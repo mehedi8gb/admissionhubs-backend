@@ -1,0 +1,30 @@
+<?php
+
+use App\Http\Controllers\AcademicYearController;
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\InstitutionController;
+use App\Http\Controllers\ResourceController;
+use App\Http\Controllers\TermController;
+use App\Http\Controllers\UserController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\AuthController;
+
+Route::group(['prefix' => 'auth'], function () {
+    Route::post('register', [AuthController::class, 'register']);
+    Route::post('login', [AuthController::class, 'login']);
+    Route::post('forget', [AuthController::class, 'forget']);
+    Route::post('validate', [AuthController::class, 'validateCode']);
+    Route::post('reset', [AuthController::class, 'resetPassword']);
+});
+
+Route::middleware(['auth:api'])->group(function () {
+    Route::post('image/upload', [ResourceController::class, 'uploadImage']);
+    Route::apiResource('institutions', InstitutionController::class);
+    Route::apiResource('courses', CourseController::class);
+    Route::apiResource('terms', TermController::class);
+    Route::apiResource('academic-years', AcademicYearController::class);
+    Route::apiResource('users', UserController::class);
+});
+
