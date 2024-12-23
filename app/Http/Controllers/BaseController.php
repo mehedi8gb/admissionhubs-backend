@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Schema;
 
-class BaseController extends Controller
+class BaseController
 {
     /**
      * Format success response.

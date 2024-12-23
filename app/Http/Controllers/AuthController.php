@@ -46,11 +46,13 @@ class AuthController extends Controller
         // Generate refresh token (optional: store securely if needed)
         $refreshToken = JWTAuth::claims(['refresh' => true])->fromUser(Auth::user());
 
-        return response()->json([
+        $data = [
             'access_token' => $token,
             'refresh_token' => $refreshToken,
             'expires_in' => auth('api')->factory()->getTTL() * 60,
-        ]);
+        ];
+
+        return $this->sendSuccessResponse('Login successful', $data);
     }
 
     /**
