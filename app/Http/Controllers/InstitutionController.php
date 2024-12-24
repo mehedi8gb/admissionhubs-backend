@@ -59,10 +59,10 @@ class InstitutionController extends Controller
         $data = Institute::findOrFail($id);
         $request->validate([
             'name' => 'sometimes|required|string|max:255',
-            'active_status' => 'sometimes|required|boolean',
+            'status' => 'sometimes|required|boolean',
         ]);
         try {
-            $data->update($request->only(['name', 'active_status']));
+            $data->update($request->only(['name', 'status']));
             $data->save();
 
             return $this->sendSuccessResponse('Record updated successfully', $data);
