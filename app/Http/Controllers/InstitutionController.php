@@ -40,10 +40,10 @@ class InstitutionController extends Controller
         }
     }
 
-    public function show($slug): JsonResponse
+    public function show($id): JsonResponse
     {
         try {
-            $data = Institute::where('slug', $slug)->firstOrFail();
+            $data = Institute::findOrFail($id);
             return $this->sendSuccessResponse('Records retrieved successfully', $data);
         } catch (\Exception $e) {
             return $this->sendErrorResponse('An error occurred: ' . $e->getMessage(), 500);
@@ -57,12 +57,13 @@ class InstitutionController extends Controller
     public function update(Request $request, string $id): JsonResponse
     {
         $data = Institute::findOrFail($id);
-        $request->validate([
-            'name' => 'sometimes|required|string|max:255',
-            'status' => 'sometimes|required|boolean',
+        $validatedData = $request->validate([
+            'name' => 'nullable|string|max:255',
+            'status' => 'nullable|boolean',
         ]);
+        $validatedData['status'] = $validatedData['status'] ?? false;
         try {
-            $data->update($request->only(['name', 'status']));
+            $data->fill($validatedData);
             $data->save();
 
             return $this->sendSuccessResponse('Record updated successfully', $data);
