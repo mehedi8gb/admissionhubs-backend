@@ -171,7 +171,6 @@ class AuthController extends Controller
             $newAccessToken = JWTAuth::refresh();
             return response()->json([
                 'access_token' => $newAccessToken,
-                'expires_in' => auth('api')->factory()->getTTL() * 60,
             ]);
         } catch (JWTException $e) {
             return response()->json(['error' => 'Unable to refresh token'], 401);

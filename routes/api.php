@@ -28,6 +28,7 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('logout', [AuthController::class, 'logout'])->middleware([JwtMiddleware::class]);
 });
 
+
 Route::middleware([JwtMiddleware::class])->group(function () {
     Route::get('me', [AuthController::class, 'me']);
     Route::post('image/upload', [ResourceController::class, 'uploadImage']);
@@ -38,4 +39,30 @@ Route::middleware([JwtMiddleware::class])->group(function () {
     Route::apiResource('users', UserController::class);
 });
 
-// role based route system has to be integrated
+// Student Routes
+Route::middleware('role:student')->prefix('student')->group(function () {
+    Route::get('dashboard', [StudentController::class, 'dashboard']);
+    Route::get('profile', [StudentController::class, 'profile']);
+    Route::get('profile', [AuthController::class, 'me']);
+    // Add more routes specific to the student role
+});
+// Staff Routes
+Route::middleware('role:staff')->prefix('staff')->group(function () {
+    Route::get('dashboard', [StaffController::class, 'dashboard']);
+    Route::get('reports', [StaffController::class, 'reports']);
+    // Add more routes specific to the staff role
+});
+
+// University Routes
+Route::middleware('role:university')->prefix('university')->group(function () {
+    Route::get('dashboard', [UniversityController::class, 'dashboard']);
+    Route::get('courses', [UniversityController::class, 'courses']);
+    // Add more routes specific to the university role
+});
+
+// Agent Routes
+Route::middleware('role:agent')->prefix('agent')->group(function () {
+    Route::get('dashboard', [AgentController::class, 'dashboard']);
+    Route::get('leads', [AgentController::class, 'leads']);
+    // Add more routes specific to the agent role
+});
