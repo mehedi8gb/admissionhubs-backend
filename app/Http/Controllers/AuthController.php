@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Mail\OTPMail;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
@@ -35,16 +37,13 @@ class AuthController extends Controller
         // Assign the role to the user
         $user->assignRole($validated['role']);
 
-        !$token = Auth::attempt($request->only('email', 'password'));
+        Auth::attempt($request->only('email', 'password'));
 
         // Generate refresh token (optional: store securely if needed)
         $refreshToken = JWTAuth::claims(['refresh' => true])->fromUser(Auth::user());
 
         $data = [
-            'access_token' => $token,
-            'refresh_token' => $refreshToken,
-            'expires_in' => auth('api')->factory()->getTTL() * 60 . ' seconds',
-            'user' => $user,
+            'access_token' => $refreshToken,
         ];
 
         return $this->sendSuccessResponse('User registered successfully', $data, 201);
@@ -55,6 +54,11 @@ class AuthController extends Controller
      */
     public function login(Request $request): JsonResponse
     {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|string',
+        ]);
+
         $credentials = $request->only(['email', 'password']);
 
         if (!$token = Auth::attempt($credentials)) {
@@ -62,12 +66,10 @@ class AuthController extends Controller
         }
 
         // Generate refresh token (optional: store securely if needed)
-        $refreshToken = JWTAuth::claims(['refresh' => true])->fromUser(Auth::user());
+        $refreshToken = JWTAuth::fromUser(Auth::user());
 
         $data = [
-            'access_token' => $token,
-            'refresh_token' => $refreshToken,
-            'expires_in' => auth('api')->factory()->getTTL() * 60 . ' seconds',
+            'access_token' => $refreshToken,
         ];
 
         return $this->sendSuccessResponse('Login successful', $data);
@@ -90,7 +92,7 @@ class AuthController extends Controller
         $user->save();
 
         // Send OTP via email (simulated here)
-         Mail::to($user->email)->send(new OTPMail($otp));
+        Mail::to($user->email)->send(new OTPMail($otp));
 
         return $this->sendSuccessResponse('OTP sent successfully');
     }
@@ -111,7 +113,20 @@ class AuthController extends Controller
             return response()->json(['error' => 'Invalid OTP'], 400);
         }
 
-        return $this->sendSuccessResponse('OTP validated successfully');
+        $token = Str::random(60);
+        DB::table('password_reset_tokens')->updateOrInsert(
+            ['email' => $validated['email']], // Condition to check if the record already exists
+            [
+                'token' => $token,               // New token to insert or update
+                'created_at' => now(),           // Update the timestamp to current time
+            ]
+        );
+
+
+        $user->password_reset_code = null;
+        $user->save();
+
+        return $this->sendSuccessResponse('OTP validated successfully', ['token' => $token]);
     }
 
     /**
@@ -120,12 +135,28 @@ class AuthController extends Controller
     public function resetPassword(Request $request): JsonResponse
     {
         $validated = $request->validate([
+            'token' => 'required',
             'email' => 'required|email|exists:users,email',
-            'newPassword' => 'required|string|min:6|confirmed',
+            'newPassword' => 'required|string|min:6',
         ]);
+        $user = User::where('email', $validated['email'])->first();
+        $token = DB::table('password_reset_tokens')->
+        where('email', $validated['email'])->where('token', $validated['token']);
+
+        if (!$user && $token->doesntExist()) {
+            return $this->sendErrorResponse('Unauthorized', 401);
+        }
+
+        if (Hash::check($validated['newPassword'], $user->password)) {
+            return $this->sendErrorResponse('New password cannot be the same as the old password', 400);
+        }
+
+        if (Carbon::parse($token->first()->created_at)->diffInMinutes(now()) > 30) {
+            return $this->sendErrorResponse('Token expired', 401);
+        }
 
         $user = User::where('email', $validated['email'])->first();
-        $user->password = Hash::make($validated['newPassword']);
+        $user->password = bcrypt($validated['newPassword']);
         $user->save();
 
         return $this->sendSuccessResponse('Password reset successfully');
@@ -150,13 +181,13 @@ class AuthController extends Controller
     /**
      * Logout and invalidate tokens
      */
-    public function logout()
+    public function logout(): JsonResponse
     {
         try {
             auth('api')->logout();
-            return response()->json(['message' => 'Logged out successfully']);
+            return $this->sendSuccessResponse('User logged out successfully');
         } catch (JWTException $e) {
-            return response()->json(['error' => 'Failed to logout'], 500);
+            return $this->sendErrorResponse('Unable to logout', 401);
         }
     }
 

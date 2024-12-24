@@ -38,3 +38,4 @@ Route::middleware([JwtMiddleware::class])->group(function () {
     Route::apiResource('users', UserController::class);
 });
 
+// role based route system has to be integrated
