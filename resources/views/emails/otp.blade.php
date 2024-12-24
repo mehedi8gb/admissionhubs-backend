@@ -117,7 +117,6 @@
         <div class="otp-container">
             <div class="otp-code">{{ $otp }}</div>
         </div>
-        <p class="description" style="margin-top: 2rem;">This OTP will expire in 10 minutes. For security reasons, please do not share this code with anyone.</p>
     </div>
     <div class="footer">
         <p>This is an automated email. Please do not reply.</p>
