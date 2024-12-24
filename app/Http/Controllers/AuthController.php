@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
@@ -35,16 +36,13 @@ class AuthController extends Controller
         // Assign the role to the user
         $user->assignRole($validated['role']);
 
-        !$token = Auth::attempt($request->only('email', 'password'));
+        Auth::attempt($request->only('email', 'password'));
 
         // Generate refresh token (optional: store securely if needed)
         $refreshToken = JWTAuth::claims(['refresh' => true])->fromUser(Auth::user());
 
         $data = [
-            'access_token' => $token,
-            'refresh_token' => $refreshToken,
-            'expires_in' => auth('api')->factory()->getTTL() * 60 . ' seconds',
-            'user' => $user,
+            'access_token' => $refreshToken,
         ];
 
         return $this->sendSuccessResponse('User registered successfully', $data, 201);
@@ -55,22 +53,29 @@ class AuthController extends Controller
      */
     public function login(Request $request): JsonResponse
     {
-        $credentials = $request->only(['email', 'password']);
+//        try {
+            $request->validate([
+                'email' => 'required|email',
+                'password' => 'required|string',
+            ]);
 
-        if (!$token = Auth::attempt($credentials)) {
-            return response()->json(['error' => 'Invalid credentials'], 401);
-        }
+            $credentials = $request->only(['email', 'password']);
 
-        // Generate refresh token (optional: store securely if needed)
-        $refreshToken = JWTAuth::claims(['refresh' => true])->fromUser(Auth::user());
+            if (!$token = Auth::attempt($credentials)) {
+                return response()->json(['error' => 'Invalid credentials'], 401);
+            }
 
-        $data = [
-            'access_token' => $token,
-            'refresh_token' => $refreshToken,
-            'expires_in' => auth('api')->factory()->getTTL() * 60 . ' seconds',
-        ];
+            // Generate refresh token (optional: store securely if needed)
+            $refreshToken = JWTAuth::fromUser(Auth::user());
 
-        return $this->sendSuccessResponse('Login successful', $data);
+            $data = [
+                'access_token' => $refreshToken,
+            ];
+
+            return $this->sendSuccessResponse('Login successful', $data);
+//        } catch (ValidationException $e) {
+//            return $this->sendErrorResponse($e->getMessage(), 422);
+//        }
     }
 
     /**
@@ -90,7 +95,7 @@ class AuthController extends Controller
         $user->save();
 
         // Send OTP via email (simulated here)
-         Mail::to($user->email)->send(new OTPMail($otp));
+        Mail::to($user->email)->send(new OTPMail($otp));
 
         return $this->sendSuccessResponse('OTP sent successfully');
     }
@@ -111,6 +116,8 @@ class AuthController extends Controller
             return response()->json(['error' => 'Invalid OTP'], 400);
         }
 
+        // need to send a token for further password reset
+
         return $this->sendSuccessResponse('OTP validated successfully');
     }
 
@@ -120,9 +127,12 @@ class AuthController extends Controller
     public function resetPassword(Request $request): JsonResponse
     {
         $validated = $request->validate([
+            'token' => 'required',
             'email' => 'required|email|exists:users,email',
             'newPassword' => 'required|string|min:6|confirmed',
         ]);
+
+        // token has to be verify
 
         $user = User::where('email', $validated['email'])->first();
         $user->password = Hash::make($validated['newPassword']);
@@ -150,7 +160,7 @@ class AuthController extends Controller
     /**
      * Logout and invalidate tokens
      */
-    public function logout()
+    public function logout(): JsonResponse
     {
         try {
             auth('api')->logout();
