@@ -36,7 +36,7 @@ class RolesAndPermissionsSeeder extends Seeder
 
         // Define roles and assign permissions
         $roles = [
-            'super_agent' => [
+            'admin' => [
                 'view_users',
                 'create_users',
                 'edit_users',
