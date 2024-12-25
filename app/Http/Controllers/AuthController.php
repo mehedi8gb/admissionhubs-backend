@@ -193,15 +193,25 @@ class AuthController extends Controller
     /**
      * Get the authenticated user
      */
+    /**
+     * Get the authenticated user
+     */
     public function me(): JsonResponse
     {
         $user = auth('api')->user();
         $data = [
-            'user' => $user,
-            'role' => $user->getRoleNames(),
+            'user' => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'email_verified_at' => $user->email_verified_at,
+                'profile_photo_url' => $user->profile_photo_url,
+            ],
+            'role' => $user->getRoleNames()->first(), // Fetches a single role name
         ];
         return $this->sendSuccessResponse('User details', $data);
     }
+
 
     /**
      * Get the authenticated user's permissions
