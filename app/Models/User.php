@@ -72,9 +72,10 @@ class User extends Authenticatable implements JWTSubject
         return [
             'email' => $this->email,
             'name' => $this->name,
-            'role' => $this->getRoleNames(),
+            'role' => $this->getRoleNames()->first(), // Fetches the first role name as a string
         ];
     }
+
 
     public function getProfilePhotoUrlAttribute(): Application|string|\Illuminate\Contracts\Routing\UrlGenerator|null
     {
