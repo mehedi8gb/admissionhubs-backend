@@ -61,8 +61,8 @@ class AuthController extends Controller
 
         $credentials = $request->only(['email', 'password']);
 
-        if (!$token = Auth::attempt($credentials)) {
-            return response()->json(['error' => 'Invalid credentials'], 401);
+        if (!Auth::attempt($credentials)) {
+            return $this->sendErrorResponse('invalid credentials', 401);
         }
 
         // Generate refresh token (optional: store securely if needed)
@@ -110,7 +110,7 @@ class AuthController extends Controller
         $user = User::where('email', $validated['email'])->first();
 
         if ($user->password_reset_code != $validated['otp']) {
-            return response()->json(['error' => 'Invalid OTP'], 400);
+            return $this->sendErrorResponse('Invalid OTP', 400);
         }
 
         $token = Str::random(60);
@@ -169,11 +169,13 @@ class AuthController extends Controller
     {
         try {
             $newAccessToken = JWTAuth::refresh();
-            return response()->json([
+            $data = [
                 'access_token' => $newAccessToken,
-            ]);
+            ];
+
+            return $this->sendSuccessResponse('Token refreshed successfully', $data);
         } catch (JWTException $e) {
-            return response()->json(['error' => 'Unable to refresh token'], 401);
+            return $this->sendErrorResponse('Unable to refresh token', 401);
         }
     }
 
