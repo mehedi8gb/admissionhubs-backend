@@ -41,7 +41,7 @@ class BaseController
         ], $statusCode);
     }
 
-    protected function handleApiRequest(Request $request, Builder $query)
+    protected function handleApiRequest(Request $request, Builder $query): array
     {
         $page = $request->query('page', 1);
         $limit = $request->query('limit', 10);
