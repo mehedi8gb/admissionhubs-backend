@@ -13,6 +13,12 @@ class UsersSeeder extends Seeder
      */
     public function run(): void
     {
+        // Create demo Admin
+        $superAgent = User::factory()->create([
+            'email' => 'admin@example.com',
+        ]);
+        $superAgent->assignRole('admin');
+
         // Create demo Agent
         $superAgent = User::factory()->create([
             'email' => 'agent@example.com',
