@@ -2,13 +2,14 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Controllers\BaseController;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
-class RefreshTokenMiddleware
+class RefreshTokenMiddleware extends BaseController
 {
     /**
      * Handle an incoming request.
@@ -29,12 +30,12 @@ class RefreshTokenMiddleware
                     return $response;
                 } catch (JWTException $e) {
                     // Unable to refresh the token
-                    return response()->json(['error' => 'Token could not be refreshed'], 401);
+                    return $this->sendErrorResponse('Unauthorized', 401);
                 }
             }
 
             // Invalid token
-            return response()->json(['error' => 'Token is invalid'], 401);
+            return $this->sendErrorResponse('invalid token', 401);
         }
 
         return $next($request);

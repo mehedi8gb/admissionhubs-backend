@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Controllers\BaseController;
 use Closure;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -9,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
-class RoleMiddleware
+class RoleMiddleware extends BaseController
 {
     /**
      * Handle an incoming request.
@@ -27,18 +28,18 @@ class RoleMiddleware
 
             // Check if the user was authenticated
             if (!$user) {
-                return response()->json(['message' => 'Unauthorized'], 401);
+                return $this->sendErrorResponse('Unauthorized', 401);
             }
 
             // Check if the user has the specified role
             if (!$user->hasRole($role)) {
-                return response()->json(['message' => 'Forbidden'], 403);
+                return $this->sendErrorResponse('Forbidden', 401);
             }
 
             return $next($request);
 
         } catch (JWTException $e) {
-            return response()->json(['error' => 'Token not valid'], 401);
+            return $this->sendErrorResponse('Token not valid', 401);
         }
     }
 }
