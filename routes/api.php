@@ -26,6 +26,9 @@ Route::group(['prefix' => 'auth'], function () {
     // Token management
     Route::post('refresh', [AuthController::class, 'refresh'])->middleware([RefreshTokenMiddleware::class]);
     Route::post('logout', [AuthController::class, 'logout'])->middleware([JwtMiddleware::class]);
+
+    // permissions
+    Route::get('user/permissions', [AuthController::class, 'permissions'])->middleware([JwtMiddleware::class]);
 });
 
 

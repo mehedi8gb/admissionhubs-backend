@@ -202,5 +202,15 @@ class AuthController extends Controller
         ];
         return $this->sendSuccessResponse('User details', $data);
     }
+
+    /**
+     * Get the authenticated user's permissions
+     */
+    public function permissions(): JsonResponse
+    {
+        $user = Auth::user();
+        $permissions = $user->getAllPermissions();
+        return $this->sendSuccessResponse('User permissions', $permissions);
+    }
 }
 
