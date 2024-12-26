@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CourseResource;
 use App\Models\Course;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -26,17 +27,19 @@ class CourseController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
+            'status' => 'required|boolean',
         ]);
 
         try {
             $data = new Course([
                 'course_data' => [
-                    'name' => $validatedData['name']
+                    'name' => $validatedData['name'],
                 ],
+                'status' => $request->status ?? 1,
             ]);
             $data->save();
 
-            return $this->sendSuccessResponse('Record created successfully', $data);
+            return $this->sendSuccessResponse('Record created successfully', CourseResource::make($data));
         } catch (\Exception $e) {
             return $this->sendErrorResponse('An error occurred: ' . $e->getMessage(), 500);
         }
@@ -46,7 +49,7 @@ class CourseController extends Controller
     {
         try {
             $data = Course::findOrFail($id);
-            return $this->sendSuccessResponse('Records retrieved successfully', $data);
+            return $this->sendSuccessResponse('Records retrieved successfully', CourseResource::make($data));
         } catch (\Exception $e) {
             return $this->sendErrorResponse('An error occurred: ' . $e->getMessage(), 500);
         }
@@ -59,7 +62,7 @@ class CourseController extends Controller
     public function update(Request $request, string $id): JsonResponse
     {
         $data = Course::findOrFail($id);
-        $validatedData = $request->validate([
+        $request->validate([
             'name' => 'nullable|string|max:255',
             'status' => 'nullable|boolean',
         ]);
@@ -76,7 +79,7 @@ class CourseController extends Controller
 
             $data->update($updateData);
 
-            return $this->sendSuccessResponse('Record updated successfully', $data);
+            return $this->sendSuccessResponse('Record updated successfully', CourseResource::make($data));
         } catch (\Exception $e) {
             return $this->sendErrorResponse('An error occurred: ' . $e->getMessage(), 500);
         }

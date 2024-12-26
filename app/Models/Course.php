@@ -14,5 +14,7 @@ class Course extends Model
     protected $casts = [
         'course_data' => 'array',
         'status' => 'boolean',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 }
