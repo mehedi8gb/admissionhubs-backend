@@ -21,6 +21,9 @@ class BaseController
      */
     protected function sendSuccessResponse(string $message, mixed $data = null, int $statusCode = 200): JsonResponse
     {
+        if ($data === null) {
+            $data = new \stdClass();
+        }
         return response()->json([
             'success' => true,
             'message' => $message,
