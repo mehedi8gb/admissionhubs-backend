@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\DefaultResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Schema;
 
 class BaseController
@@ -49,18 +51,16 @@ class BaseController
         $sortDirection = $request->query('sortDirection', 'asc');
         $selectFields = $request->query('select');
 
-
-
         // Apply filters
         foreach ($request->query() as $key => $value) {
-            if ($key !== 'page' && $key !== 'limit' && $key !== 'searchTerm' && $key !== 'sortBy' && $key !== 'sortDirection' && $key !== 'select') {
+            if (!in_array($key, ['page', 'limit', 'searchTerm', 'sortBy', 'sortDirection', 'select'])) {
                 $query->where($key, $value);
             }
         }
 
         // Apply search
         $searchTerm = $request->query('searchTerm');
-        if ($searchTerm!== null) {
+        if ($searchTerm !== null) {
             $columns = Schema::getColumnListing($query->getModel()->getTable());
             $query->where(function ($query) use ($searchTerm, $columns) {
                 foreach ($columns as $column) {
@@ -76,22 +76,27 @@ class BaseController
 
         $query->orderBy('created_at', 'desc');
 
-        if($selectFields !== null) {
+        // Select specific fields
+        if ($selectFields !== null) {
             $query->select(explode(',', $selectFields));
-            $results = $query->get();
         }
-        if ($limit === 'all' ) {
+
+        // Fetch results
+        if ($limit === 'all') {
             $results = $query->get();
             $total = $results->count();
         } else {
-            // Paginate data if limit is not 'all'
             $results = $query->paginate($limit, ['*'], 'page', $page);
             $total = $results->total();
         }
-        // Paginate and format response
-        // $results = $query->paginate($limit, ['*'], 'page', $page);
 
-        // Extract relevant pagination data
+        // Apply dynamic resource transformation
+        $resourceClass = getResourceClass($query->getModel());
+        $result = $results instanceof LengthAwarePaginator
+            ? $resourceClass::collection($results->items())
+            : $resourceClass::collection($results);
+
+        // Meta information for pagination
         $meta = [
             'page' => $page,
             'limit' => $limit === 'all' ? $total : $limit,
@@ -99,9 +104,6 @@ class BaseController
             'totalPage' => $limit === 'all' ? 1 : $results->lastPage(),
         ];
 
-        // Format response data
-        //$result = $results->items();
-        $result = $results instanceof \Illuminate\Pagination\LengthAwarePaginator ? $results->items() : $results->toArray();
         return compact('meta', 'result');
     }
 }
