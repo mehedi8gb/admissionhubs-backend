@@ -26,6 +26,10 @@ class RoleMiddleware extends BaseController
             // Attempt to authenticate the user using JWT
             $user = JWTAuth::parseToken()->authenticate();
 
+            // check if user is admin
+            if ($user->roles->contains('name', 'admin'))
+                return $next($request);
+
             // Check if the user was authenticated
             if (!$user) {
                 return $this->sendErrorResponse('Unauthorized', 401);

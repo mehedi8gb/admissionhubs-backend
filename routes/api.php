@@ -4,6 +4,7 @@ use App\Http\Controllers\AcademicYearController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\InstitutionController;
 use App\Http\Controllers\ResourceController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TermController;
 use App\Http\Controllers\UserController;
 
@@ -43,9 +44,8 @@ Route::middleware([JwtMiddleware::class])->group(function () {
 });
 
 // Student Routes
-Route::middleware('role:student')->prefix('student')->group(function () {
-    Route::get('dashboard', [StudentController::class, 'dashboard']);
-    Route::get('profile', [StudentController::class, 'profile']);
+Route::middleware(['role:student'])->prefix('students')->group(function () {
+    Route::apiResource('/', StudentController::class);
     Route::get('profile', [AuthController::class, 'me']);
     // Add more routes specific to the student role
 });
