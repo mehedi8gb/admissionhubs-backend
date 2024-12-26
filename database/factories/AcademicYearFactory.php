@@ -2,13 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Models\User;
+use App\Models\AcademicYear;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Team>
+ * @extends Factory<AcademicYear>
  */
-class TeamFactory extends Factory
+class AcademicYearFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,9 +18,8 @@ class TeamFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->unique()->company(),
-            'user_id' => User::factory(),
-            'personal_team' => true,
+            'academic_year' =>  $this->faker->year() . '-' . $this->faker->year(),
+            'status' => $this->faker->boolean(),
         ];
     }
 }
