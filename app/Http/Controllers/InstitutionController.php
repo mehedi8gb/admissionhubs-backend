@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\InstituteResource;
 use App\Models\Institute;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -26,15 +27,17 @@ class InstitutionController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
+            'status' => 'required|boolean',
         ]);
 
         try {
             $data = new Institute([
                 'name' => $validatedData['name'],
+                'status' => $request->status ?? 1,
             ]);
             $data->save();
 
-            return $this->sendSuccessResponse('Record created successfully', $data);
+            return $this->sendSuccessResponse('Record created successfully', InstituteResource::make($data));
         } catch (\Exception $e) {
             return $this->sendErrorResponse('An error occurred: ' . $e->getMessage(), 500);
         }
@@ -44,7 +47,7 @@ class InstitutionController extends Controller
     {
         try {
             $data = Institute::findOrFail($id);
-            return $this->sendSuccessResponse('Records retrieved successfully', $data);
+            return $this->sendSuccessResponse('Records retrieved successfully', InstituteResource::make($data));
         } catch (\Exception $e) {
             return $this->sendErrorResponse('An error occurred: ' . $e->getMessage(), 500);
         }
@@ -66,7 +69,7 @@ class InstitutionController extends Controller
             $data->fill($validatedData);
             $data->save();
 
-            return $this->sendSuccessResponse('Record updated successfully', $data);
+            return $this->sendSuccessResponse('Record updated successfully', InstituteResource::make($data));
         } catch (\Exception $e) {
             return $this->sendErrorResponse('An error occurred: ' . $e->getMessage(), 500);
         }
@@ -75,7 +78,7 @@ class InstitutionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id): JsonResponse
+    public function destroy($id): JsonResponse
     {
         try {
             $data = Institute::findOrFail($id);

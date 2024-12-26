@@ -10,4 +10,10 @@ class Institute extends Model
         'name',
         'status'
     ];
+
+    protected $casts = [
+        'status' => 'boolean',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime'
+    ];
 }
