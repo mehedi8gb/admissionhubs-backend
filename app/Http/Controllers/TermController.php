@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\TermResource;
 use App\Models\Term;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -35,12 +36,12 @@ class TermController extends Controller
                 'term_data' => [
                     'term' => $validatedData['term'],
                     'academic_year' => $validatedData['academic_year'],
-                    'status' => $validatedData['status'] ?? true,
                 ],
+                'status' => $validatedData['status'] ?? 1,
             ]);
             $data->save();
 
-            return $this->sendSuccessResponse('Record created successfully', $data);
+            return $this->sendSuccessResponse('Record created successfully', TermResource::make($data), 201);
         } catch (\Exception $e) {
             return $this->sendErrorResponse('An error occurred: ' . $e->getMessage(), 500);
         }
@@ -50,7 +51,7 @@ class TermController extends Controller
     {
         try {
             $data = Term::findOrFail($id);
-            return $this->sendSuccessResponse('Records retrieved successfully', $data);
+            return $this->sendSuccessResponse('Records retrieved successfully', TermResource::make($data));
         } catch (\Exception $e) {
             return $this->sendErrorResponse('An error occurred: ' . $e->getMessage(), 500);
         }
@@ -83,7 +84,7 @@ class TermController extends Controller
 
             $data->update($updateData);
 
-            return $this->sendSuccessResponse('Record updated successfully', $data);
+            return $this->sendSuccessResponse('Record updated successfully', TermResource::make($data));
         } catch (\Exception $e) {
             return $this->sendErrorResponse('An error occurred: ' . $e->getMessage(), 500);
         }
