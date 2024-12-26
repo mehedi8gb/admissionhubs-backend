@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('institutes', function (Blueprint $table) {
             $table->id();  // Auto-incrementing primary key
             $table->string('name');  // Institute name
-            $table->boolean('status')->default(true)->nullable();  // Active status (default to true)
+            $table->boolean('status')->default(1)->nullable();  // Active status (default to true)
             $table->timestamps();  // created_at and updated_at timestamps
         });
     }

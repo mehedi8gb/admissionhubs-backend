@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('terms', function (Blueprint $table) {
             $table->id();
             $table->json('term_data');
-            $table->boolean('status')->nullable()->default(true);
+            $table->boolean('status')->nullable()->default(1);
             $table->timestamps();
         });
     }

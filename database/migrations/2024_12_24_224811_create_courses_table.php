@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
             $table->json('course_data');
-            $table->boolean('status')->default(true);
+            $table->boolean('status')->default(1);
             $table->timestamps();
         });
     }

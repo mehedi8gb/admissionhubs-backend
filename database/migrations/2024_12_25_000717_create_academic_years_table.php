@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('academic_years', function (Blueprint $table) {
             $table->id();
             $table->string('academic_year');
-            $table->boolean('status')->nullable()->default(true);
+            $table->boolean('status')->nullable()->default(1);
             $table->timestamps();
         });
     }
