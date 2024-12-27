@@ -28,7 +28,7 @@ class StudentController extends Controller
         try {
             $studentObject = $request->all();
             $student = new Student([
-                'created_by' => $validatedData['createdBy'],
+                'created_by' => auth()->id(),
                 'student_data' => $studentObject,
             ]);
             $student->save();
@@ -45,16 +45,56 @@ class StudentController extends Controller
         $validatedData = $request->validated();
 
         try {
-            $studentObject = $request->all();
+            // Get existing student data
+            $existingStudentData = $student->student_data;
+
+            // Perform a deep merge, overwriting existing keys
+            $mergedData = $this->deepMerge($existingStudentData, $validatedData);
+
+            // Update the student record
             $student->update([
-                'created_by' => $validatedData['createdBy'],
-                'student_data' => $studentObject,
+                'student_data' => $mergedData,
             ]);
 
             return $this->sendSuccessResponse('Student updated successfully', $student);
         } catch (\Exception $e) {
             return $this->sendErrorResponse('An error occurred: ' . $e->getMessage(), 500);
         }
+    }
+
+    /**
+     * Perform a deep merge of two arrays, allowing forced replacement with a "forceReplace" value.
+     *
+     * @param array $original
+     * @param array $new
+     * @param string $forceReplaceIndicator
+     * @return array
+     */
+    private function deepMerge(array $original, array $new, string $forceReplaceIndicator = 'forceReplace'): array
+    {
+        foreach ($new as $key => $value) {
+            // Check if the value is marked as a forced replacement
+            if ($value === $forceReplaceIndicator) {
+                // Replace the key in the original array with an empty value
+                $original[$key] = '';
+                continue;
+            }
+
+            // Check if the new value is empty (null, empty string, or empty array)
+            if (is_null($value) || (is_string($value) && trim($value) === '') || (is_array($value) && empty($value))) {
+                // Skip overwriting if the new value is empty
+                continue;
+            }
+
+            if (is_array($value) && isset($original[$key]) && is_array($original[$key])) {
+                // Recursively merge arrays
+                $original[$key] = $this->deepMerge($original[$key], $value, $forceReplaceIndicator);
+            } else {
+                // Overwrite scalar values or arrays
+                $original[$key] = $value;
+            }
+        }
+        return $original;
     }
 
 

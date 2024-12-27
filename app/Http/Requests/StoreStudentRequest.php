@@ -14,7 +14,6 @@ class StoreStudentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'createdBy' => 'required|integer',
             'title' => 'nullable|string|max:255',
             'firstName' => 'required|string|max:255',
             'lastName' => 'required|string|max:255',
