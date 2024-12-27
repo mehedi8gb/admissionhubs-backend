@@ -44,8 +44,8 @@ Route::middleware([JwtMiddleware::class])->group(function () {
 });
 
 // Student Routes
-Route::middleware(['role:student'])->prefix('students')->group(function () {
-    Route::apiResource('/', StudentController::class);
+Route::middleware(['role:student'])->group(function () {
+    Route::apiResource('students', StudentController::class);
     Route::get('profile', [AuthController::class, 'me']);
     // Add more routes specific to the student role
 });
