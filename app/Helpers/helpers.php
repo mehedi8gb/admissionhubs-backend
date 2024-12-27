@@ -29,3 +29,40 @@ function convertStatus(mixed $status): int
 {
     return $status ? 1 : 0;
 }
+
+
+/**
+ * Perform a deep merge of two arrays, allowing forced replacement with a "forceReplace" value.
+ *
+ * @param array $original
+ * @param array $new
+ * @param string $forceReplaceIndicator
+ * @return array
+ */
+function deepMerge(array $original, array $new, string $forceReplaceIndicator = 'forceReplace'): array
+{
+    foreach ($new as $key => $value) {
+        // Check if the value is marked as a forced replacement
+        if ($value === $forceReplaceIndicator) {
+            // Replace the key in the original array with an empty value
+            $original[$key] = '';
+            continue;
+        }
+
+        // Check if the new value is empty (null, empty string, or empty array)
+        if (is_null($value) || (is_string($value) && trim($value) === '') || (is_array($value) && empty($value))) {
+            // Skip overwriting if the new value is empty
+            continue;
+        }
+
+        if (is_array($value) && isset($original[$key]) && is_array($original[$key])) {
+            // Recursively merge arrays
+            $original[$key] = deepMerge($original[$key], $value, $forceReplaceIndicator);
+        } else {
+            // Overwrite scalar values or arrays
+            $original[$key] = $value;
+        }
+    }
+    return $original;
+}
+
