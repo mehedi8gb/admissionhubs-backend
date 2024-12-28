@@ -7,9 +7,30 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+
+/**
+ *
+ *
+ * @property int $id
+ * @property string $academic_year
+ * @property bool|null $status
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @method static \Database\Factories\AcademicYearFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|AcademicYear newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|AcademicYear newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|AcademicYear query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|AcademicYear whereAcademicYear($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|AcademicYear whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|AcademicYear whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|AcademicYear whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|AcademicYear whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|AcademicYear inRandomOrder()
+ */
 
 class User extends Authenticatable implements JWTSubject
 {
