@@ -14,6 +14,7 @@ class UpdateStudentRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'status' => 'nullable|boolean',
             'title' => 'nullable|string|max:255',
             'firstName' => 'nullable|string|max:255',
             'lastName' => 'nullable|string|max:255',

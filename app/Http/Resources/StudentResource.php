@@ -17,7 +17,12 @@ class StudentResource extends JsonResource
         $studentData = $this->student_data;
         return [
             'id' => $this->id,
-            'createdBy' => $this->created_by,
+            'refId' => $this->ref_id,
+            'status' => convertStatus($this->status),
+            'createdBy' => $this->createdBy->name,
+//            'academicYear' => $this->academicYear->academic_year,
+//            'term' => $this->term->term_data['term'],
+//            'institute' => $this->institute->name,
             'title' => $studentData['title'] ?? null,
             'firstName' => $studentData['firstName'] ?? null,
             'lastName' => $studentData['lastName'] ?? null,

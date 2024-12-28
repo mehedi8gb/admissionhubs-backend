@@ -13,10 +13,24 @@ return new class extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('created_by'); // For createdBy
-            $table->json('student_data'); // Store the entire student object
+            $table->unsignedBigInteger('created_by');
+//            $table->foreignId('academic_year_id')->index();
+//            $table->foreignId('term_id')->nullable()->index();
+//            $table->foreignId('institute_id')->nullable()->index();
+            $table->string('agent')->nullable()->index();
+            $table->string('staff')->nullable()->index();
+            $table->boolean('status')->default(true)->index();
+            $table->string('ref_id')->unique();
+            $table->string('name')->index();
+            $table->string('email')->index();
+            $table->string('phone')->index();
+            $table->date('dob')->nullable()->index();
+            $table->json('student_data');
             $table->timestamps();
+
+            $table->foreign('created_by')->references('id')->on('users');
         });
+
     }
 
     /**

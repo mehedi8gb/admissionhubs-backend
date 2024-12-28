@@ -268,4 +268,73 @@ class StudentTest extends TestCase
         $response->assertJsonFragment(['firstName' => 'Jane', 'email' => 'jane.doe@example.com']);
     }
 
+    public function test_can_store_student_with_valid_data_and_auto_generated_ref_id()
+    {
+        $data = $this->studentData(); // No need to pass 'ref_id' since it's auto-generated
+        $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)
+            ->postJson('/api/students', $data);
+
+        $response->assertStatus(200);
+
+        // Assert that the response contains the auto-generated ref_id
+        $response->assertJsonFragment(['refId' => 'STD00001']);
+
+        // Retrieve the most recently created student from the database
+        $student = Student::latest()->first();
+
+        // Check if the auto-generated ref_id matches the format and is correct
+        $this->assertMatchesRegularExpression('/^STD\d{5}$/', $student->ref_id);
+
+        // Optionally, assert that the student's ref_id is correctly generated
+        $this->assertEquals(sprintf('STD%05d', $student->id), $student->ref_id);
+    }
+
+
+    public function test_cannot_store_student_without_required_fields()
+    {
+        $data = $this->studentData(['email' => null]);
+        $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)
+            ->postJson('/api/students', $data);
+
+        $response->assertStatus(422);
+        // Assert the JSON structure contains success: false and the appropriate message
+        $response->assertJson([
+            'success' => false,
+            'message' => 'The email field is required.',
+        ]);
+    }
+
+
+    public function test_can_update_student_status_without_changing_other_data()
+    {
+        // Create a student with valid data
+        $student = Student::factory()->create([
+            'status' => true, // Initially, the status is set to true
+        ]);
+
+        // Prepare the updated data, only changing the 'status' field
+        $updatedData = ['status' => false]; // Changing the status to false
+
+        // Perform the update request with the 'status' field
+        $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)
+            ->putJson('/api/students/' . $student->id, $updatedData);
+
+        // Assert that the status code is 200 (OK)
+        $response->assertStatus(200);
+
+        // Assert that the response contains the updated 'status' field
+        $response->assertJsonFragment(['status' => 0]);
+
+        // Retrieve the student again from the database
+        $updatedStudent = Student::find($student->id);
+
+        // Assert that the 'status' has been updated correctly
+        $this->assertNotEquals($student->status, $updatedStudent->status);
+
+        // Assert that other fields (e.g., ref_id) remain unchanged
+        $this->assertEquals($student->ref_id, $updatedStudent->ref_id);
+        $this->assertEquals($student->email, $updatedStudent->email);
+    }
+
+
 }

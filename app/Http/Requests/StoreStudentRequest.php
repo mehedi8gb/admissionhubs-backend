@@ -30,6 +30,7 @@ class StoreStudentRequest extends FormRequest
             'country' => 'required|string|max:255', // Country is required
 
             // All other fields remain nullable
+            'status' => 'nullable|boolean', // Status is nullable
             'nativeLanguage' => 'nullable|string|max:255',
             'passportName' => 'nullable|string|max:255',
             'passportIssueLocation' => 'nullable|string|max:255',

@@ -8,13 +8,14 @@ use App\Http\Resources\StudentResource;
 use App\Models\Student;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class StudentController extends Controller
 {
     public function index(Request $request): JsonResponse
     {
         $query = Student::query();
-        $results = $this->handleApiRequest($request, $query);
+        $results = $this->handleApiRequest($request, $query, ['createdBy']);
 
         // Convert $results to a collection if it's an array
         $results = collect($results);
@@ -30,15 +31,29 @@ class StudentController extends Controller
         $validatedData = $request->validated();
 
         try {
+            DB::beginTransaction();
+
             $student = new Student([
                 'created_by' => auth()->id(),
+                'name' => $validatedData['firstName'] . ' ' . $validatedData['lastName'],
+                'email' => $validatedData['email'],
+                'phone' => $validatedData['phone'],
+                'dob' => $validatedData['dob'],
+//                'academic_year' => $validatedData['academic_year'],
+//                'term' => $validatedData['term'],
+//                'institute' => $validatedData['institute'],
+                'status' => $validatedData['status'] ?? true,
+                'agent' => $validatedData['agent'] ?? null,
+                'staff' => $validatedData['staff'] ?? null,
                 'student_data' => $validatedData,
             ]);
             $student->save();
 
-            return $this->sendSuccessResponse('Student created successfully',
-                StudentResource::make($student));
+            DB::commit();
+
+            return $this->sendSuccessResponse('Student created successfully', StudentResource::make($student));
         } catch (\Exception $e) {
+            DB::rollBack();
             return $this->sendErrorResponse('An error occurred: ' . $e->getMessage(), 500);
         }
     }
@@ -49,19 +64,27 @@ class StudentController extends Controller
         $validatedData = $request->validated();
 
         try {
-            // Get existing student data
-            $existingStudentData = $student->student_data;
+            DB::beginTransaction();
 
-            // Perform a deep merge, overwriting existing keys
-            $mergedData = deepMerge($existingStudentData, $validatedData);
-
-            // Update the student record
             $student->update([
-                'student_data' => $mergedData,
+                'name' => $validatedData['firstName'] ?? $student->name,
+                'email' => $validatedData['email'] ?? $student->email,
+                'phone' => $validatedData['phone'] ?? $student->phone,
+                'dob' => $validatedData['dob'] ?? $student->dob,
+//                'academic_year' => $validatedData['academic_year'] ?? $student->academic_year,
+//                'term' => $validatedData['term'] ?? $student->term,
+//                'institute' => $validatedData['institute'] ?? $student->institute,
+                'status' => $validatedData['status'] ?? $student->status,
+                'agent' => $validatedData['agent'] ?? $student->agent,
+                'staff' => $validatedData['staff'] ?? $student->staff,
+                'student_data' => deepMerge($student->student_data, $validatedData ?? []),
             ]);
+
+            DB::commit();
 
             return $this->sendSuccessResponse('Student updated successfully', StudentResource::make($student));
         } catch (\Exception $e) {
+            DB::rollBack();
             return $this->sendErrorResponse('An error occurred: ' . $e->getMessage(), 500);
         }
     }
