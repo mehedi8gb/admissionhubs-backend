@@ -68,11 +68,13 @@ class CourseController extends Controller
         ]);
         try {
             $updateData = [];
-            $updateData['course_data'] = [
-                'name' => $request->name,
-            ];
 
-            // Update 'status' only if it's explicitly provided in the request
+            if ($request->has('name')) {
+                $updateData['course_data'] = [
+                    'name' => $request->name,
+                ];
+            }
+
             if ($request->has('status')) {
                 $updateData['status'] = $request->status;
             }
