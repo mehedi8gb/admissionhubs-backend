@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\DefaultResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
@@ -46,13 +45,26 @@ class BaseController
         ], $statusCode);
     }
 
-    protected function handleApiRequest(Request $request, Builder $query): array
+    /**
+     * Handle API request.
+     *
+     * @param Request $request
+     * @param Builder $query
+     * @param array $with
+     * @return array
+     */
+    protected function handleApiRequest(Request $request, Builder $query, array $with = []): array
     {
         $page = $request->query('page', 1);
         $limit = $request->query('limit', 10);
         $sortBy = $request->query('sortBy');
         $sortDirection = $request->query('sortDirection', 'asc');
         $selectFields = $request->query('select');
+
+        // Eager load relationships
+        if (!empty($with)) {
+            $query->with($with);
+        }
 
         // Apply filters
         foreach ($request->query() as $key => $value) {
