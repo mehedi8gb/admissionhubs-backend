@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\AcademicYear;
 use App\Models\Term;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -18,11 +19,17 @@ class TermFactory extends Factory
      */
     public function definition(): array
     {
+        $termName = [
+            'First Term',
+            'Second Term',
+            'Third Term',
+        ];
+
         return [
             'term_data' => [
-                'term' => $this->faker->unique()->word(),
-                'academic_year' => $this->faker->year() . '-' . $this->faker->year(),
+                'term' => $termName[$this->faker->numberBetween(0, 2)],
             ],
+            'academic_year_id' => AcademicYear::inRandomOrder()->first()->id,
             'status' => $this->faker->boolean(),
 
         ];

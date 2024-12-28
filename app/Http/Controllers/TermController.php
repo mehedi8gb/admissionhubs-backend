@@ -11,7 +11,7 @@ class TermController extends Controller
 {
     public function index(Request $request): JsonResponse
     {
-        $query = Term::query();
+        $query = Term::with('academicYear');
         $results = $this->handleApiRequest($request, $query);
 
         // Convert $results to a collection if it's an array
@@ -27,7 +27,7 @@ class TermController extends Controller
     {
         $validatedData = $request->validate([
             'term' => 'required|string|max:255',
-            'academic_year' => 'required|string|max:255',
+            'academic_year_id' => 'required|string|max:255',
             'status' => 'nullable|boolean',
         ]);
 
@@ -35,9 +35,9 @@ class TermController extends Controller
             $data = new Term([
                 'term_data' => [
                     'term' => $validatedData['term'],
-                    'academic_year' => $validatedData['academic_year'],
                 ],
-                'status' => $validatedData['status'] ?? 1,
+                'academic_year_id' => $validatedData['academic_year_id'],
+                'status' => $validatedData['status'] ?? true,
             ]);
             $data->save();
 
@@ -66,16 +66,21 @@ class TermController extends Controller
         $data = Term::findOrFail($id);
         $request->validate([
             'term' => 'nullable|string|max:255',
-            'academic_year' => 'nullable|string|max:255',
+            'academic_year_id' => 'nullable|string|max:255',
             'status' => 'nullable|boolean',
         ]);
         try {
             $updateData = [];
 
-            $updateData['term_data'] = [
-                'term' => $request->term,
-                'academic_year' => $request->academic_year,
-            ];
+            if ($request->has('term')) {
+                $updateData['term_data'] = [
+                    'term' => $request->term,
+                ];
+            }
+
+            if ($request->has('academic_year_id')) {
+                $updateData['academic_year_id'] = $request->academic_year_id;
+            }
 
             // Update 'status' only if it's explicitly provided in the request
             if ($request->has('status')) {

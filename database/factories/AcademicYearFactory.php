@@ -17,9 +17,15 @@ class AcademicYearFactory extends Factory
      */
     public function definition(): array
     {
+        static $startYear = 2019; // Starting academic year
+
+        // Generate the next academic year in sequence
+        $academicYear = $startYear . '-' . ($startYear + 1);
+        $startYear++; // Increment the starting year for the next call
+
         return [
-            'academic_year' =>  $this->faker->year() . '-' . $this->faker->year(),
-            'status' => $this->faker->boolean(),
+            'academic_year' => $academicYear,
+            'status' => true,
         ];
     }
 }
