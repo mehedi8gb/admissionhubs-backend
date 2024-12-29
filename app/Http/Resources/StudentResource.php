@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\File;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -57,7 +58,7 @@ class StudentResource extends JsonResource
             'refuseHistory' => $studentData['refuseHistory'] ?? [],
             'academicHistory' => $studentData['academicHistory'] ?? [],
             'workDetails' => $studentData['workDetails'] ?? [],
-            'documents' => $studentData['documents'] ?? [],
+            'documents' => FileResource::collection($this->documents),
             'application' => $studentData['application'] ?? [],
             'assignStaff' => $studentData['assignStaff'] ?? [],
         ];
