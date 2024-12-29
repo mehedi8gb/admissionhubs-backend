@@ -339,4 +339,31 @@ class StudentTest extends TestCase
     }
 
 
+
+    // write a test case where unique email validation is tested
+    public function test_cannot_store_student_with_duplicate_email()
+    {
+        // Create a student with a valid email
+        Student::factory()->create([
+            'student_data' => $this->studentData(['email' => 'ddd@example.com'])
+        ]);
+
+        // Attempt to create another student with the same email
+        $data = $this->studentData(['email' => 'ddd@example.com']);
+
+        // Send the request to store the student
+
+        $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)
+            ->postJson('/api/students/', $data);
+
+        // Assert that the response status is 422 (Unprocessable Entity)
+
+        $response->assertStatus(422);
+
+        // Assert that the response contains the appropriate error message
+        $response->assertJson([
+            'success' => false,
+            'message' => 'The email has already been taken.',
+        ]);
+    }
 }
