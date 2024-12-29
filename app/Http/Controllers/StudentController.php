@@ -15,7 +15,7 @@ class StudentController extends Controller
     public function index(Request $request): JsonResponse
     {
         $query = Student::query();
-        $results = $this->handleApiRequest($request, $query, ['createdBy']);
+        $results = $this->handleApiRequest($request, $query, ['createdBy', 'documents']);
 
         // Convert $results to a collection if it's an array
         $results = collect($results);
