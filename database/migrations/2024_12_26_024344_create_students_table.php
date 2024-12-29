@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('students', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('created_by');
-//            $table->foreignId('academic_year_id')->index();
-//            $table->foreignId('term_id')->nullable()->index();
+            $table->foreignId('academic_year_id')->index();
+            $table->foreignId('term_id')->nullable()->index();
 //            $table->foreignId('institute_id')->nullable()->index();
             $table->string('agent')->nullable()->index();
             $table->string('staff')->nullable()->index();

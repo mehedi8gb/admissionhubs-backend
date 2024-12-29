@@ -17,8 +17,8 @@ class Student extends Model
      */
     protected $fillable = [
         'created_by', // User ID who created the record
-//        'academic_year_id', // Academic year the student is enrolled in
-//        'term_id', // Academic term the student is in
+        'academic_year_id', // Academic year the student is enrolled in
+        'term_id', // Academic term the student is in
 //        'institute_id', // Institute name
         'status', // Student's status
         'ref_id', // Unique reference ID for the student
@@ -54,8 +54,8 @@ class Student extends Model
         'email',
         'phone',
         'dob',
-//        'academic_year_id',
-//        'term_id',
+        'academic_year_id',
+        'term_id',
 //        'institute_id',
         'agent',
         'staff',
@@ -82,15 +82,15 @@ class Student extends Model
         return $this->hasMany(File::class, 'student_id');
     }
 
-//    public function academicYear(): BelongsTo
-//    {
-//        return $this->belongsTo(AcademicYear::class);
-//    }
-//
-//    public function term(): BelongsTo
-//    {
-//        return $this->belongsTo(Term::class);
-//    }
+    public function academicYear(): BelongsTo
+    {
+        return $this->belongsTo(AcademicYear::class);
+    }
+
+    public function term(): BelongsTo
+    {
+        return $this->belongsTo(Term::class);
+    }
 //
 //    public function institute(): BelongsTo
 //    {

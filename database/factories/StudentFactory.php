@@ -23,8 +23,8 @@ class StudentFactory extends Factory
     {
         return [
             'created_by' => User::inRandomOrder()->first()->id,
-//            'academic_year_id' => AcademicYear::inRandomOrder()->first()->id,
-//            'term_id' => Term::inRandomOrder()->first()->id,
+            'academic_year_id' => AcademicYear::inRandomOrder()->first()->id,
+            'term_id' => Term::inRandomOrder()->first()->id,
 //            'institute_id' => Institute::inRandomOrder()->first()->id,
             'status' => fake()->boolean,
             'ref_id' => fake()->uuid,
