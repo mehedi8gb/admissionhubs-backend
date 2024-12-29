@@ -34,6 +34,8 @@ use Illuminate\Support\Carbon;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Model find($id)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Model exists()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Model latest()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Model create($data)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Model where($column, $operator = null, $value = null, $boolean = 'and')
  *
  * Relationships:
  * @method \Illuminate\Database\Eloquent\Relations\BelongsToMany students()

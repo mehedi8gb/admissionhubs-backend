@@ -2,17 +2,23 @@
 
 use App\Http\Controllers\AcademicYearController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\InstitutionController;
 use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TermController;
 use App\Http\Controllers\UserController;
-
 use App\Http\Middleware\JwtMiddleware;
 use App\Http\Middleware\RefreshTokenMiddleware;
 use Illuminate\Support\Facades\Route;
-
 use App\Http\Controllers\AuthController;
+
+
+/*
+ *
+ * NOTE: if role middleware is passed then jwt middleware is also passed
+ */
 
 Route::group(['prefix' => 'auth'], function () {
     // Authentication routes
@@ -41,6 +47,17 @@ Route::middleware([JwtMiddleware::class])->group(function () {
     Route::apiResource('terms', TermController::class);
     Route::apiResource('academic-years', AcademicYearController::class);
     Route::apiResource('users', UserController::class);
+});
+
+// Student Routes
+Route::middleware(['role:student'])->prefix('documents')->group(function () {
+    Route::get('/', [FileController::class, 'index']);
+    Route::post('/', [FileController::class, 'store']);
+    Route::get('download/{file}', [FileController::class, 'download'])
+        ->name('file.download')
+        ->middleware('signed') // Ensure signed middleware is applied
+        ->withoutMiddleware('role:student'); // Exclude the role middleware for this route
+    Route::delete('{file}', [FileController::class, 'destroy']);
 });
 
 // Student Routes
