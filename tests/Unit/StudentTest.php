@@ -28,126 +28,125 @@ class StudentTest extends TestCase
 
     private function studentData($overrides = []): array
     {
-        $defaultData = [
-            'title' => 'Mr.',
-            'firstName' => 'John',
-            'lastName' => 'Doe',
-            'email' => 'john.doe@example.com',
-            'phone' => '1234567890',
-            'dob' => '01-01-1990',
-            'maritualStatus' => 'Single',
-            'gender' => 'Male',
-            'nationality' => 'Bangladeshi',
-            'countryResidence' => 'Bangladesh',
-            'countryBirth' => 'Bangladesh',
-            'nativeLanguage' => 'Bengali',
-            'passportName' => 'John Doe',
-            'passportIssueLocation' => 'Dhaka',
-            'passportNumber' => 'A12345678',
-            'passportIssueDate' => '01-01-2015',
-            'passportExpiryDate' => '01-01-2025',
-            'addressLine1' => '123 Main Street',
-            'addressLine2' => 'Apt 4B',
-            'townCity' => 'Dhaka',
-            'state' => 'Dhaka',
-            'postCode' => '1205',
-            'country' => 'Bangladesh',
-            'disabilities' => 'None',
-            'ethnicity' => 'Asian',
-            'genderidentity' => 'Male',
-            'sexualOrientation' => 'Heterosexual',
-            'religion' => 'Islam',
-            'emergencyContact' => [
+        $data = [
+            "title" => "Mr.",
+            "firstName" => "John",
+            "lastName" => "Doe",
+            "email" => "johssne.doe@example.com",
+            "phone" => "1234567890",
+            "dob" => "01-01-1990",
+            "maritualStatus" => "Single",
+            "gender" => "Male",
+            "nationality" => "Bangladeshi",
+            "countryResidence" => "Bangladesh",
+            "countryBirth" => "Bangladesh",
+            "nativeLanguage" => "Bengali",
+            "passportName" => "John Doe",
+            "passportIssueLocation" => "Dhaka",
+            "passportNumber" => "A12345678",
+            "passportIssueDate" => "01-01-2015",
+            "passportExpiryDate" => "01-01-2025",
+            "addressLine1" => "123 Main Street",
+            "addressLine2" => "Apt 4B",
+            "townCity" => "Dhaka",
+            "state" => "Dhaka",
+            "postCode" => "1205",
+            "country" => "Bangladesh",
+            "disabilities" => "None",
+            "ethnicity" => "Asian",
+            "genderidentity" => "Male",
+            "sexualOrientation" => "Heterosexual",
+            "religion" => "Islam",
+            "emergencyContact" => [
                 [
-                    'name' => 'Jane Doe',
-                    'phone' => '9876543210',
-                    'email' => 'jane.doe@example.com',
-                    'address' => '456 Elm Street, Dhaka',
-                    'relationship' => 'Spouse',
-                    'status' => 'Active',
+                    "name" => "Jane Doe",
+                    "phone" => "9876543210",
+                    "email" => "janee.doe@example.com",
+                    "address" => "456 Elm Street, Dhaka",
+                    "relationship" => "Spouse",
+                    "status" => "Active",
                 ],
             ],
-            'travelHistory' => [
+            "travelHistory" => [
                 [
-                    'purpose' => 'Study',
-                    'arrival' => '01-01-2020',
-                    'departure' => '01-01-2021',
-                    'visaStart' => '01-01-2020',
-                    'visaExpiry' => '01-01-2021',
-                    'visaType' => 'Student Visa',
+                    "purpose" => "Study",
+                    "arrival" => "01-01-2020",
+                    "departure" => "01-01-2021",
+                    "visaStart" => "01-01-2020",
+                    "visaExpiry" => "01-01-2021",
+                    "visaType" => "Student Visa",
                 ],
             ],
-            'visaNeed' => true,
-            'refuseHistory' => [
+            "visaNeed" => true,
+            "refuseHistory" => [
                 [
-                    'refusaltype' => 'Visa Refusal',
-                    'refusalDate' => '01-01-2018',
-                    'details' => 'Insufficient funds',
-                    'country' => 'USA',
-                    'visaType' => 'Tourist Visa',
-                    'status' => 'Resolved',
+                    "refusaltype" => "Visa Refusal",
+                    "refusalDate" => "01-01-2018",
+                    "details" => "Insufficient funds",
+                    "country" => "USA",
+                    "visaType" => "Tourist Visa",
+                    "status" => "Resolved",
                 ],
             ],
-            'academicHistory' => [
+            "academicHistory" => [
                 [
-                    'institution' => 'Dhaka University',
-                    'course' => 'Computer Science',
-                    'studylevel' => 'Undergraduate',
-                    'resultScore' => 3.8,
-                    'outof' => 4.0,
-                    'startDate' => '01-01-2010',
-                    'endDate' => '01-01-2014',
-                    'status' => 'Completed',
+                    "institution" => "Dhaka University",
+                    "course" => "Computer Science",
+                    "academicYearId" => "1",
+                    "termId" => "1",
+                    "studylevel" => "Undergraduate",
+                    "resultScore" => 3.8,
+                    "outof" => 4.0,
+                    "startDate" => "01-01-2010",
+                    "endDate" => "01-01-2014",
+                    "status" => "Completed",
                 ],
             ],
-            'workDetails' => [
+            "workDetails" => [
                 [
-                    'jobtitle' => 'Software Engineer',
-                    'organization' => 'ABC Ltd.',
-                    'address' => '789 Maple Street, Dhaka',
-                    'phone' => '1122334455',
-                    'fromDate' => '01-01-2015',
-                    'toDate' => '01-01-2020',
-                    'active' => true,
-                    'currentlyWorking' => false,
+                    "jobtitle" => "Software Engineer",
+                    "organization" => "ABC Ltd.",
+                    "address" => "789 Maple Street, Dhaka",
+                    "phone" => "1122334455",
+                    "fromDate" => "01-01-2015",
+                    "toDate" => "01-01-2020",
+                    "active" => true,
+                    "currentlyWorking" => false,
                 ],
             ],
-            'documents' => [
-                'passport' => 'document-passport.pdf',
-                'bankstatement' => 'document-bankstatement.pdf',
-                'qualification' => 'document-qualification.pdf',
-                'workExperience' => 'document-workexperience.pdf',
-                'cv' => 'document-cv.pdf',
-            ],
-            'application' => [
+            "application" => [
                 [
-                    'institution' => 'Dhaka University',
-                    'course' => 'Computer Science',
-                    'term' => 'Fall 2024',
-                    'type' => 'Full-time',
-                    'amount' => 50000,
-                    'status' => 'Submitted',
+                    "institution" => "Dhaka University",
+                    "course" => "Computer Science",
+                    "term" => "Fall 2024",
+                    "type" => "Full-time",
+                    "amount" => 50000,
+                    "status" => "Submitted",
                 ],
             ],
-            'assignStaff' => [
+            "assignStaff" => [
                 [
-                    'staffid' => 1,
-                    'type' => 'Counselor',
+                    "staffid" => 1,
+                    "type" => "Counselor",
                 ],
             ],
         ];
 
-        return array_merge($defaultData, $overrides);
+
+        return array_merge($data, $overrides);
     }
 
     public function test_can_store_student_with_valid_data()
     {
         // Send request to store student with valid data
+        $this->withoutExceptionHandling();
         $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)
             ->postJson('/api/students', $this->studentData());
 
+        dd($response->getContent());
+
         $response->assertStatus(200);
-        $response->assertJsonFragment(['firstName' => 'John', 'email' => 'john.doe@example.com']);
+        $response->assertJsonFragment(['firstName' => 'John', 'email' => 'johssne.doe@example.com']);
 
         $student = Student::latest()->first();
         $this->assertEquals('John', $student->student_data['firstName']);
