@@ -49,7 +49,7 @@ Route::middleware([JwtMiddleware::class])->group(function () {
     Route::apiResource('users', UserController::class);
 });
 
-// Student Routes
+// Documents Routes
 Route::middleware(['role:student'])->prefix('documents')->group(function () {
     Route::get('/', [FileController::class, 'index']);
     Route::post('/', [FileController::class, 'store']);
