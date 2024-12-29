@@ -2,7 +2,9 @@
 
 namespace Tests\Unit;
 
+use App\Models\AcademicYear;
 use App\Models\Student;
+use App\Models\Term;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Role;
@@ -21,6 +23,9 @@ class StudentTest extends TestCase
 
         // Create the student role and user only once
         Role::create(['name' => 'student', 'guard_name' => 'web']);
+        AcademicYear::factory()->create();
+        Term::factory()->create();
+
         $this->user = User::factory()->create();
         $this->user->assignRole('student');
         $this->token = JWTAuth::fromUser($this->user);
@@ -32,7 +37,7 @@ class StudentTest extends TestCase
             "title" => "Mr.",
             "firstName" => "John",
             "lastName" => "Doe",
-            "email" => "johssne.doe@example.com",
+            "email" => "john.doe@example.com",
             "phone" => "1234567890",
             "dob" => "01-01-1990",
             "maritualStatus" => "Single",
@@ -143,10 +148,8 @@ class StudentTest extends TestCase
         $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)
             ->postJson('/api/students', $this->studentData());
 
-        dd($response->getContent());
-
         $response->assertStatus(200);
-        $response->assertJsonFragment(['firstName' => 'John', 'email' => 'johssne.doe@example.com']);
+        $response->assertJsonFragment(['firstName' => 'John', 'email' => 'john.doe@example.com']);
 
         $student = Student::latest()->first();
         $this->assertEquals('John', $student->student_data['firstName']);
@@ -264,7 +267,7 @@ class StudentTest extends TestCase
 
         // Assert the correct students are returned
         $response->assertJsonFragment(['firstName' => 'John', 'email' => 'john.doe@example.com']);
-        $response->assertJsonFragment(['firstName' => 'Jane', 'email' => 'jane.doe@example.com']);
+        $response->assertJsonFragment(['firstName' => 'Jane', 'email' => 'jane@example.com']);
     }
 
     public function test_can_store_student_with_valid_data_and_auto_generated_ref_id()
