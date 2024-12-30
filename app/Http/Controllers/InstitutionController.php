@@ -27,13 +27,13 @@ class InstitutionController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'status' => 'required|boolean',
+            'status' => 'nullable|boolean',
         ]);
 
         try {
             $data = new Institute([
                 'name' => $validatedData['name'],
-                'status' => $request->status ?? 1,
+                'status' => $request->status ?? true,
             ]);
             $data->save();
 
