@@ -39,8 +39,8 @@ class StudentController extends Controller
                 'email' => $validatedData['email'],
                 'phone' => $validatedData['phone'],
                 'dob' => $validatedData['dob'],
-                'academic_year_id' => $validatedData['academicHistory'][0]['academicYearId'],
-                'term_id' => $validatedData['academicHistory'][0]['termId'],
+                'academic_year_id' => $validatedData['academicHistory'][0]['academicYearId'] ?? 1,
+                'term_id' => $validatedData['academicHistory'][0]['termId'] ?? null,
 //                'institute' => $validatedData['institute'],
                 'status' => $validatedData['status'] ?? true,
                 'agent' => $validatedData['agent'] ?? null,
@@ -66,18 +66,43 @@ class StudentController extends Controller
         try {
             DB::beginTransaction();
 
+            $studentData = $student->student_data;
+
+            $studentData = deepMerge($studentData, $validatedData);
+
+            $nestedArrays = [
+                'emergencyContact',
+                'travelHistory',
+                'refuseHistory',
+                'academicHistory',
+                'workDetails',
+                'application',
+                'assignStaff'
+            ];
+
+            // Dynamically process all nested arrays
+            foreach ($nestedArrays as $arrayKey) {
+                if (isset($validatedData[$arrayKey])) {
+                    $studentData[$arrayKey] = processNestedArray(
+                        $studentData[$arrayKey] ?? [],
+                        $validatedData[$arrayKey]
+                    );
+                }
+            }
+
             $student->update([
                 'name' => $validatedData['firstName'] ?? $student->name,
+                'created_by' => $validatedData['createdBy'] ?? $student->created_by,
                 'email' => $validatedData['email'] ?? $student->email,
                 'phone' => $validatedData['phone'] ?? $student->phone,
                 'dob' => $validatedData['dob'] ?? $student->dob,
-                'academic_year_id' => $validatedData['academicHistory'][0]['academicYearId'] ?? $student->academicYear->academic_year,
-                'term_id' => $validatedData['academicHistory'][0]['termId'] ?? $student->term->term_data['term'],
+                'academic_year_id' => $validatedData['academicHistory'][0]['academicYearId'] ?? $student->academicYear->id,
+                'term_id' => $validatedData['academicHistory'][0]['termId'] ?? $student->term->id,
 //                'institute' => $validatedData['institute'] ?? $student->institute,
                 'status' => $validatedData['status'] ?? $student->status,
                 'agent' => $validatedData['agent'] ?? $student->agent,
                 'staff' => $validatedData['staff'] ?? $student->staff,
-                'student_data' => deepMerge($student->student_data, $validatedData ?? []),
+                'student_data' => $studentData,
             ]);
 
             DB::commit();

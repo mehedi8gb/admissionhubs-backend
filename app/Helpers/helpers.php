@@ -33,6 +33,7 @@ function convertStatus(mixed $status): int
 
 /**
  * Perform a deep merge of two arrays, allowing forced replacement with a "forceReplace" value.
+ * Includes handling for array deletions based on the forceReplace flag.
  *
  * @param array $original
  * @param array $new
@@ -42,16 +43,15 @@ function convertStatus(mixed $status): int
 function deepMerge(array $original, array $new, string $forceReplaceIndicator = 'forceReplace'): array
 {
     foreach ($new as $key => $value) {
-        // Check if the value is marked as a forced replacement
+        // If value is marked as a forced replacement
         if ($value === $forceReplaceIndicator) {
-            // Replace the key in the original array with an empty value
-            $original[$key] = '';
+            // Remove the key from the original array
+            unset($original[$key]);
             continue;
         }
 
-        // Check if the new value is empty (null, empty string, or empty array)
+        // Skip overwriting with null/empty values
         if (is_null($value) || (is_string($value) && trim($value) === '') || (is_array($value) && empty($value))) {
-            // Skip overwriting if the new value is empty
             continue;
         }
 
@@ -63,6 +63,31 @@ function deepMerge(array $original, array $new, string $forceReplaceIndicator = 
             $original[$key] = $value;
         }
     }
+
     return $original;
+}
+
+
+/**
+ * Process nested arrays by removing missing indexes and merging incoming data.
+ *
+ * @param array $existingArray
+ * @param array $payloadArray
+ * @return array
+ */
+function processNestedArray(array $existingArray, array $payloadArray): array
+{
+    // Map payload by unique identifier (e.g., id)
+    $payloadMap = collect($payloadArray)->keyBy('id');
+
+    // Filter existing array to retain only indexes present in the payload
+    $filteredArray = collect($existingArray)
+        ->filter(fn($item) => $payloadMap->has($item['id']))
+        ->map(fn($item) => array_merge($item, $payloadMap->get($item['id'])))
+        ->values()
+        ->toArray();
+
+    // if array fragment same to same then remove 1 index
+    return array_map("unserialize", array_unique(array_map("serialize", $filteredArray)));
 }
 

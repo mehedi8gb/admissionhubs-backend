@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('terms', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('academic_year_id')->constrained()->onDelete('cascade');
+            $table->foreignId('academic_year_id')->nullable()->constrained()->onDelete('cascade');
             $table->json('term_data');
             $table->boolean('status')->nullable()->default(1);
             $table->timestamps();

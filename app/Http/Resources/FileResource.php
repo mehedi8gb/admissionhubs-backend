@@ -13,12 +13,8 @@ class FileResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'uploaded_by' => $this->user->name,
-            'file_name' => $this->file_name,
-            'file_path' => $this->file_path,
             'file_url' => FileUploadHelper::generateSignedUrl($this->id),
             'file_type' => $this->file_type,
-            'created_at' => Carbon::parse($this->created_at)->format('d M Y'),
         ];
     }
 }

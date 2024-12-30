@@ -16,14 +16,14 @@ class StudentResource extends JsonResource
     public function toArray(Request $request): array
     {
         $studentData = $this->student_data;
-        $studentData['academicHistory'][0]['academicYear'] = $this->academicYear->academic_year;
-        $studentData['academicHistory'][0]['term'] = $this->term->term_data['term'];
+        $studentData['academicHistory'][0]['academicYear'] = $this->academicYear->academic_year ?? null;
+        $studentData['academicHistory'][0]['term'] = $this->term->term_data['term'] ?? null;
 
         return [
             'id' => $this->id,
             'refId' => $this->ref_id,
             'status' => convertStatus($this->status),
-            'createdBy' => $this->createdBy->name,
+            'createdBy' => UserResource::make($this->createdBy),
 //            'institute' => $this->institute->name,
             'title' => $studentData['title'] ?? null,
             'firstName' => $studentData['firstName'] ?? null,

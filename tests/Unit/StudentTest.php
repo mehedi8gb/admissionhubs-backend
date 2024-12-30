@@ -64,6 +64,7 @@ class StudentTest extends TestCase
             "religion" => "Islam",
             "emergencyContact" => [
                 [
+                    "id" => 1,
                     "name" => "Jane Doe",
                     "phone" => "9876543210",
                     "email" => "janee.doe@example.com",
@@ -74,6 +75,7 @@ class StudentTest extends TestCase
             ],
             "travelHistory" => [
                 [
+                    "id" => 1,
                     "purpose" => "Study",
                     "arrival" => "01-01-2020",
                     "departure" => "01-01-2021",
@@ -85,6 +87,7 @@ class StudentTest extends TestCase
             "visaNeed" => true,
             "refuseHistory" => [
                 [
+                    "id" => 1,
                     "refusaltype" => "Visa Refusal",
                     "refusalDate" => "01-01-2018",
                     "details" => "Insufficient funds",
@@ -95,6 +98,7 @@ class StudentTest extends TestCase
             ],
             "academicHistory" => [
                 [
+                    "id" => 1,
                     "institution" => "Dhaka University",
                     "course" => "Computer Science",
                     "academicYearId" => "1",
@@ -109,6 +113,7 @@ class StudentTest extends TestCase
             ],
             "workDetails" => [
                 [
+                    "id" => 1,
                     "jobtitle" => "Software Engineer",
                     "organization" => "ABC Ltd.",
                     "address" => "789 Maple Street, Dhaka",
@@ -121,6 +126,7 @@ class StudentTest extends TestCase
             ],
             "application" => [
                 [
+                    "id" => 1,
                     "institution" => "Dhaka University",
                     "course" => "Computer Science",
                     "term" => "Fall 2024",
@@ -159,7 +165,7 @@ class StudentTest extends TestCase
     {
         // Step 2: Create a student with initial data using the provided structure
         $student = Student::factory()->create([
-            'created_by' => User::factory()->create()->id,
+            'created_by' => $this->user->id,
             'student_data' => $this->studentData()
         ]);
 
@@ -169,6 +175,7 @@ class StudentTest extends TestCase
             'addressLine1' => '456 New Main Street', // Updated field
             'emergencyContact' => [
                 [
+                    'id' => 1,
                     'name' => 'Updated Jane Doe', // Updated emergency contact
                     'phone' => '9999999999', // Updated phone number
                 ]
@@ -176,6 +183,7 @@ class StudentTest extends TestCase
             'visaNeed' => false, // Updated field
             'academicHistory' => [
                 [
+                    'id' => 1,
                     'institution' => 'Dhaka Polytechnic', // Updated academic history
                     'course' => 'Information Technology',
                     'studylevel' => 'Diploma',
