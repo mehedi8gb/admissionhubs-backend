@@ -97,7 +97,7 @@ class FileUploadHelper
     {
         return URL::temporarySignedRoute(
             'file.download',
-            now()->addMinutes(10),
+            now()->addHours(24),
             ['file' => $id]
         );
     }
