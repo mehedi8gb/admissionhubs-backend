@@ -39,7 +39,7 @@ class StudentController extends Controller
                 'email' => $validatedData['email'],
                 'phone' => $validatedData['phone'],
                 'dob' => $validatedData['dob'],
-                'academic_year_id' => $validatedData['academicHistory'][0]['academicYearId'] ?? 1,
+                'academic_year_id' => $validatedData['academicHistory'][0]['academicYearId'] ?? null,
                 'term_id' => $validatedData['academicHistory'][0]['termId'] ?? null,
 //                'institute' => $validatedData['institute'],
                 'status' => $validatedData['status'] ?? true,
