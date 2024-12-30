@@ -24,7 +24,7 @@ class FileStoreRequest extends FormRequest
 
             'session_id' => 'nullable', // 'session_id' can be nullable and a string
 
-            'file_type' => 'required|in:id_document,academic_record,proof_of_address,payment_receipt,photo,medical_form,visa,passport,bank_statement,recommendation_letter,transcript,application_form,admission_offer',
+            'file_type' => 'required|in:proof_of_address,visa,passport,bank_statement,qualification,cv,work_experience',
             'files' => 'required_without:base64_files|array',
             'files.*' => 'file|max:102400', // Maximum file size is 100MB
             'base64_files' => 'required_without:files|array', // 'base64_files' should be an array if provided
