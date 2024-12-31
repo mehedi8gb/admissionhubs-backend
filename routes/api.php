@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AcademicYearController;
+use App\Http\Controllers\ApplicationsController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\FileController;

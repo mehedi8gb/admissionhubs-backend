@@ -60,7 +60,7 @@ class StudentResource extends JsonResource
             'academicHistory' => $studentData['academicHistory'] ?? [],
             'workDetails' => $studentData['workDetails'] ?? [],
             'documents' => FileResource::collection($this->documents),
-            'application' => $studentData['application'] ?? [],
+            'applications' => ApplicationResource::collection($this->applications),
             'assignStaff' => $studentData['assignStaff'] ?? [],
         ];
     }

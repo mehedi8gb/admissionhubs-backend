@@ -61,6 +61,14 @@ class Student extends Model
         'staff',
     ];
 
+    protected $with = [
+        'createdBy',
+        'documents',
+        'academicYear',
+        'term',
+        'applications'
+    ];
+
     protected static function boot(): void
     {
         parent::boot();
@@ -96,5 +104,10 @@ class Student extends Model
 //    {
 //        return $this->belongsTo(Institute::class);
 //    }
+
+    public function applications(): HasMany
+    {
+        return $this->hasMany(Application::class);
+    }
 
 }
