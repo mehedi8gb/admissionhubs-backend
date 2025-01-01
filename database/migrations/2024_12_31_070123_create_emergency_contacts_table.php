@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('emergency_contacts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('student_id')->constrained()->onDelete('cascade');
-            $table->string('name');
-            $table->string('phone');
-            $table->string('email');
-            $table->string('address');
-            $table->string('relationship');
-            $table->string('status');
+            $table->string('name')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('email')->nullable();
+            $table->string('address')->nullable();
+            $table->string('relationship')->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }

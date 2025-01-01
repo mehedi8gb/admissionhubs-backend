@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('applications', function (Blueprint $table) {
             $table->id();
             $table->foreignId('student_id')->constrained()->onDelete('cascade');
-            $table->string('institution');
-            $table->string('course');
-            $table->string('term');
-            $table->string('type');
-            $table->decimal('amount', 10, 2);
-            $table->string('status');
+            $table->string('institution')->nullable();
+            $table->string('course')->nullable();
+            $table->string('term')->nullable();
+            $table->string('type')->nullable();
+            $table->decimal('amount', 10, 2)->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
         });
 
