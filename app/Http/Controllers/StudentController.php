@@ -109,14 +109,14 @@ class StudentController extends Controller
                         $nestedData = $validatedArray[$key][0];
 
                         if (isset($nestedData['id'])) {
-                            $nestedModel = $class::find($nestedData['id'])->update(
+                            $class::find($nestedData['id'])->update(
                                 $nestedData
                             );
                         } else {
                             $nestedData['student_id'] = $student->id;
                             $nestedModel = $class::create($nestedData);
+                            $nestedModel->save();
                         }
-                        $nestedModel->save();
                     }
                 }
             }
