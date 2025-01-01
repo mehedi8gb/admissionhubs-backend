@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('student_id')->constrained()->onDelete('cascade');
             $table->string('refusalType', 255)->nullable();
-            $table->date('refusalDate')->nullable();
+            $table->timestamp('refusalDate')->nullable();
             $table->string('details', 1000)->nullable();
             $table->string('country', 255)->nullable();
             $table->string('visaType', 255)->nullable();

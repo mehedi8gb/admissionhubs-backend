@@ -15,6 +15,15 @@ class UpdateStudentRelationsRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'emergencyContact' => 'nullable|array',
+            'emergencyContact.*.id' => 'nullable:integer',
+            'emergencyContact.*.name' => 'nullable:string|max:255',
+            'emergencyContact.*.phone' => 'nullable:string|max:20',
+            'emergencyContact.*.email' => 'nullable|email|max:255',
+            'emergencyContact.*.address' => 'nullable|string|max:255',
+            'emergencyContact.*.relationship' => 'nullable|string|max:255',
+            'emergencyContact.*.status' => 'nullable|string|max:50',
+
             'applications' => 'nullable|array',
             'applications.*.id' => 'nullable|integer',
             'applications.*.delete' => 'nullable|boolean',
@@ -25,11 +34,10 @@ class UpdateStudentRelationsRequest extends FormRequest
             'applications.*.amount' => 'nullable|numeric',
             'applications.*.status' => 'nullable|string|max:50',
 
-
             'assignStaff' => 'nullable|array',
+            'assignStaff.*.id' => 'nullable|integer',
             'assignStaff.*.staffId' => 'nullable|integer',
             'assignStaff.*.type' => 'nullable|string|max:255',
-
 
             'workDetails' => 'nullable|array',
             'workDetails.*.id' => 'nullable|integer',
@@ -37,11 +45,10 @@ class UpdateStudentRelationsRequest extends FormRequest
             'workDetails.*.organization' => 'nullable|string|max:255',
             'workDetails.*.address' => 'nullable|string|max:255',
             'workDetails.*.phone' => 'nullable|string|max:20',
-            'workDetails.*.fromDate' => 'nullable|date_format:d-m-Y',
-            'workDetails.*.toDate' => 'nullable|date_format:d-m-Y',
+            'workDetails.*.fromDate' => 'nullable|date',
+            'workDetails.*.toDate' => 'nullable|date',
             'workDetails.*.active' => 'nullable|boolean',
             'workDetails.*.currentlyWorking' => 'nullable|boolean',
-
 
             'academicHistory' => 'nullable|array',
             'academicHistory.*.id' => 'nullable|integer',
@@ -52,28 +59,26 @@ class UpdateStudentRelationsRequest extends FormRequest
             'academicHistory.*.studyLevel' => 'nullable|string|max:255',
             'academicHistory.*.resultScore' => 'nullable|numeric',
             'academicHistory.*.outOf' => 'nullable|numeric',
-            'academicHistory.*.startDate' => 'nullable|date_format:d-m-Y',
-            'academicHistory.*.endDate' => 'nullable|date_format:d-m-Y',
+            'academicHistory.*.startDate' => 'nullable|date',
+            'academicHistory.*.endDate' => 'nullable|date',
             'academicHistory.*.status' => 'nullable|string|max:50',
-
 
             'refuseHistory' => 'nullable|array',
             'refuseHistory.*.id' => 'nullable|integer',
             'refuseHistory.*.refusalType' => 'nullable|string|max:255',
-            'refuseHistory.*.refusalDate' => 'nullable|date_format:d-m-Y',
+            'refuseHistory.*.refusalDate' => 'nullable|date',
             'refuseHistory.*.details' => 'nullable|string|max:1000',
             'refuseHistory.*.country' => 'nullable|string|max:255',
             'refuseHistory.*.visaType' => 'nullable|string|max:255',
             'refuseHistory.*.status' => 'nullable|string|max:50',
 
-
             'travelHistory' => 'nullable|array',
             'travelHistory.*.id' => 'nullable|integer',
             'travelHistory.*.purpose' => 'nullable|string|max:255',
-            'travelHistory.*.arrival' => 'nullable|date_format:d-m-Y',
-            'travelHistory.*.departure' => 'nullable|date_format:d-m-Y',
-            'travelHistory.*.visaStart' => 'nullable|date_format:d-m-Y',
-            'travelHistory.*.visaExpiry' => 'nullable|date_format:d-m-Y',
+            'travelHistory.*.arrival' => 'nullable|date',
+            'travelHistory.*.departure' => 'nullable|date',
+            'travelHistory.*.visaStart' => 'nullable|date',
+            'travelHistory.*.visaExpiry' => 'nullable|date',
             'travelHistory.*.visaType' => 'nullable|string|max:255',
         ];
     }

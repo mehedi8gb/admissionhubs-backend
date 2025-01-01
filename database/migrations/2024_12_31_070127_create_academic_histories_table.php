@@ -21,8 +21,8 @@ return new class extends Migration
             $table->string('studyLevel', 255)->nullable();
             $table->decimal('resultScore', 10, 2)->nullable();
             $table->decimal('outOf', 10, 2)->nullable();
-            $table->date('startDate')->nullable();
-            $table->date('endDate')->nullable();
+            $table->timestamp('startDate')->nullable();
+            $table->timestamp('endDate')->nullable();
             $table->string('status', 50)->nullable();
             $table->timestamps();
         });

@@ -103,7 +103,6 @@ class StudentController extends Controller
             ]);
 
 
-
             if (!empty($validatedArray)) {
                 foreach ($this->nestedArrays as $key => $class) {
                     if (array_key_exists($key, $validatedArray)) {
@@ -147,11 +146,13 @@ class StudentController extends Controller
                         $nestedData = $validatedArray[$key][0];
                         $nestedModel = $class::findOrFail($nestedData['id']);
                         $nestedModel->delete();
-                        return $this->sendSuccessResponse( $nestedData['id'] .' Application was deleted successfully');
+
+                        $normalizedKeyName = strtolower(preg_replace('/([a-z])([A-Z])/', '$1 $2', $key));
+                        return $this->sendSuccessResponse( $normalizedKeyName .' was deleted successfully');
                     }
                 }
             }
-            $student->delete();
+//            $student->delete();
 
             return $this->sendSuccessResponse('Student deleted successfully');
         } catch (\Exception $e) {

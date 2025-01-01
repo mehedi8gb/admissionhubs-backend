@@ -17,8 +17,8 @@ return new class extends Migration {
             $table->string('organization', 255)->nullable();
             $table->string('address', 255)->nullable();
             $table->string('phone', 20)->nullable();
-            $table->date('fromDate')->nullable();
-            $table->date('toDate')->nullable();
+            $table->timestamp('fromDate')->nullable();
+            $table->timestamp('toDate')->nullable();
             $table->boolean('active')->nullable();
             $table->boolean('currentlyWorking')->nullable();
             $table->timestamps();

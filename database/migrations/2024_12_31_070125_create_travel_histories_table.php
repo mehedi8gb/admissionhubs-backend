@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('student_id')->constrained()->onDelete('cascade');
             $table->string('purpose', 255)->nullable();
-            $table->date('arrival')->nullable();
-            $table->date('departure')->nullable();
-            $table->date('visaStart')->nullable();
-            $table->date('visaExpiry')->nullable();
+            $table->timestamp('arrival')->nullable();
+            $table->timestamp('departure')->nullable();
+            $table->timestamp('visaStart')->nullable();
+            $table->timestamp('visaExpiry')->nullable();
             $table->string('visaType', 255)->nullable();
             $table->timestamps();
         });
