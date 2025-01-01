@@ -2,26 +2,26 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class WorkDetail extends Model
 {
+    use hasFactory;
+    
     protected $fillable = [
         'student_id',
-        'company_name',
-        'company_address',
-        'company_phone',
-        'company_email',
-        'supervisor_name',
-        'supervisor_phone',
-        'supervisor_email',
-        'job_title',
-        'job_description',
-        'start_date',
-        'end_date',
-        'status',
+        'jobTitle',
+        'organization',
+        'address',
+        'phone',
+        'fromDate',
+        'toDate',
+        'active',
+        'currentlyWorking',
     ];
-    public function student()
+    public function student(): BelongsTo
     {
         return $this->belongsTo(Student::class);
     }

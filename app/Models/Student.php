@@ -63,10 +63,15 @@ class Student extends Model
 
     protected $with = [
         'createdBy',
-        'documents',
         'academicYear',
         'term',
-        'applications'
+        'documents',
+        'applications',
+        'assignStaff',
+        'workDetails',
+        'academicHistory',
+        'refuseHistory',
+        'travelHistory',
     ];
 
     protected static function boot(): void
@@ -110,4 +115,28 @@ class Student extends Model
         return $this->hasMany(Application::class);
     }
 
+    public function assignStaff(): HasMany
+    {
+        return $this->hasMany(AssignStaff::class);
+    }
+
+    public function workDetails(): HasMany
+    {
+        return $this->hasMany(WorkDetail::class);
+    }
+
+    public function academicHistory(): HasMany
+    {
+        return $this->hasMany(AcademicHistory::class);
+    }
+
+    public function refuseHistory(): HasMany
+    {
+        return $this->hasMany(RefuseHistory::class);
+    }
+
+    public function travelHistory(): HasMany
+    {
+        return $this->hasMany(TravelHistory::class);
+    }
 }

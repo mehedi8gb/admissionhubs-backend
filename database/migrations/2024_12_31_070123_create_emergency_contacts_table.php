@@ -11,20 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-
         Schema::create('emergency_contacts', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id'); // Associate with the user
-            $table->string('name');          // Full name
-            $table->string('phone');         // Phone number
-            $table->string('email');         // Email address
-            $table->string('address');       // Full address
-            $table->string('relationship'); // Relationship (e.g., Spouse, Parent)
-            $table->string('status');        // Status (e.g., Active)
-            $table->timestamps();            // Created and updated timestamps
+            $table->foreignId('student_id')->constrained()->onDelete('cascade');
+            $table->string('name');
+            $table->string('phone');
+            $table->string('email');
+            $table->string('address');
+            $table->string('relationship');
+            $table->string('status');
+            $table->timestamps();
         });
-
-
     }
 
     /**

@@ -8,17 +8,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class AssignStaff extends Model
 {
-
     use HasFactory;
+
     protected $fillable = [
-        'application_id',
-        'staff_id',
+        'student_id',
+        'staffId',
+        'type',
     ];
 
     public function student(): BelongsTo
     {
         return $this->belongsTo(Student::class);
     }
-
-
 }

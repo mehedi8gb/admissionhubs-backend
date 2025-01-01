@@ -13,18 +13,18 @@ return new class extends Migration
     {
         Schema::create('academic_histories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Reference to users table
-            $table->string('institution');       // Institution name
-            $table->string('course');            // Course name
-            $table->string('study_level');       // Study level (e.g., Diploma)
-            $table->float('result_score', 5, 2); // Result score
-            $table->float('out_of', 5, 2);       // Maximum score
-            $table->date('start_date');          // Start date of the course
-            $table->date('end_date');            // End date of the course
-            $table->string('status');            // Status (e.g., Completed)
-            $table->string('academic_year');     // Academic year (e.g., 2021-2022)
-            $table->string('term');              // Term (e.g., First Term)
-            $table->timestamps();                // Laravel's created_at and updated_at
+            $table->foreignId('student_id')->constrained()->onDelete('cascade'); // Reference to users table
+            $table->string('institution', 255)->nullable();
+            $table->string('course', 255)->nullable();
+            $table->string('academicYearId', 255)->nullable();
+            $table->string('termId', 255)->nullable();
+            $table->string('studyLevel', 255)->nullable();
+            $table->decimal('resultScore', 10, 2)->nullable();
+            $table->decimal('outOf', 10, 2)->nullable();
+            $table->date('startDate')->nullable();
+            $table->date('endDate')->nullable();
+            $table->string('status', 50)->nullable();
+            $table->timestamps();
         });
     }
 

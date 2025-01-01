@@ -11,16 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('refusals', function (Blueprint $table) {
+        Schema::create('refuse_histories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Reference to users table
-            $table->string('refusal_type');    // Type of refusal
-            $table->date('refusal_date');      // Date of refusal
-            $table->text('details');           // Details of the refusal
-            $table->string('country');         // Country related to the refusal
-            $table->string('visa_type');       // Visa type related to the refusal
-            $table->string('status');          // Status of the refusal (e.g., Resolved)
-            $table->timestamps();              // Laravel's created_at and updated_at
+            $table->foreignId('student_id')->constrained()->onDelete('cascade');
+            $table->string('refusalType', 255)->nullable();
+            $table->date('refusalDate')->nullable();
+            $table->string('details', 1000)->nullable();
+            $table->string('country', 255)->nullable();
+            $table->string('visaType', 255)->nullable();
+            $table->string('status', 50)->nullable();
+            $table->timestamps();
         });
     }
 

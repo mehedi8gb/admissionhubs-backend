@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('travel_histories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Relationship with users
-            $table->string('purpose');          // Purpose of travel
-            $table->date('arrival');            // Arrival date
-            $table->date('departure')->nullable(); // Departure date (nullable if not applicable)
-            $table->date('visa_start')->nullable(); // Visa start date
-            $table->date('visa_expiry')->nullable(); // Visa expiry date
-            $table->string('visa_type');        // Visa type (e.g., Tourist, Business)
-            $table->timestamps();               // Created and updated timestamps
+            $table->foreignId('student_id')->constrained()->onDelete('cascade');
+            $table->string('purpose', 255)->nullable();
+            $table->date('arrival')->nullable();
+            $table->date('departure')->nullable();
+            $table->date('visaStart')->nullable();
+            $table->date('visaExpiry')->nullable();
+            $table->string('visaType', 255)->nullable();
+            $table->timestamps();
         });
 
     }

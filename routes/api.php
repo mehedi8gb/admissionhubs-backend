@@ -63,10 +63,15 @@ Route::middleware(['role:student'])->prefix('documents')->group(function () {
 
 // Student Routes
 Route::middleware(['role:student'])->group(function () {
+
+
     Route::apiResource('students', StudentController::class);
     Route::get('profile', [AuthController::class, 'me']);
     // Add more routes specific to the student role
 });
+
+
+
 // Staff Routes
 Route::middleware('role:staff')->prefix('staff')->group(function () {
     Route::get('dashboard', [StaffController::class, 'dashboard']);

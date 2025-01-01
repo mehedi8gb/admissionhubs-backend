@@ -21,8 +21,6 @@ use Illuminate\Support\Facades\DB;
 
 class StudentController extends Controller
 {
-
-
     protected array $nestedArrays = [
         'applications' => Application::class,
         'emergencyContact' => EmergencyContact::class,
@@ -32,6 +30,7 @@ class StudentController extends Controller
         'workDetails' => WorkDetail::class,
         'assignStaff' => AssignStaff::class,
     ];
+
     public function index(Request $request): JsonResponse
     {
         $query = Student::query();
@@ -84,17 +83,10 @@ class StudentController extends Controller
         $validatedData = $request->validated();
         $validatedArray = $req->validated();
 
-
-
-
         try {
             DB::beginTransaction();
-
             $studentData = $student->student_data;
-
             $studentData = deepMerge($studentData, $validatedData);
-
-
             $student->update([
                 'name' => $validatedData['firstName'] ?? $student->name,
                 'created_by' => $validatedData['createdBy'] ?? $student->created_by,
