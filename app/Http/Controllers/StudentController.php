@@ -107,8 +107,15 @@ class StudentController extends Controller
                 foreach ($this->nestedArrays as $key => $class) {
                     if (array_key_exists($key, $validatedArray)) {
                         $nestedData = $validatedArray[$key][0];
-                        $nestedModel = $class::findOrFail($nestedData['id']);
-                        $nestedModel->update($nestedData);
+
+                        if (isset($nestedData['id'])) {
+                            $nestedModel = $class::find($nestedData['id'])->update(
+                                $nestedData
+                            );
+                        } else {
+                            $nestedData['student_id'] = $student->id;
+                            $nestedModel = $class::create($nestedData);
+                        }
                         $nestedModel->save();
                     }
                 }
@@ -148,7 +155,7 @@ class StudentController extends Controller
                         $nestedModel->delete();
 
                         $normalizedKeyName = strtolower(preg_replace('/([a-z])([A-Z])/', '$1 $2', $key));
-                        return $this->sendSuccessResponse( $normalizedKeyName .' was deleted successfully');
+                        return $this->sendSuccessResponse($normalizedKeyName . ' was deleted successfully');
                     }
                 }
             }
