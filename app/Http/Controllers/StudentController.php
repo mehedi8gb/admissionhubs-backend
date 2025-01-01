@@ -159,7 +159,7 @@ class StudentController extends Controller
                     }
                 }
             }
-//            $student->delete();
+            $student->delete();
 
             return $this->sendSuccessResponse('Student deleted successfully');
         } catch (\Exception $e) {
