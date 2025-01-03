@@ -27,14 +27,19 @@ class EnglishLanguageExamController extends Controller
     public function store(Request $request): JsonResponse
     {
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
+            'exam' => 'required|string|max:255',
+            'examDate' => 'required|date',
+            'score' => 'required|numeric',
             'status' => 'nullable|boolean',
         ]);
 
         try {
-            $data = new Institute([
-                'name' => $validatedData['name'],
-                'status' => $request->status ?? true,
+            $data = new EnglishLanguageExam([
+                'student_id' => auth()->user()->id,
+                'exam' => $validatedData['exam'],
+                'examDate' => $validatedData['examDate'],
+                'score' => $validatedData['score'],
+                'status' => $validatedData['status'] ?? true,
             ]);
             $data->save();
 
@@ -50,7 +55,7 @@ class EnglishLanguageExamController extends Controller
             $data = EnglishLanguageExam::findOrFail($id);
             return $this->sendSuccessResponse('Records retrieved successfully', EnglishLanguageExamResource::make($data));
         } catch (\Exception $e) {
-            return $this->sendErrorResponse('An error occurred: ' . $e->getMessage(), 500);
+            return $this->sendErrorResponse('An error occurred: ' . $e->getMessage(), 500, $e);
         }
     }
 
@@ -60,9 +65,11 @@ class EnglishLanguageExamController extends Controller
      */
     public function update(Request $request, string $id): JsonResponse
     {
-        $data = Institute::findOrFail($id);
+        $data = EnglishLanguageExam::findOrFail($id);
         $validatedData = $request->validate([
-            'name' => 'nullable|string|max:255',
+            'exam' => 'required|string|max:255',
+            'examDate' => 'required|date',
+            'score' => 'required|numeric',
             'status' => 'nullable|boolean',
         ]);
         $validatedData['status'] = $validatedData['status'] ?? false;

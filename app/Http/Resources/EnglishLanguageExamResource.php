@@ -19,7 +19,7 @@ class EnglishLanguageExamResource extends JsonResource
             'exam' => $this->exam,
             'examDate' => $this->examDate,
             'score' => $this->score,
-            'status' => $this->status,
+            'status' => convertStatus($this->status),
         ];
     }
 }

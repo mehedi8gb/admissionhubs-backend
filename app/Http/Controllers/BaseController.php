@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
@@ -35,10 +37,18 @@ class BaseController
      *
      * @param string $message
      * @param int $statusCode
+     * @param Exception|null $e
      * @return JsonResponse
      */
-    protected function sendErrorResponse(string $message, int $statusCode): JsonResponse
+    protected function sendErrorResponse(string $message, int $statusCode, Exception $e = null): JsonResponse
     {
+        if ($e instanceof ModelNotFoundException) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Record not found',
+            ], 404);
+        }
+
         return response()->json([
             'success' => false,
             'message' => $message,

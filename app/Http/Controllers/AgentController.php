@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\AgentResource;
 use App\Models\Agent;
 use App\Models\User;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -67,8 +68,9 @@ class AgentController extends Controller
         try {
             $data = Agent::findOrFail($id);
             return $this->sendSuccessResponse('Record retrieved successfully', AgentResource::make($data));
-        } catch (\Exception $e) {
-            return $this->sendErrorResponse('An error occurred: ' . $e->getMessage(), 500);
+        }
+        catch (\Exception $e) {
+            return $this->sendErrorResponse('An error occurred: ' . $e->getMessage(), 500, $e);
         }
     }
 

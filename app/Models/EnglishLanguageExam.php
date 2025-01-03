@@ -11,6 +11,7 @@ class EnglishLanguageExam extends Model
     use HasFactory;
 
     protected $fillable = [
+        'student_id',
         'exam',
         'examDate',
         'score',
