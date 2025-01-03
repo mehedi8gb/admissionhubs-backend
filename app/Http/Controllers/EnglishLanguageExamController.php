@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\EnglishLanguageExamResource;
 use App\Models\EnglishLanguageExam;
-use App\Models\Institute;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
