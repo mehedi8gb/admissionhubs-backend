@@ -1,8 +1,9 @@
 <?php
 
 use App\Http\Controllers\AcademicYearController;
+use App\Http\Controllers\AgentController;
 use App\Http\Controllers\CourseController;
-use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\EnglishLanguageExamController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\InstitutionController;
 use App\Http\Controllers\ResourceController;
@@ -38,6 +39,14 @@ Route::group(['prefix' => 'auth'], function () {
     Route::get('user/permissions', [AuthController::class, 'permissions'])->middleware([JwtMiddleware::class]);
 });
 
+
+
+// Admin Routes
+Route::middleware(['role:student'])->group(function () {
+    Route::apiResource('agents', AgentController::class);
+    Route::apiResource('english-language-exams', EnglishLanguageExamController::class);
+    // Add more routes specific to the student role
+});
 
 Route::middleware([JwtMiddleware::class])->group(function () {
     Route::get('me', [AuthController::class, 'me']);
@@ -80,9 +89,3 @@ Route::middleware('role:university')->prefix('university')->group(function () {
     // Add more routes specific to the university role
 });
 
-// Agent Routes
-Route::middleware('role:agent')->prefix('agent')->group(function () {
-    Route::get('dashboard', [AgentController::class, 'dashboard']);
-    Route::get('leads', [AgentController::class, 'leads']);
-    // Add more routes specific to the agent role
-});

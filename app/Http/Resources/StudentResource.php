@@ -53,15 +53,15 @@ class StudentResource extends JsonResource
             'genderidentity' => $studentData['genderidentity'] ?? null,
             'sexualOrientation' => $studentData['sexualOrientation'] ?? null,
             'religion' => $studentData['religion'] ?? null,
-            'emergencyContact' => $studentData['emergencyContact'] ?? [],
-            'travelHistory' => $studentData['travelHistory'] ?? [],
-            'visaNeed' => $studentData['visaNeed'] ?? false,
-            'refuseHistory' => $studentData['refuseHistory'] ?? [],
-            'academicHistory' => $studentData['academicHistory'] ?? [],
-            'workDetails' => $studentData['workDetails'] ?? [],
+//            'visaNeed' => $studentData['visaNeed'] ?? false,
+            'emergencyContact' => EmergencyContactResource::collection($this->emergencyContacts),
+            'travelHistory' => TravelHistoryResource::collection($this->travelHistories),
+            'refuseHistory' => RefuseHistoryResource::collection($this->refuseHistories),
+            'academicHistory' => AcademicHistoryResource::collection($this->academicHistories),
+            'workDetails' => WorkDetailResource::collection($this->workDetails),
             'documents' => FileResource::collection($this->documents),
-            'application' => $studentData['application'] ?? [],
-            'assignStaff' => $studentData['assignStaff'] ?? [],
+            'applications' => ApplicationResource::collection($this->applications),
+            'assignStaff' => AssignStaffResource::collection($this->assignStaffs),
         ];
     }
 }

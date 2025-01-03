@@ -61,6 +61,19 @@ class Student extends Model
         'staff',
     ];
 
+    protected $with = [
+        'createdBy',
+        'academicYear',
+        'term',
+        'documents',
+        'applications',
+        'assignStaffs',
+        'workDetails',
+        'academicHistories',
+        'refuseHistories',
+        'travelHistories',
+    ];
+
     protected static function boot(): void
     {
         parent::boot();
@@ -75,11 +88,6 @@ class Student extends Model
     public function createdBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by');
-    }
-
-    public function documents(): HasMany
-    {
-        return $this->hasMany(File::class, 'student_id');
     }
 
     public function academicYear(): BelongsTo
@@ -97,4 +105,43 @@ class Student extends Model
 //        return $this->belongsTo(Institute::class);
 //    }
 
+    public function emergencyContacts(): HasMany
+    {
+        return $this->hasMany(EmergencyContact::class);
+    }
+
+    public function applications(): HasMany
+    {
+        return $this->hasMany(Application::class);
+    }
+
+    public function documents(): HasMany
+    {
+        return $this->hasMany(File::class);
+    }
+
+    public function assignStaffs(): HasMany
+    {
+        return $this->hasMany(AssignStaff::class);
+    }
+
+    public function workDetails(): HasMany
+    {
+        return $this->hasMany(WorkDetail::class);
+    }
+
+    public function academicHistories(): HasMany
+    {
+        return $this->hasMany(AcademicHistory::class);
+    }
+
+    public function refuseHistories(): HasMany
+    {
+        return $this->hasMany(RefuseHistory::class);
+    }
+
+    public function travelHistories(): HasMany
+    {
+        return $this->hasMany(TravelHistory::class);
+    }
 }

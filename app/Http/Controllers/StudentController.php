@@ -2,16 +2,35 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DeleteStudentRelationsRequest;
 use App\Http\Requests\StoreStudentRequest;
+use App\Http\Requests\UpdateStudentRelationsRequest;
 use App\Http\Requests\UpdateStudentRequest;
 use App\Http\Resources\StudentResource;
+use App\Models\AcademicHistory;
+use App\Models\Application;
+use App\Models\AssignStaff;
+use App\Models\EmergencyContact;
+use App\Models\RefuseHistory;
 use App\Models\Student;
+use App\Models\TravelHistory;
+use App\Models\WorkDetail;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class StudentController extends Controller
 {
+    protected array $nestedArrays = [
+        'applications' => Application::class,
+        'emergencyContact' => EmergencyContact::class,
+        'travelHistory' => TravelHistory::class,
+        'refuseHistory' => RefuseHistory::class,
+        'academicHistory' => AcademicHistory::class,
+        'workDetails' => WorkDetail::class,
+        'assignStaff' => AssignStaff::class,
+    ];
+
     public function index(Request $request): JsonResponse
     {
         $query = Student::query();
@@ -58,38 +77,16 @@ class StudentController extends Controller
         }
     }
 
-    public function update(UpdateStudentRequest $request, string $id): JsonResponse
+    public function update(UpdateStudentRequest $request, UpdateStudentRelationsRequest $req, string $id): JsonResponse
     {
         $student = Student::findOrFail($id);
         $validatedData = $request->validated();
+        $validatedArray = $req->validated();
 
         try {
             DB::beginTransaction();
-
             $studentData = $student->student_data;
-
             $studentData = deepMerge($studentData, $validatedData);
-
-            $nestedArrays = [
-                'emergencyContact',
-                'travelHistory',
-                'refuseHistory',
-                'academicHistory',
-                'workDetails',
-                'application',
-                'assignStaff'
-            ];
-
-            // Dynamically process all nested arrays
-            foreach ($nestedArrays as $arrayKey) {
-                if (isset($validatedData[$arrayKey])) {
-                    $studentData[$arrayKey] = processNestedArray(
-                        $studentData[$arrayKey] ?? [],
-                        $validatedData[$arrayKey]
-                    );
-                }
-            }
-
             $student->update([
                 'name' => $validatedData['firstName'] ?? $student->name,
                 'created_by' => $validatedData['createdBy'] ?? $student->created_by,
@@ -105,8 +102,27 @@ class StudentController extends Controller
                 'student_data' => $studentData,
             ]);
 
-            DB::commit();
 
+            if (!empty($validatedArray)) {
+                foreach ($this->nestedArrays as $key => $class) {
+                    if (array_key_exists($key, $validatedArray)) {
+                        $nestedData = $validatedArray[$key][0];
+
+                        if (isset($nestedData['id'])) {
+                            $class::find($nestedData['id'])->update(
+                                $nestedData
+                            );
+                        } else {
+                            $nestedData['student_id'] = $student->id;
+                            $nestedModel = $class::create($nestedData);
+                            $nestedModel->save();
+                        }
+                    }
+                }
+            }
+
+            DB::commit();
+            $student->refresh();
             return $this->sendSuccessResponse('Student updated successfully', StudentResource::make($student));
         } catch (\Exception $e) {
             DB::rollBack();
@@ -125,10 +141,24 @@ class StudentController extends Controller
         }
     }
 
-    public function destroy($id): JsonResponse
+    public function destroy($id, DeleteStudentRelationsRequest $req): JsonResponse
     {
         try {
             $student = Student::findOrFail($id);
+            $validatedArray = $req->validated();
+
+            if (!empty($validatedArray)) {
+                foreach ($this->nestedArrays as $key => $class) {
+                    if (array_key_exists($key, $validatedArray)) {
+                        $nestedData = $validatedArray[$key][0];
+                        $nestedModel = $class::findOrFail($nestedData['id']);
+                        $nestedModel->delete();
+
+                        $normalizedKeyName = strtolower(preg_replace('/([a-z])([A-Z])/', '$1 $2', $key));
+                        return $this->sendSuccessResponse($normalizedKeyName . ' was deleted successfully');
+                    }
+                }
+            }
             $student->delete();
 
             return $this->sendSuccessResponse('Student deleted successfully');
