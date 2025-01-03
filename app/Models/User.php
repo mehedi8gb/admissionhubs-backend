@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -20,16 +21,17 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property bool|null $status
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @method static \Database\Factories\AcademicYearFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder<static>|AcademicYear newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|AcademicYear newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|AcademicYear query()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|AcademicYear whereAcademicYear($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|AcademicYear whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|AcademicYear whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|AcademicYear whereStatus($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|AcademicYear whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|AcademicYear inRandomOrder()
+ * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUser($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User inRandomOrder()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User Create(array $array)
  */
 
 class User extends Authenticatable implements JWTSubject
@@ -46,6 +48,7 @@ class User extends Authenticatable implements JWTSubject
     protected $fillable = [
         'name',
         'email',
+        'phone',
         'password',
     ];
 
@@ -97,6 +100,11 @@ class User extends Authenticatable implements JWTSubject
         ];
     }
 
+
+    public function agent(): HasOne
+    {
+        return $this->hasOne(Agent::class);
+    }
 
     public function getProfilePhotoUrlAttribute(): Application|string|\Illuminate\Contracts\Routing\UrlGenerator|null
     {

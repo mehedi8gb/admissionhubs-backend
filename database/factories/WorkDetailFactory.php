@@ -26,7 +26,7 @@ class WorkDetailFactory extends Factory
             'phone' => fake()->phoneNumber,
             'fromDate' => fake()->date('Y-m-d', '-10 years'),
             'toDate' => fake()->date('Y-m-d', '-5 years'),
-            'active' => fake()->boolean,
+            'status' => fake()->boolean,
             'currentlyWorking' => $this->faker->boolean,
         ];
     }

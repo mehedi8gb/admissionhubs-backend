@@ -55,7 +55,7 @@ function deepMerge(array $original, array $new, string $forceReplaceIndicator = 
             continue;
         }
 
-        if (is_array($value) && isset($original[$key]) && is_array($original[$key])) {
+        if (is_array($value) && isset($original[$key]) && is_array($original[$key])){
             // Recursively merge arrays
             $original[$key] = deepMerge($original[$key], $value, $forceReplaceIndicator);
         } else {

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\EnglishLanguageExam;
 use App\Models\Student;
 use App\Models\EmergencyContact;
 use App\Models\Application;
@@ -12,6 +13,7 @@ use App\Models\WorkDetail;
 use App\Models\AssignStaff;
 use Illuminate\Database\Seeder;
 
+
 class StudentSeeder extends Seeder
 {
     /**
@@ -19,7 +21,7 @@ class StudentSeeder extends Seeder
      */
     public function run(): void
     {
-        Student::factory(1000)->create()->each(function ($student) {
+        Student::factory(10)->create()->each(function ($student) {
             EmergencyContact::factory(rand(2, 7))->create(['student_id' => $student->id]);
             Application::factory(rand(2, 7))->create(['student_id' => $student->id]);
             AcademicHistory::factory(rand(2, 7))->create(['student_id' => $student->id]);
@@ -27,6 +29,7 @@ class StudentSeeder extends Seeder
             RefuseHistory::factory(rand(2, 7))->create(['student_id' => $student->id]);
             WorkDetail::factory(rand(2, 7))->create(['student_id' => $student->id]);
             AssignStaff::factory(rand(2, 7))->create(['student_id' => $student->id]);
+            EnglishLanguageExam::factory(rand(2, 7))->create(['student_id' => $student->id]);
         });
 
         echo "\n";

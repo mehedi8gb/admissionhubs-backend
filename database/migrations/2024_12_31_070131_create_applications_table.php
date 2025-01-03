@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('term')->nullable();
             $table->string('type')->nullable();
             $table->decimal('amount', 10, 2)->nullable();
-            $table->string('status')->nullable();
+            $table->string('status')->nullable()->default(1);
             $table->timestamps();
         });
 
