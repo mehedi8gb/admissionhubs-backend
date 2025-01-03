@@ -25,7 +25,7 @@ class AcademicHistoryResource extends JsonResource
             'outOf' => $this->outOf,
             'startDate' => $this->startDate,
             'endDate' => $this->endDate,
-            'status' => $this->status,
+            'status' => convertStatus($this->status),
         ];
     }
 }
