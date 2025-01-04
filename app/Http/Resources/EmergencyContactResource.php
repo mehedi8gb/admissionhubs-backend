@@ -18,6 +18,7 @@ class EmergencyContactResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'relationship' => $this->relationship,
+            'address' => $this->address,
             'phone' => $this->phone,
             'email' => $this->email,
         ];
