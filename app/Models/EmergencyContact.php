@@ -14,6 +14,7 @@ class EmergencyContact extends Model
         'name',
         'relationship',
         'phone',
+        'address',
         'email',
     ];
     public function student(): BelongsTo
