@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('address')->nullable();
             $table->string('relationship')->nullable();
-            $table->boolean('status')->default(true);
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }

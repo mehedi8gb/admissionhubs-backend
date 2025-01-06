@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('details', 1000)->nullable();
             $table->string('country', 255)->nullable();
             $table->string('visaType', 255)->nullable();
-            $table->boolean('status')->default(true);
+            $table->string('status', 50)->nullable();
             $table->timestamps();
         });
     }
