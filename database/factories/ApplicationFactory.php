@@ -26,7 +26,7 @@ class ApplicationFactory extends Factory
             'term' => fake()->randomElement(['Fall', 'Spring', 'Summer']),
             'type' => fake()->randomElement(['Full-time', 'Part-time']),
             'amount' => fake()->randomFloat(2, 1000, 50000),
-            'status' => 'Submitted',
+            'status' => fake()->numberBetween(0, 1),
         ];
     }
 }

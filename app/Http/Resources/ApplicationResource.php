@@ -17,7 +17,7 @@ class ApplicationResource extends JsonResource
             'term' => $this->term,
             'type' => $this->type,
             'amount' => $this->amount,
-            'status' => convertStatus($this->status),
+            'status' => $this->status,
         ];
     }
 }

@@ -29,7 +29,7 @@ class UpdateStudentRequest extends FormRequest
                 Rule::unique('students')->ignore($studentId, 'id') // Ignore the current student's email
             ],
             'phone' => 'nullable|string|max:20',
-            'dob' => 'nullable|date_format:d-m-Y',
+            'dob' => 'nullable|date_format:Y-m-d',
             'maritualStatus' => 'nullable|string|max:255',
             'gender' => 'nullable|string|max:50',
             'nationality' => 'nullable|string|max:255',
@@ -43,18 +43,18 @@ class UpdateStudentRequest extends FormRequest
             'religion' => 'nullable|string|max:255',
             'visaNeed' => 'nullable|boolean',
 
-            'addressLine1' => 'required|string|max:255', // Address Line 1 is required
+            'addressLine1' => 'nullable|string|max:255', // Address Line 1 is required
             'addressLine2' => 'nullable|string|max:255', // Address Line 2 is nullable
-            'townCity' => 'required|string|max:255', // Town/City is required
-            'state' => 'required|string|max:255', // State is required
-            'postCode' => 'required|string|max:20', // Post Code is required
-            'country' => 'required|string|max:255', // Country is required
+            'townCity' => 'nullable|string|max:255', // Town/City is required
+            'state' => 'nullable|string|max:255', // State is required
+            'postCode' => 'nullable|string|max:20', // Post Code is required
+            'country' => 'nullable|string|max:255', // Country is required
 
             'passportName' => 'nullable|string|max:255',
             'passportIssueLocation' => 'nullable|string|max:255',
             'passportNumber' => 'nullable|string|max:255',
-            'passportIssueDate' => 'nullable|date_format:d-m-Y',
-            'passportExpiryDate' => 'nullable|date_format:d-m-Y',
+            'passportIssueDate' => 'nullable|date_format:Y-m-d',
+            'passportExpiryDate' => 'nullable|date_format:Y-m-d',
 
             'refusedPermission' => 'nullable|boolean', // Refused permission flag
             'englishLanguageRequired' => 'nullable|boolean', // English language requirement

@@ -21,7 +21,7 @@ class RefuseHistoryResource extends JsonResource
             'details' => $this->details,
             'country' => $this->country,
             'visaType' => $this->visaType,
-            'status' => convertStatus($this->status),
+            'status' => $this->status,
         ];
     }
 }
