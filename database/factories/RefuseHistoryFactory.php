@@ -25,7 +25,7 @@ class RefuseHistoryFactory extends Factory
             'details' => $this->faker->sentence,
             'country' => $this->faker->country,
             'visaType' => $this->faker->word,
-            'status' => $this->faker->randomElement(['Resolved', 'Pending']),
+            'status' => rand(0, 1),
         ];
     }
 }
