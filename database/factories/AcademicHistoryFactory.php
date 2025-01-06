@@ -31,7 +31,7 @@ class AcademicHistoryFactory extends Factory
             'outOf' => 5,
             'startDate' => fake()->date('Y-m-d', '-10 years'),
             'endDate' => fake()->date('Y-m-d', '-5 years'),
-            'status' => $this->faker->randomElement(['Completed', 'Ongoing']),
+            'status' => rand(0, 1),
         ];
     }
 }

@@ -49,8 +49,8 @@ class StoreStudentRequest extends FormRequest
             'englishLanguageRequired' => 'nullable|boolean', // English language requirement
             'academicHistoryRequired' => 'nullable|boolean', // Academic history requirement
             'workExperience' => 'nullable|boolean', // Work experience flag
-            'ukinpast' => 'nullable|boolean', // UK in the past flag
-
+            'ukInPast' => 'nullable|boolean', // UK in the past flag
+            'currentlyInUk' => 'nullable|boolean', // Currently in UK flag
             'academicYearId' => 'nullable|integer',
             'termId' => 'nullable|integer',
         ];

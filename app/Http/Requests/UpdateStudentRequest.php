@@ -61,6 +61,7 @@ class UpdateStudentRequest extends FormRequest
             'academicHistoryRequired' => 'nullable|boolean', // Academic history requirement
             'workExperience' => 'nullable|boolean', // Work experience flag
             'ukinpast' => 'nullable|boolean', // UK in the past flag
+            'currentlyInUk' => 'nullable|boolean',
 
             'academicYearId' => 'nullable|integer',
             'termId' => 'nullable|integer',
