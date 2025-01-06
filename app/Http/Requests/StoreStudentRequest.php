@@ -27,7 +27,7 @@ class StoreStudentRequest extends FormRequest
             'state' => 'required|string|max:255', // State is required
             'postCode' => 'required|string|max:20', // Post Code is required
             'country' => 'required|string|max:255', // Country is required
-            'nativeLanguage' => 'required|string|max:255',
+            'nativeLanguage' => 'nullable|string|max:255',
             'nationality' => 'required|string|max:255',
             'gender' => 'required|string|max:50',
 
