@@ -22,8 +22,8 @@ class WorkDetailResource extends JsonResource
             'phone' => $this->phone,
             'fromDate' => $this->fromDate,
             'toDate' => $this->toDate,
-            'active' => $this->active,
             'currentlyWorking' => $this->currentlyWorking,
+            'status' => convertStatus($this->status),
         ];
     }
 }
