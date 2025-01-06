@@ -56,6 +56,9 @@ class StudentController extends Controller
         try {
             DB::beginTransaction();
 
+            $validatedData['currentlyInUk'] = false;
+            $validatedData['ukInPast'] = false;
+
             $student = new Student([
                 'created_by' => auth()->id(),
                 'name' => $validatedData['firstName'] . ' ' . $validatedData['lastName'],
