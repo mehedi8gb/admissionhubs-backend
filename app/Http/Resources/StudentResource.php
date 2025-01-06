@@ -33,6 +33,7 @@ class StudentResource extends JsonResource
             'dob' => $studentData['dob'] ?? null,
             'maritualStatus' => $studentData['maritualStatus'] ?? null,
             'nationality' => $studentData['nationality'] ?? null,
+            'gender' => $studentData['gender'],
             'countryResidence' => $studentData['countryResidence'] ?? null,
             'countryBirth' => $studentData['countryBirth'] ?? null,
             'nativeLanguage' => $studentData['nativeLanguage'] ?? null,

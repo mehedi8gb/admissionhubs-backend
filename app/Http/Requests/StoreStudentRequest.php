@@ -29,6 +29,7 @@ class StoreStudentRequest extends FormRequest
             'country' => 'required|string|max:255', // Country is required
             'nativeLanguage' => 'required|string|max:255',
             'nationality' => 'required|string|max:255',
+            'gender' => 'required|string|max:50',
 
             'passportName' => 'nullable|string|max:255',
             'passportIssueLocation' => 'nullable|string|max:255',
