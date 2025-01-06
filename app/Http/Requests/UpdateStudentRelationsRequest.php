@@ -22,7 +22,7 @@ class UpdateStudentRelationsRequest extends FormRequest
             'emergencyContact.*.email' => 'nullable|email|max:255',
             'emergencyContact.*.address' => 'nullable|string|max:255',
             'emergencyContact.*.relationship' => 'nullable|string|max:255',
-            'emergencyContact.*.status' => 'nullable|string|max:50',
+            'emergencyContact.*.status' => 'nullable|boolean',
 
             'applications' => 'nullable|array',
             'applications.*.id' => 'nullable|integer',
@@ -32,7 +32,7 @@ class UpdateStudentRelationsRequest extends FormRequest
             'applications.*.term' => 'nullable|string|max:255',
             'applications.*.type' => 'nullable|string|max:255',
             'applications.*.amount' => 'nullable|numeric',
-            'applications.*.status' => 'nullable|string|max:50',
+            'applications.*.status' => 'nullable|boolean',
 
             'assignStaff' => 'nullable|array',
             'assignStaff.*.id' => 'nullable|integer',
@@ -47,8 +47,8 @@ class UpdateStudentRelationsRequest extends FormRequest
             'workDetails.*.phone' => 'nullable|string|max:20',
             'workDetails.*.fromDate' => 'nullable|date',
             'workDetails.*.toDate' => 'nullable|date',
-            'workDetails.*.active' => 'nullable|boolean',
             'workDetails.*.currentlyWorking' => 'nullable|boolean',
+            'workDetails.*.status' => 'nullable|boolean',
 
             'academicHistory' => 'nullable|array',
             'academicHistory.*.id' => 'nullable|integer',
@@ -61,7 +61,7 @@ class UpdateStudentRelationsRequest extends FormRequest
             'academicHistory.*.outOf' => 'nullable|numeric',
             'academicHistory.*.startDate' => 'nullable|date',
             'academicHistory.*.endDate' => 'nullable|date',
-            'academicHistory.*.status' => 'nullable|string|max:50',
+            'academicHistory.*.status' => 'nullable|boolean',
 
             'refuseHistory' => 'nullable|array',
             'refuseHistory.*.id' => 'nullable|integer',
@@ -70,7 +70,7 @@ class UpdateStudentRelationsRequest extends FormRequest
             'refuseHistory.*.details' => 'nullable|string|max:1000',
             'refuseHistory.*.country' => 'nullable|string|max:255',
             'refuseHistory.*.visaType' => 'nullable|string|max:255',
-            'refuseHistory.*.status' => 'nullable|string|max:50',
+            'refuseHistory.*.status' => 'nullable|boolean',
 
             'travelHistory' => 'nullable|array',
             'travelHistory.*.id' => 'nullable|integer',
@@ -80,6 +80,7 @@ class UpdateStudentRelationsRequest extends FormRequest
             'travelHistory.*.visaStart' => 'nullable|date',
             'travelHistory.*.visaExpiry' => 'nullable|date',
             'travelHistory.*.visaType' => 'nullable|string|max:255',
+            'travelHistory.*.status' => 'nullable|boolean',
         ];
     }
 }
