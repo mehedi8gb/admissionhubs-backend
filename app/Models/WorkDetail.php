@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class WorkDetail extends Model
 {
     use hasFactory;
-    
+
     protected $fillable = [
         'student_id',
         'jobTitle',
@@ -18,7 +18,7 @@ class WorkDetail extends Model
         'phone',
         'fromDate',
         'toDate',
-        'active',
+        'status',
         'currentlyWorking',
     ];
     public function student(): BelongsTo
