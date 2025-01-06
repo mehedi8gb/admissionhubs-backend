@@ -18,6 +18,7 @@ class TravelHistory extends Model
         'visaStart',
         'visaExpiry',
         'visaType',
+        'status'
     ];
 
     public function student(): BelongsTo

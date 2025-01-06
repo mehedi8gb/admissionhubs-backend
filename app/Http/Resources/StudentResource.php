@@ -58,6 +58,7 @@ class StudentResource extends JsonResource
             'addresses' => AddressResource::collection($this->addresses),
             'passports' => PassportResource::collection($this->passports),
             'assignStaff' => AssignStaffResource::collection($this->assignStaffs),
+            'englishLanguageExam' => EnglishLanguageExamResource::collection($this->englishLanguageExams),
         ];
     }
 }

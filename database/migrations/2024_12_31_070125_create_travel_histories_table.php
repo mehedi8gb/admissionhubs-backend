@@ -20,6 +20,7 @@ return new class extends Migration
             $table->timestamp('visaStart')->nullable();
             $table->timestamp('visaExpiry')->nullable();
             $table->string('visaType', 255)->nullable();
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }

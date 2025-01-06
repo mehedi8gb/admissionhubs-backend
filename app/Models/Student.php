@@ -93,6 +93,7 @@ class Student extends Model
         'travelHistories',
         'passports',
         'addresses',
+        'englishLanguageExams'
     ];
 
     protected static function boot(): void
@@ -174,5 +175,10 @@ class Student extends Model
     public function addresses(): HasMany
     {
         return $this->hasMany(Address::class);
+    }
+
+    public function englishLanguageExams(): HasMany
+    {
+        return $this->hasMany(EnglishLanguageExam::class);
     }
 }
