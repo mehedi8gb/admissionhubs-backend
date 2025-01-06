@@ -59,7 +59,7 @@ class AgentController extends Controller
 
             return $this->sendSuccessResponse('Record created successfully', AgentResource::make($agent));
         } catch (\Exception $e) {
-            return $this->sendErrorResponse('An error occurred: ' . $e->getMessage(), 500);
+            return $this->sendErrorResponse($e, 500);
         }
     }
 
@@ -70,7 +70,7 @@ class AgentController extends Controller
             return $this->sendSuccessResponse('Record retrieved successfully', AgentResource::make($data));
         }
         catch (\Exception $e) {
-            return $this->sendErrorResponse('An error occurred: ' . $e->getMessage(), 500, $e);
+            return $this->sendErrorResponse($e, 500, $e);
         }
     }
 
@@ -109,7 +109,7 @@ class AgentController extends Controller
 
             return $this->sendSuccessResponse('Record updated successfully', AgentResource::make($agent));
         } catch (\Exception $e) {
-            return $this->sendErrorResponse('An error occurred: ' . $e->getMessage(), 500);
+            return $this->sendErrorResponse($e, 500);
         }
     }
 
@@ -121,7 +121,7 @@ class AgentController extends Controller
             $data->delete();
             return $this->sendSuccessResponse('Record deleted successfully');
         } catch (\Exception $e) {
-            return $this->sendErrorResponse('An error occurred: ' . $e->getMessage(), 500);
+            return $this->sendErrorResponse($e, 500);
         }
     }
 }

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Schema;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class BaseController
 {
@@ -35,12 +36,11 @@ class BaseController
     /**
      * Format error response.
      *
-     * @param string $message
+     * @param NotFoundHttpException|ModelNotFoundException|Exception|string $e
      * @param int $statusCode
-     * @param Exception|null $e
      * @return JsonResponse
      */
-    protected function sendErrorResponse(string $message, int $statusCode, Exception $e = null): JsonResponse
+    protected function sendErrorResponse( NotFoundHttpException|ModelNotFoundException|Exception|string $e, int $statusCode,): JsonResponse
     {
         if ($e instanceof ModelNotFoundException) {
             return response()->json([
@@ -48,10 +48,16 @@ class BaseController
                 'message' => 'Record not found',
             ], 404);
         }
+        if ($e instanceof NotFoundHttpException) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Not found',
+            ], 404);
+        }
 
         return response()->json([
             'success' => false,
-            'message' => $message,
+            'message' => $e instanceof Exception ? $e->getMessage() : $e,
         ], $statusCode);
     }
 

@@ -77,15 +77,15 @@ Route::middleware(['role:student'])->group(function () {
 });
 // Staff Routes
 Route::middleware('role:staff')->prefix('staff')->group(function () {
-    Route::get('dashboard', [StaffController::class, 'dashboard']);
-    Route::get('reports', [StaffController::class, 'reports']);
+//    Route::get('dashboard', [StaffController::class, 'dashboard']);
+//    Route::get('reports', [StaffController::class, 'reports']);
     // Add more routes specific to the staff role
 });
 
 // University Routes
 Route::middleware('role:university')->prefix('university')->group(function () {
-    Route::get('dashboard', [UniversityController::class, 'dashboard']);
-    Route::get('courses', [UniversityController::class, 'courses']);
+//    Route::get('dashboard', [UniversityController::class, 'dashboard']);
+//    Route::get('courses', [UniversityController::class, 'courses']);
     // Add more routes specific to the university role
 });
 

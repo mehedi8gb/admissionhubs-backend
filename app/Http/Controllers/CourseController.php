@@ -41,7 +41,7 @@ class CourseController extends Controller
 
             return $this->sendSuccessResponse('Record created successfully', CourseResource::make($data));
         } catch (\Exception $e) {
-            return $this->sendErrorResponse('An error occurred: ' . $e->getMessage(), 500);
+            return $this->sendErrorResponse($e, 500);
         }
     }
 
@@ -51,7 +51,7 @@ class CourseController extends Controller
             $data = Course::findOrFail($id);
             return $this->sendSuccessResponse('Records retrieved successfully', CourseResource::make($data));
         } catch (\Exception $e) {
-            return $this->sendErrorResponse('An error occurred: ' . $e->getMessage(), 500);
+            return $this->sendErrorResponse($e, 500);
         }
     }
 
@@ -83,7 +83,7 @@ class CourseController extends Controller
 
             return $this->sendSuccessResponse('Record updated successfully', CourseResource::make($data));
         } catch (\Exception $e) {
-            return $this->sendErrorResponse('An error occurred: ' . $e->getMessage(), 500);
+            return $this->sendErrorResponse($e, 500);
         }
     }
 
@@ -97,7 +97,7 @@ class CourseController extends Controller
             $data->delete();
             return $this->sendSuccessResponse('Record deleted successfully');
         } catch (\Exception $e) {
-            return $this->sendErrorResponse('An error occurred: ' . $e->getMessage(), 500);
+            return $this->sendErrorResponse($e, 500);
         }
     }
 }

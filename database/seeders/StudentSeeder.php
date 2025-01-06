@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Address;
 use App\Models\EnglishLanguageExam;
+use App\Models\Passport;
 use App\Models\Student;
 use App\Models\EmergencyContact;
 use App\Models\Application;
@@ -30,6 +32,8 @@ class StudentSeeder extends Seeder
             WorkDetail::factory(rand(2, 7))->create(['student_id' => $student->id]);
             AssignStaff::factory(rand(2, 7))->create(['student_id' => $student->id]);
             EnglishLanguageExam::factory(rand(2, 7))->create(['student_id' => $student->id]);
+            Address::factory(rand(2, 4))->create(['student_id' => $student->id]);
+            Passport::factory(rand(1, 3))->create(['student_id' => $student->id]);
         });
 
         echo "\n";

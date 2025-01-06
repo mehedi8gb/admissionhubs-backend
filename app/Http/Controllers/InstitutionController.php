@@ -39,7 +39,7 @@ class InstitutionController extends Controller
 
             return $this->sendSuccessResponse('Record created successfully', InstituteResource::make($data));
         } catch (\Exception $e) {
-            return $this->sendErrorResponse('An error occurred: ' . $e->getMessage(), 500);
+            return $this->sendErrorResponse($e, 500);
         }
     }
 
@@ -49,7 +49,7 @@ class InstitutionController extends Controller
             $data = Institute::findOrFail($id);
             return $this->sendSuccessResponse('Records retrieved successfully', InstituteResource::make($data));
         } catch (\Exception $e) {
-            return $this->sendErrorResponse('An error occurred: ' . $e->getMessage(), 500);
+            return $this->sendErrorResponse($e, 500);
         }
     }
 
@@ -71,7 +71,7 @@ class InstitutionController extends Controller
 
             return $this->sendSuccessResponse('Record updated successfully', InstituteResource::make($data));
         } catch (\Exception $e) {
-            return $this->sendErrorResponse('An error occurred: ' . $e->getMessage(), 500);
+            return $this->sendErrorResponse($e, 500);
         }
     }
 
@@ -85,7 +85,7 @@ class InstitutionController extends Controller
             $data->delete();
             return $this->sendSuccessResponse('Record deleted successfully');
         } catch (\Exception $e) {
-            return $this->sendErrorResponse('An error occurred: ' . $e->getMessage(), 500);
+            return $this->sendErrorResponse($e, 500);
         }
     }
 }

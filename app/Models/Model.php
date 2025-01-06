@@ -2,6 +2,7 @@
 
 namespace App\Models;
 use Illuminate\Database\Eloquent\Model as MainModel;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Carbon;
 
 /**
@@ -44,5 +45,15 @@ use Illuminate\Support\Carbon;
 
 class Model extends MainModel
 {
+    public static function findOrCustomFail($id): \Illuminate\Database\Eloquent\Builder|\Illuminate\Http\JsonResponse|Model
+    {
+        try {
+            return self::findOrFail($id);
+        } catch (ModelNotFoundException $e) {
+            // Handle the exception
+            // For example, return a custom response
+            return sendErrorResponse($e, 404);
+        }
+    }
 
 }

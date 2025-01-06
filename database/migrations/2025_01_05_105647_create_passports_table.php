@@ -11,15 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('travel_histories', function (Blueprint $table) {
+        Schema::create('passports', function (Blueprint $table) {
             $table->id();
             $table->foreignId('student_id')->constrained()->onDelete('cascade');
-            $table->string('purpose', 255)->nullable();
-            $table->timestamp('arrival')->nullable();
-            $table->timestamp('departure')->nullable();
-            $table->timestamp('visaStart')->nullable();
-            $table->timestamp('visaExpiry')->nullable();
-            $table->string('visaType', 255)->nullable();
+            $table->string('passportName')->nullable();
+            $table->string('passportIssueLocation')->nullable();
+            $table->string('passportNumber')->nullable();
+            $table->date('passportIssueDate')->nullable();
+            $table->date('passportExpiryDate')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('travel_histories');
+        Schema::dropIfExists('passports');
     }
 };

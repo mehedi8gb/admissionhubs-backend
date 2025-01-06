@@ -30,6 +30,8 @@ class DeleteStudentRelationsRequest extends FormRequest
             'academicHistory.*.id' => 'nullable|integer',
             'refuseHistory.*.id' => 'nullable|integer',
             'travelHistory.*.id' => 'nullable|integer',
+            'passport.*.id' => 'nullable|integer',
+            'address.*.id' => 'nullable|integer',
         ];
     }
 }

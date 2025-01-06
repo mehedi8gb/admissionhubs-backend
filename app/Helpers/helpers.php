@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Resources\DefaultResource;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\JsonResponse;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 function getResourceClass($model): string
 {
@@ -89,5 +92,34 @@ function processNestedArray(array $existingArray, array $payloadArray): array
 
     // if array fragment same to same then remove 1 index
     return array_map("unserialize", array_unique(array_map("serialize", $filteredArray)));
+}
+
+
+/**
+ * Format error response.
+ *
+ * @param NotFoundHttpException|ModelNotFoundException|Exception|string $e
+ * @param int $statusCode
+ * @return JsonResponse
+ */
+function sendErrorResponse( NotFoundHttpException|ModelNotFoundException|Exception|string $e, int $statusCode,): JsonResponse
+{
+    if ($e instanceof ModelNotFoundException) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Record not found',
+        ], 404);
+    }
+    if ($e instanceof NotFoundHttpException) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Not found',
+        ], 404);
+    }
+
+    return response()->json([
+        'success' => false,
+        'message' => $e instanceof Exception ? $e->getMessage() : $e,
+    ], $statusCode);
 }
 

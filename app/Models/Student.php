@@ -18,10 +18,9 @@ class Student extends Model
     protected $fillable = [
         'created_by', // User ID who created the record
         'academic_year_id', // Academic year the student is enrolled in
-        'term_id', // Academic term the student is in
-//        'institute_id', // Institute name
-        'status', // Student's status
         'ref_id', // Unique reference ID for the student
+        'term_id', // Academic term the student is in
+        'status', // Student's status
         'name', // Student's name
         'email', // Student's email address
         'phone', // Student's phone number
@@ -29,7 +28,27 @@ class Student extends Model
         'agent', // Agent information (if any)
         'staff', // Staff assigned to the student (if any)
         'student_data', // JSON column containing the entire student object
+        'maritual_status', // Marital status of the student
+        'gender', // Gender of the student
+        'nationality', // Nationality of the student
+        'country_residence', // Country of residence
+        'country_birth', // Country of birth
+        'native_language', // Native language of the student
+
+//        'visa_need', // Whether the student needs a visa
+//        'refused_permission', // Whether the student has refused permission
+//        'english_language_required', // Whether English language proficiency is required
+//        'academic_history_required', // Whether academic history is required
+//        'work_experience', // Whether work experience is required
+//        'ukinpast', // Whether the student has been in the UK in the past
+//        'maritual_status', // Marital status of the student
+//        'gender_identity', // Gender identity of the student
+//        'sexual_orientation', // Sexual orientation of the student
+//        'religion', // Religion of the student
+//        'ethnicity', // Ethnicity of the student
+//        'disabilities', // Disabilities of the student
     ];
+
 
     /**
      * The attributes that should be cast to native types.
@@ -72,6 +91,8 @@ class Student extends Model
         'academicHistories',
         'refuseHistories',
         'travelHistories',
+        'passports',
+        'addresses',
     ];
 
     protected static function boot(): void
@@ -143,5 +164,15 @@ class Student extends Model
     public function travelHistories(): HasMany
     {
         return $this->hasMany(TravelHistory::class);
+    }
+
+    public function passports(): HasMany
+    {
+        return $this->hasMany(Passport::class);
+    }
+
+    public function addresses(): HasMany
+    {
+        return $this->hasMany(Address::class);
     }
 }

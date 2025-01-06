@@ -19,11 +19,10 @@ return new class extends Migration {
             $table->string('phone', 20)->nullable();
             $table->timestamp('fromDate')->nullable();
             $table->timestamp('toDate')->nullable();
-            $table->boolean('status')->nullable();
+            $table->boolean('status')->default(true);
             $table->boolean('currentlyWorking')->nullable();
             $table->timestamps();
         });
-
     }
 
     /**

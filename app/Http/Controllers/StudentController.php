@@ -8,13 +8,16 @@ use App\Http\Requests\UpdateStudentRelationsRequest;
 use App\Http\Requests\UpdateStudentRequest;
 use App\Http\Resources\StudentResource;
 use App\Models\AcademicHistory;
+use App\Models\Address;
 use App\Models\Application;
 use App\Models\AssignStaff;
 use App\Models\EmergencyContact;
+use App\Models\Passport;
 use App\Models\RefuseHistory;
 use App\Models\Student;
 use App\Models\TravelHistory;
 use App\Models\WorkDetail;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -29,6 +32,8 @@ class StudentController extends Controller
         'academicHistory' => AcademicHistory::class,
         'workDetails' => WorkDetail::class,
         'assignStaff' => AssignStaff::class,
+        'passports' => Passport::class,
+        'addresses' => Address::class,
     ];
 
     public function index(Request $request): JsonResponse
@@ -58,8 +63,8 @@ class StudentController extends Controller
                 'email' => $validatedData['email'],
                 'phone' => $validatedData['phone'],
                 'dob' => $validatedData['dob'],
-                'academic_year_id' => $validatedData['academicHistory'][0]['academicYearId'] ?? null,
-                'term_id' => $validatedData['academicHistory'][0]['termId'] ?? null,
+                'academic_year_id' => $validatedData['academicYearId'] ?? null,
+                'term_id' => $validatedData['termId'] ?? null,
 //                'institute' => $validatedData['institute'],
                 'status' => $validatedData['status'] ?? true,
                 'agent' => $validatedData['agent'] ?? null,
@@ -68,12 +73,21 @@ class StudentController extends Controller
             ]);
             $student->save();
 
+            $student->addresses()->create([
+                'addressLine1' => $validatedData['addressLine1'],
+                'addressLine2' => $validatedData['addressLine2'] ?? null,
+                'townCity' => $validatedData['townCity'],
+                'state' => $validatedData['state'],
+                'postCode' => $validatedData['postCode'],
+                'country' => $validatedData['country'],
+                ]);
+
             DB::commit();
 
             return $this->sendSuccessResponse('Student created successfully', StudentResource::make($student));
         } catch (\Exception $e) {
             DB::rollBack();
-            return $this->sendErrorResponse('An error occurred: ' . $e->getMessage(), 500);
+            return $this->sendErrorResponse($e, 500);
         }
     }
 
@@ -93,15 +107,14 @@ class StudentController extends Controller
                 'email' => $validatedData['email'] ?? $student->email,
                 'phone' => $validatedData['phone'] ?? $student->phone,
                 'dob' => $validatedData['dob'] ?? $student->dob,
-                'academic_year_id' => $validatedData['academicHistory'][0]['academicYearId'] ?? $student->academicYear->id,
-                'term_id' => $validatedData['academicHistory'][0]['termId'] ?? $student->term->id,
+                'academic_year_id' => $validatedData['academicYearId'] ?? optional($student->academicYear)->id,
+                'term_id' => $validatedData['termId'] ?? optional($student->term)->id,
 //                'institute' => $validatedData['institute'] ?? $student->institute,
                 'status' => $validatedData['status'] ?? $student->status,
                 'agent' => $validatedData['agent'] ?? $student->agent,
                 'staff' => $validatedData['staff'] ?? $student->staff,
                 'student_data' => $studentData,
             ]);
-
 
             if (!empty($validatedArray)) {
                 foreach ($this->nestedArrays as $key => $class) {
@@ -124,9 +137,9 @@ class StudentController extends Controller
             DB::commit();
             $student->refresh();
             return $this->sendSuccessResponse('Student updated successfully', StudentResource::make($student));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
-            return $this->sendErrorResponse('An error occurred: ' . $e->getMessage(), 500);
+            return $this->sendErrorResponse($e, 500);
         }
     }
 
@@ -137,7 +150,7 @@ class StudentController extends Controller
 
             return $this->sendSuccessResponse('Student details retrieved successfully', StudentResource::make($student));
         } catch (\Exception $e) {
-            return $this->sendErrorResponse('An error occurred: ' . $e->getMessage(), 500);
+            return $this->sendErrorResponse($e, 500);
         }
     }
 
@@ -163,7 +176,7 @@ class StudentController extends Controller
 
             return $this->sendSuccessResponse('Student deleted successfully');
         } catch (\Exception $e) {
-            return $this->sendErrorResponse('An error occurred: ' . $e->getMessage(), 500);
+            return $this->sendErrorResponse($e, 500);
         }
     }
 }

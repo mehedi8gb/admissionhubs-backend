@@ -44,7 +44,7 @@ class EnglishLanguageExamController extends Controller
 
             return $this->sendSuccessResponse('Record created successfully', EnglishLanguageExamResource::make($data));
         } catch (\Exception $e) {
-            return $this->sendErrorResponse('An error occurred: ' . $e->getMessage(), 500);
+            return $this->sendErrorResponse($e, 500);
         }
     }
 
@@ -54,7 +54,7 @@ class EnglishLanguageExamController extends Controller
             $data = EnglishLanguageExam::findOrFail($id);
             return $this->sendSuccessResponse('Records retrieved successfully', EnglishLanguageExamResource::make($data));
         } catch (\Exception $e) {
-            return $this->sendErrorResponse('An error occurred: ' . $e->getMessage(), 500, $e);
+            return $this->sendErrorResponse($e, 500, $e);
         }
     }
 
@@ -78,7 +78,7 @@ class EnglishLanguageExamController extends Controller
 
             return $this->sendSuccessResponse('Record updated successfully', EnglishLanguageExamResource::make($data));
         } catch (\Exception $e) {
-            return $this->sendErrorResponse('An error occurred: ' . $e->getMessage(), 500);
+            return $this->sendErrorResponse($e, 500);
         }
     }
 
@@ -92,7 +92,7 @@ class EnglishLanguageExamController extends Controller
             $data->delete();
             return $this->sendSuccessResponse('Record deleted successfully');
         } catch (\Exception $e) {
-            return $this->sendErrorResponse('An error occurred: ' . $e->getMessage(), 500);
+            return $this->sendErrorResponse($e, 500);
         }
     }
 }
