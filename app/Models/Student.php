@@ -91,8 +91,6 @@ class Student extends Model
         'academicHistories',
         'refuseHistories',
         'travelHistories',
-        'passports',
-        'addresses',
         'englishLanguageExams'
     ];
 
@@ -165,16 +163,6 @@ class Student extends Model
     public function travelHistories(): HasMany
     {
         return $this->hasMany(TravelHistory::class);
-    }
-
-    public function passports(): HasMany
-    {
-        return $this->hasMany(Passport::class);
-    }
-
-    public function addresses(): HasMany
-    {
-        return $this->hasMany(Address::class);
     }
 
     public function englishLanguageExams(): HasMany

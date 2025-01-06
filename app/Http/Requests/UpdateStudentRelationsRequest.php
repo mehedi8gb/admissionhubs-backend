@@ -80,23 +80,6 @@ class UpdateStudentRelationsRequest extends FormRequest
             'travelHistory.*.visaStart' => 'nullable|date',
             'travelHistory.*.visaExpiry' => 'nullable|date',
             'travelHistory.*.visaType' => 'nullable|string|max:255',
-
-            'passports' => 'nullable|array',
-            'passports.*.id' => 'nullable|integer',
-            'passports.*.passportName' => 'nullable|string|max:255',
-            'passports.*.passportIssueLocation' => 'nullable|string|max:255',
-            'passports.*.passportNumber' => 'nullable|string|max:255',
-            'passports.*.passportIssueDate' => 'nullable|date_format:d-m-Y',
-            'passports.*.passportExpiryDate' => 'nullable|date_format:d-m-Y',
-
-            'addresses' => 'nullable|array',
-            'addresses.*.id' => 'nullable|integer',
-            'addresses.*.addressLine1' => 'nullable|string|max:255',
-            'addresses.*.addressLine2' => 'nullable|string|max:255',
-            'addresses.*.townCity' => 'nullable|string|max:255',
-            'addresses.*.state' => 'nullable|string|max:255',
-            'addresses.*.postCode' => 'nullable|string|max:20',
-            'addresses.*.country' => 'nullable|string|max:255',
         ];
     }
 }

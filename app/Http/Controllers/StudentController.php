@@ -21,6 +21,7 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Throwable;
 
 class StudentController extends Controller
 {
@@ -32,8 +33,6 @@ class StudentController extends Controller
         'academicHistory' => AcademicHistory::class,
         'workDetails' => WorkDetail::class,
         'assignStaff' => AssignStaff::class,
-        'passports' => Passport::class,
-        'addresses' => Address::class,
     ];
 
     public function index(Request $request): JsonResponse
@@ -72,20 +71,10 @@ class StudentController extends Controller
                 'student_data' => $validatedData,
             ]);
             $student->save();
-
-            $student->addresses()->create([
-                'addressLine1' => $validatedData['addressLine1'],
-                'addressLine2' => $validatedData['addressLine2'] ?? null,
-                'townCity' => $validatedData['townCity'],
-                'state' => $validatedData['state'],
-                'postCode' => $validatedData['postCode'],
-                'country' => $validatedData['country'],
-                ]);
-
             DB::commit();
 
             return $this->sendSuccessResponse('Student created successfully', StudentResource::make($student));
-        } catch (\Exception $e) {
+        } catch (\Exception|Throwable $e) {
             DB::rollBack();
             return $this->sendErrorResponse($e, 500);
         }

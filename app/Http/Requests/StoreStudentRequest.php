@@ -30,6 +30,12 @@ class StoreStudentRequest extends FormRequest
             'nativeLanguage' => 'required|string|max:255',
             'nationality' => 'required|string|max:255',
 
+            'passportName' => 'nullable|string|max:255',
+            'passportIssueLocation' => 'nullable|string|max:255',
+            'passportNumber' => 'nullable|string|max:255',
+            'passportIssueDate' => 'nullable|date_format:d-m-Y',
+            'passportExpiryDate' => 'nullable|date_format:d-m-Y',
+
             // All other fields remain nullable
             'status' => 'nullable|boolean', // Status is nullable
             'disabilities' => 'nullable|string|max:255',
