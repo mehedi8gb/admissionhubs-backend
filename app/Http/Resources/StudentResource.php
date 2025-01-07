@@ -26,7 +26,7 @@ class StudentResource extends JsonResource
             'id' => $this->id,
             'refId' => $this->ref_id,
             'status' => convertStatus($this->status),
-            'profilePhotoUrl' => FileUploadHelper::generateSignedUrl($profileUrl->id),
+            'profilePhotoUrl' => $profileUrl ? FileUploadHelper::generateSignedUrl($profileUrl->id) : null,
             'createdBy' => UserResource::make($this->createdBy),
 //            'institute' => $this->institute->name,
             'title' => $studentData['title'] ?? null,
