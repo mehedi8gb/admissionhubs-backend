@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Models\File;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -30,7 +31,7 @@ class StudentResource extends JsonResource
             'lastName' => $studentData['lastName'] ?? null,
             'email' => $studentData['email'] ?? null,
             'phone' => $studentData['phone'] ?? null,
-            'dob' => $studentData['dob'] ?? null,
+            'dob' => Carbon::parse($studentData['dob'])->format('Y-m-d') ?? null,
             'maritualStatus' => $studentData['maritualStatus'] ?? null,
             'nationality' => $studentData['nationality'] ?? null,
             'gender' => $studentData['gender'],
