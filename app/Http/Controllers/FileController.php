@@ -24,6 +24,22 @@ class FileController extends Controller
         ]);
 
         $query = File::query();
+
+        if ($request->file_type === 'profile') {
+            $file = $query->where([
+                ['student_id', $request->student_id],
+                ['file_type', 'profile']
+            ])
+                ->latest()
+                ->first();
+
+            return $this->sendSuccessResponse(
+                'Profile picture retrieved successfully',
+                FileResource::make($file)
+            );
+        }
+
+
         if ($request->has('student_id')) {
             $query->where('student_id', $request->student_id);
         }
