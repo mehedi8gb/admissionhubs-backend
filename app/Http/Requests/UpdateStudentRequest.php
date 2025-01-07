@@ -54,7 +54,7 @@ class UpdateStudentRequest extends FormRequest
 
             'passportName' => 'nullable|string|max:255',
             'passportIssueLocation' => 'nullable|string|max:255',
-            'passportNumber' => 'nullable|integer|max:255',
+            'passportNumber' => 'nullable|string|max:255',
             'passportIssueDate' => 'nullable|date_format:Y-m-d',
             'passportExpiryDate' => 'nullable|date_format:Y-m-d',
 
