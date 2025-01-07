@@ -34,19 +34,6 @@ class Student extends Model
         'country_residence', // Country of residence
         'country_birth', // Country of birth
         'native_language', // Native language of the student
-
-//        'visa_need', // Whether the student needs a visa
-//        'refused_permission', // Whether the student has refused permission
-//        'english_language_required', // Whether English language proficiency is required
-//        'academic_history_required', // Whether academic history is required
-//        'work_experience', // Whether work experience is required
-//        'ukinpast', // Whether the student has been in the UK in the past
-//        'maritual_status', // Marital status of the student
-//        'gender_identity', // Gender identity of the student
-//        'sexual_orientation', // Sexual orientation of the student
-//        'religion', // Religion of the student
-//        'ethnicity', // Ethnicity of the student
-//        'disabilities', // Disabilities of the student
     ];
 
 
@@ -84,6 +71,7 @@ class Student extends Model
         'createdBy',
         'academicYear',
         'term',
+        'emergencyContacts',
         'documents',
         'applications',
         'assignStaffs',

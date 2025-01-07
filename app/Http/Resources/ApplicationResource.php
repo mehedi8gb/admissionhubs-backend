@@ -12,9 +12,9 @@ class ApplicationResource extends JsonResource
         // Since this is an array, you can directly return the array as response
         return [
             'id' => $this->id,
-            'institution' => $this->institution,
-            'course' => $this->course,
-            'term' => $this->term,
+            'institution' => InstituteResource::make($this->institute),
+            'course' => CourseResource::make($this->course),
+            'term' => TermResource::make($this->term),
             'type' => $this->type,
             'amount' => $this->amount,
             'status' => convertStatus($this->status)

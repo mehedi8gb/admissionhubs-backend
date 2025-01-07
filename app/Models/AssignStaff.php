@@ -16,8 +16,8 @@ class AssignStaff extends Model
         'type',
     ];
 
-    public function student(): BelongsTo
-    {
-        return $this->belongsTo(Student::class);
-    }
+//    public function student(): BelongsTo
+//    {
+//        return $this->belongsTo(Student::class);
+//    }
 }

@@ -18,8 +18,8 @@ class EmergencyContact extends Model
         'email',
         'status',
     ];
-    public function student(): BelongsTo
-    {
-        return $this->belongsTo(Student::class);
-    }
+//    public function student(): BelongsTo
+//    {
+//        return $this->belongsTo(Student::class);
+//    }
 }

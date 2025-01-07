@@ -12,16 +12,33 @@ class Application extends Model
 
     protected $fillable = [
         'student_id',
-        'institution',
-        'course',
-        'term',
+        'institution_id',
+        'course_id',
+        'term_id',
         'type',
         'amount',
         'status',
     ];
 
-    public function student(): BelongsTo
+    protected $with = ['institute', 'course', 'term'];
+
+//    public function student(): BelongsTo
+//    {
+//        return $this->belongsTo(Student::class, 'id');
+//    }
+
+    public function institute(): BelongsTo
     {
-        return $this->belongsTo(Student::class, 'id');
+        return $this->belongsTo(Institute::class, 'id');
+    }
+
+    public function course(): BelongsTo
+    {
+        return $this->belongsTo(Course::class, 'id');
+    }
+
+    public function term(): BelongsTo
+    {
+        return $this->belongsTo(Term::class, 'id');
     }
 }
