@@ -12,7 +12,7 @@ class Application extends Model
 
     protected $fillable = [
         'student_id',
-        'institution_id',
+        'institute_id',
         'course_id',
         'term_id',
         'type',
@@ -29,16 +29,16 @@ class Application extends Model
 
     public function institute(): BelongsTo
     {
-        return $this->belongsTo(Institute::class, 'id');
+        return $this->belongsTo(Institute::class, 'institute_id');
     }
 
     public function course(): BelongsTo
     {
-        return $this->belongsTo(Course::class, 'id');
+        return $this->belongsTo(Course::class, 'course_id');
     }
 
     public function term(): BelongsTo
     {
-        return $this->belongsTo(Term::class, 'id');
+        return $this->belongsTo(Term::class, 'term_id');
     }
 }

@@ -27,12 +27,12 @@ class UpdateStudentRelationsRequest extends FormRequest
             'applications' => 'nullable|array',
             'applications.*.id' => 'nullable|integer',
             'applications.*.delete' => 'nullable|boolean',
-            'applications.*.institution' => 'nullable|string|max:255',
-            'applications.*.course' => 'nullable|string|max:255',
-            'applications.*.term' => 'nullable|string|max:255',
+            'applications.*.instituteId' => 'nullable|integer|max:255',
+            'applications.*.courseId' => 'nullable|integer|max:255',
+            'applications.*.termId' => 'nullable|integer|max:255',
             'applications.*.type' => 'nullable|string|max:255',
             'applications.*.amount' => 'nullable|numeric',
-            'applications.*.status' => 'nullable|boolean',
+            'applications.*.status' => 'nullable|string',
 
             'assignStaff' => 'nullable|array',
             'assignStaff.*.id' => 'nullable|integer',
@@ -54,8 +54,8 @@ class UpdateStudentRelationsRequest extends FormRequest
             'academicHistory.*.id' => 'nullable|integer',
             'academicHistory.*.institution' => 'nullable|string|max:255',
             'academicHistory.*.course' => 'nullable|string|max:255',
-            'academicHistory.*.academicYearId' => 'nullable|string|max:255',
-            'academicHistory.*.termId' => 'nullable|string|max:255',
+            'academicHistory.*.academicYearId' => 'nullable|max:255',
+            'academicHistory.*.termId' => 'nullable|max:255',
             'academicHistory.*.studyLevel' => 'nullable|string|max:255',
             'academicHistory.*.resultScore' => 'nullable|numeric',
             'academicHistory.*.outOf' => 'nullable|numeric',
@@ -89,5 +89,41 @@ class UpdateStudentRelationsRequest extends FormRequest
             'englishLanguageExam.*.score' => 'nullable|numeric',
             'englishLanguageExam.*.status' => 'nullable|boolean',
         ];
+    }
+
+    /**
+     * Override validated method to apply transformations.
+     */
+    public function validated($key = null, $default = null): array
+    {
+        $validated = parent::validated($key, $default);
+        return $this->transformSelectedKeys($validated);
+    }
+
+
+    /**
+     * Transform specific camelCase keys to snake_case.
+     */
+    private function transformSelectedKeys(array $data): array
+    {
+        // Define the keys to transform.
+        $keysToTransform = [
+            'instituteId' => 'institute_id',
+            'termId' => 'term_id',
+            'courseId' => 'course_id',
+            'academicYearId' => 'academic_year_id',
+        ];
+
+        foreach ($data as $key => $value) {
+            if (is_array($value)) {
+                $data[$key] = $this->transformSelectedKeys($value); // Recursive for nested arrays.
+            } elseif (isset($keysToTransform[$key])) {
+                // Transform key if it matches the ones in the mapping.
+                $data[$keysToTransform[$key]] = $value;
+                unset($data[$key]); // Remove old key.
+            }
+        }
+
+        return $data;
     }
 }

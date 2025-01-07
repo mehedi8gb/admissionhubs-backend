@@ -6,7 +6,15 @@ use App\Http\Requests\DeleteStudentRelationsRequest;
 use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentRelationsRequest;
 use App\Http\Requests\UpdateStudentRequest;
+use App\Http\Resources\AcademicHistoryResource;
+use App\Http\Resources\ApplicationResource;
+use App\Http\Resources\AssignStaffResource;
+use App\Http\Resources\EmergencyContactResource;
+use App\Http\Resources\EnglishLanguageExamResource;
+use App\Http\Resources\RefuseHistoryResource;
 use App\Http\Resources\StudentResource;
+use App\Http\Resources\TravelHistoryResource;
+use App\Http\Resources\WorkDetailResource;
 use App\Models\AcademicHistory;
 use App\Models\Address;
 use App\Models\Application;
@@ -27,15 +35,40 @@ use Throwable;
 class StudentController extends Controller
 {
     protected array $nestedArrays = [
-        'applications' => Application::class,
-        'emergencyContact' => EmergencyContact::class,
-        'travelHistory' => TravelHistory::class,
-        'refuseHistory' => RefuseHistory::class,
-        'academicHistory' => AcademicHistory::class,
-        'workDetails' => WorkDetail::class,
-        'assignStaff' => AssignStaff::class,
-        'englishLanguageExam' => EnglishLanguageExam::class,
+        'applications' => [
+            'model' => Application::class,
+            'resource' => ApplicationResource::class,
+        ],
+        'emergencyContact' => [
+            'model' => EmergencyContact::class,
+            'resource' => EmergencyContactResource::class,
+        ],
+        'travelHistory' => [
+            'model' => TravelHistory::class,
+            'resource' => TravelHistoryResource::class,
+        ],
+        'refuseHistory' => [
+            'model' => RefuseHistory::class,
+            'resource' => RefuseHistoryResource::class,
+        ],
+        'academicHistory' => [
+            'model' => AcademicHistory::class,
+            'resource' => AcademicHistoryResource::class,
+        ],
+        'workDetails' => [
+            'model' => WorkDetail::class,
+            'resource' => WorkDetailResource::class,
+        ],
+        'assignStaff' => [
+            'model' => AssignStaff::class,
+            'resource' => AssignStaffResource::class,
+        ],
+        'englishLanguageExam' => [
+            'model' => EnglishLanguageExam::class,
+            'resource' => EnglishLanguageExamResource::class,
+        ],
     ];
+
 
     public function index(Request $request): JsonResponse
     {
@@ -111,22 +144,30 @@ class StudentController extends Controller
             ]);
 
             if (!empty($validatedArray)) {
-                foreach ($this->nestedArrays as $key => $class) {
+                foreach ($this->nestedArrays as $key => $classes) {
                     if (array_key_exists($key, $validatedArray)) {
                         $nestedData = $validatedArray[$key][0];
-
                         if (isset($nestedData['id'])) {
-                            $class::find($nestedData['id'])->update(
-                                $nestedData
-                            );
+                            $classes['model']::find($nestedData['id'])->update($nestedData);
+                            $msg = 'updated';
                         } else {
                             $nestedData['student_id'] = $student->id;
-                            $nestedModel = $class::create($nestedData);
-                            $nestedModel->save();
+                            $nestedModel = $classes['model']::create($nestedData);
+                            $nestedData['id'] = $nestedModel->id;
+                            $msg = 'created';
                         }
+                        DB::commit();
+
+                        $normalizedKeyName = strtolower(preg_replace('/([a-z])([A-Z])/', '$1 $2', $key));
+
+                        return $this->sendSuccessResponse(
+                            $normalizedKeyName . ' was ' . $msg . ' successfully',
+                            $classes['resource']::make($classes['model']::find($nestedData['id'])) // Dynamically call the resource class
+                        );
                     }
                 }
             }
+
 
             DB::commit();
             $student->refresh();
@@ -155,10 +196,10 @@ class StudentController extends Controller
             $validatedArray = $req->validated();
 
             if (!empty($validatedArray)) {
-                foreach ($this->nestedArrays as $key => $class) {
+                foreach ($this->nestedArrays as $key => $classes) {
                     if (array_key_exists($key, $validatedArray)) {
                         $nestedData = $validatedArray[$key][0];
-                        $nestedModel = $class::findOrFail($nestedData['id']);
+                        $nestedModel = $classes['model']::findOrFail($nestedData['id']);
                         $nestedModel->delete();
 
                         $normalizedKeyName = strtolower(preg_replace('/([a-z])([A-Z])/', '$1 $2', $key));

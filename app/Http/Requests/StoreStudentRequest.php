@@ -54,8 +54,8 @@ class StoreStudentRequest extends FormRequest
             'workExperience' => 'nullable|boolean', // Work experience flag
             'ukInPast' => 'nullable|boolean', // UK in the past flag
             'currentlyInUk' => 'nullable|boolean', // Currently in UK flag
-            'academicYearId' => 'nullable|integer',
-            'termId' => 'nullable|integer',
+            'academicYearId' => 'nullable',
+            'termId' => 'nullable',
         ];
     }
 }

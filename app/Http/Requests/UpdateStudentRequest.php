@@ -65,8 +65,8 @@ class UpdateStudentRequest extends FormRequest
             'ukInPast' => 'nullable|boolean', // UK in the past flag
             'currentlyInUk' => 'nullable|boolean',
 
-            'academicYearId' => 'nullable|integer',
-            'termId' => 'nullable|integer',
+            'academicYearId' => 'nullable',
+            'termId' => 'nullable',
         ];
     }
 }
