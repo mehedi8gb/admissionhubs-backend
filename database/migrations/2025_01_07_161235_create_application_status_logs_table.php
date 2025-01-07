@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('application_status_logs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('application_id')->constrained('applications')->onDelete('cascade'); // Foreign key to Application
+            $table->foreignId('assigned_at')->constrained('users')->onDelete('cascade'); // When the previous status was assigned
+            $table->foreignId('changed_at')->constrained('users')->onDelete('cascade'); // When the status was changed
             $table->string('prev_status')->nullable(); // Previous status
             $table->string('assigned_by'); // Who assigned the previous status
-            $table->timestamp('assigned_at'); // When the previous status was assigned
             $table->string('changed_to'); // New status
             $table->string('changed_by'); // Who changed the status
-            $table->timestamp('changed_at'); // When the status was changed
             $table->timestamps();
         });
     }
