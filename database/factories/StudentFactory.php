@@ -47,6 +47,8 @@ class StudentFactory extends Factory
                 'phone' => fake()->phoneNumber,
                 'dob' => fake()->date('Y-m-d', fake()->dateTimeBetween('-30 years', '-18 years')),
                 'maritualStatus' => fake()->randomElement(['Single', 'Married', 'Divorced', 'Widowed']),
+                'claimDisabilities' => fake()->word(),
+                'disabilitiesOption' => fake()->sentence,
                 'gender' => fake()->randomElement(['Male', 'Female']),
                 'nationality' => fake()->country,
                 'countryResidence' => fake()->country,

@@ -30,6 +30,8 @@ class UpdateStudentRequest extends FormRequest
             ],
             'phone' => 'nullable|string|max:20',
             'dob' => 'nullable|date_format:Y-m-d',
+            'claimDisabilities' => 'nullable|string',
+            'disabilitiesOption' => 'nullable|string|max:255',
             'maritualStatus' => 'nullable|string|max:255',
             'gender' => 'nullable|string|max:50',
             'nationality' => 'nullable|string|max:255',

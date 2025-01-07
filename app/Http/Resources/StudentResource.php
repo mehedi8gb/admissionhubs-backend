@@ -35,6 +35,8 @@ class StudentResource extends JsonResource
             'email' => $studentData['email'] ?? null,
             'phone' => $studentData['phone'] ?? null,
             'dob' => Carbon::parse($studentData['dob'])->format('Y-m-d') ?? null,
+            'claimDisabilities' => $studentData['claimDisabilities'] ?? false,
+            'disabilitiesOption' => $studentData['disabilitiesOption'] ?? null,
             'maritualStatus' => $studentData['maritualStatus'] ?? null,
             'nationality' => $studentData['nationality'] ?? null,
             'gender' => $studentData['gender'],
