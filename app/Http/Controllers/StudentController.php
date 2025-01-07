@@ -12,6 +12,7 @@ use App\Models\Address;
 use App\Models\Application;
 use App\Models\AssignStaff;
 use App\Models\EmergencyContact;
+use App\Models\EnglishLanguageExam;
 use App\Models\Passport;
 use App\Models\RefuseHistory;
 use App\Models\Student;
@@ -33,6 +34,7 @@ class StudentController extends Controller
         'academicHistory' => AcademicHistory::class,
         'workDetails' => WorkDetail::class,
         'assignStaff' => AssignStaff::class,
+        'englishLanguageExam' => EnglishLanguageExam::class,
     ];
 
     public function index(Request $request): JsonResponse

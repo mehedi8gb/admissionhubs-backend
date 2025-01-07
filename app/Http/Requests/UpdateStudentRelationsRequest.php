@@ -81,6 +81,13 @@ class UpdateStudentRelationsRequest extends FormRequest
             'travelHistory.*.visaExpiry' => 'nullable|date',
             'travelHistory.*.visaType' => 'nullable|string|max:255',
             'travelHistory.*.status' => 'nullable|boolean',
+
+            'englishLanguageExam' => 'nullable|array',
+            'englishLanguageExam.*.id' => 'nullable|integer',
+            'englishLanguageExam.*.exam' => 'nullable|string|max:255',
+            'englishLanguageExam.*.examDate' => 'nullable|date',
+            'englishLanguageExam.*.score' => 'nullable|numeric',
+            'englishLanguageExam.*.status' => 'nullable|boolean',
         ];
     }
 }
