@@ -148,8 +148,19 @@ class StudentController extends Controller
                     if (array_key_exists($key, $validatedArray)) {
                         $nestedData = $validatedArray[$key][0];
                         if (isset($nestedData['id'])) {
-                            $classes['model']::find($nestedData['id'])->update($nestedData);
+                            // If the key is 'applications' and the status has changed
+                            $data = $classes['model']::find($nestedData['id']);
+
+                            if ($key === 'applications' && isset($nestedData['status'])
+                                && $nestedData['status'] !== $data->status
+                            ) {
+                                $classes['model']::logApplicationStatusChange($nestedData['status'], $data);
+                            }
+
+                            $data->update($nestedData);
+                            $data->refresh();
                             $msg = 'updated';
+
                         } else {
                             $nestedData['student_id'] = $student->id;
                             $nestedModel = $classes['model']::create($nestedData);

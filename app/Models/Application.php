@@ -41,4 +41,19 @@ class Application extends Model
     {
         return $this->belongsTo(Term::class, 'term_id');
     }
+
+    // Log status change
+    public static function logApplicationStatusChange($changedTo, $application): void
+    {
+        // Create a new log entry
+        ApplicationStatusLog::create([
+            'application_id' => $application->id,
+            'prev_status' => $application->status,
+            'assigned_by' => auth()->id(),
+            'assigned_at' => $application->assigned_at ?? now(),
+            'changed_to' => $changedTo,
+            'changed_by' => auth()->id(),
+            'changed_at' => now(), // Use current timestamp
+        ]);
+    }
 }

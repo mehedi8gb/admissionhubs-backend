@@ -3,6 +3,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\ApplicationStatusLog;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ApplicationResource extends JsonResource
@@ -17,7 +18,8 @@ class ApplicationResource extends JsonResource
             'term' => TermResource::make($this->term),
             'type' => $this->type,
             'amount' => $this->amount,
-            'status' => convertStatus($this->status)
+            'status' => $this->status,
+            'statusLogs' => ApplicationStatusLogResource::collection(ApplicationStatusLog::where('application_id', $this->id)->get()),
         ];
     }
 }
