@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Helpers\FileUploadHelper;
 use App\Models\File;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -19,11 +20,13 @@ class StudentResource extends JsonResource
         $studentData = $this->student_data;
         $studentData['academicHistory'][0]['academicYear'] = $this->academicYear->academic_year ?? null;
         $studentData['academicHistory'][0]['term'] = $this->term->term_data['term'] ?? null;
+        $profileUrl = $this->documents->where('file_type', 'profile')->sortByDesc('created_at')->first();
 
         return [
             'id' => $this->id,
             'refId' => $this->ref_id,
             'status' => convertStatus($this->status),
+            'profilePhotoUrl' => FileUploadHelper::generateSignedUrl($profileUrl->id),
             'createdBy' => UserResource::make($this->createdBy),
 //            'institute' => $this->institute->name,
             'title' => $studentData['title'] ?? null,
