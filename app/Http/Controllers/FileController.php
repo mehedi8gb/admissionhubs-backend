@@ -33,6 +33,10 @@ class FileController extends Controller
                 ->latest()
                 ->first();
 
+            if (!$file) {
+                return $this->sendErrorResponse('No profile picture found for the given student.', 404);
+            }
+
             return $this->sendSuccessResponse(
                 'Profile picture retrieved successfully',
                 FileResource::make($file)
