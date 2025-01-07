@@ -20,8 +20,6 @@ class StoreStudentRequest extends FormRequest
             'email' => 'required|email|max:255|unique:students,student_data->email', // Email is required and unique
             'phone' => 'required|string|max:20', // Phone is required
             'dob' => 'required|date_format:d-m-Y', // Date of Birth is required
-            'claimDisabilities' => 'required|string', // Claim Disabilities is required
-            'disabilitiesOption' => 'required|string|max:255', // Disabilities Option is required
             'maritualStatus' => 'required|string|max:255', // Marital Status is required
             'addressLine1' => 'required|string|max:255', // Address Line 1 is required
             'townCity' => 'required|string|max:255', // Town/City is required
@@ -29,6 +27,9 @@ class StoreStudentRequest extends FormRequest
             'postCode' => 'required|string|max:20', // Post Code is required
             'country' => 'required|string|max:255', // Country is required
             'gender' => 'required|string|max:50',
+
+            'claimDisabilities' => 'nullable|string', // Claim Disabilities is required
+            'disabilitiesOption' => 'nullable|string|max:255', // Disabilities Option is required
 
             'passportName' => 'nullable|string|max:255',
             'passportIssueLocation' => 'nullable|string|max:255',
