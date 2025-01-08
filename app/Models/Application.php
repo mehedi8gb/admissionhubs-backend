@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Application extends Model
 {
@@ -20,7 +21,7 @@ class Application extends Model
         'status',
     ];
 
-    protected $with = ['institute', 'course', 'term'];
+    protected $with = ['institute', 'course', 'term', 'statusLogs'];
 
 //    public function student(): BelongsTo
 //    {
@@ -40,6 +41,11 @@ class Application extends Model
     public function term(): BelongsTo
     {
         return $this->belongsTo(Term::class, 'term_id');
+    }
+
+    public function statusLogs(): HasMany
+    {
+        return $this->hasMany(ApplicationStatusLog::class, 'application_id');
     }
 
     // Log status change

@@ -41,4 +41,9 @@ class ApplicationStatusLog extends Model
     {
         return $this->belongsTo(User::class, 'changed_by');
     }
+
+    public function application(): BelongsTo
+    {
+        return $this->belongsTo(Application::class, 'application_id');
+    }
 }

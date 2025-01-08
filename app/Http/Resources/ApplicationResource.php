@@ -19,7 +19,7 @@ class ApplicationResource extends JsonResource
             'type' => $this->type,
             'amount' => $this->amount,
             'status' => $this->status,
-            'statusLogs' => ApplicationStatusLogResource::collection(ApplicationStatusLog::where('application_id', $this->id)->get()),
+            'statusLogs' => ApplicationStatusLogResource::collection($this->statusLogs),
         ];
     }
 }
