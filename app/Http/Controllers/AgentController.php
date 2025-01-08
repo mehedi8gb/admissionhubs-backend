@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class AgentController extends Controller
 {
@@ -29,12 +30,13 @@ class AgentController extends Controller
     {
         $validatedData = $request->validate([
             'agent_name' => 'required|string|max:255',
-            'organization' => 'required|string|max:255',
-            'contact_person' => 'required|string|max:255',
-            'phone' => 'required|string|unique:users,phone|max:15',
-            'email' => 'required|email|unique:users,email',
+            'contact_person' => 'nullable|string|max:255',
+            'email' => 'required|email|unique:agents,email',
+            'location' => 'nullable|string|max:255',
+            'nominated_staff' => 'required|exists:staffs,id',
+            'organization' => 'nullable|string|max:255',
+            'phone' => 'required|string|unique:agents,phone|max:15',
             'password' => 'required|string|min:8',
-            'location' => 'required|string|max:255',
             'status' => 'nullable|boolean',
         ]);
 
@@ -43,17 +45,14 @@ class AgentController extends Controller
                 'name' => $validatedData['agent_name'],
                 'email' => $validatedData['email'],
                 'phone' => $validatedData['phone'],
-                'password' => $validatedData['password'],
+                'password' => Hash::make($validatedData['password']),
             ]);
             $user->assignRole('agent');
             $user->save();
 
-            $agent = Agent::create([
-                'user_id' => $user->id,
-                'organization' => $validatedData['organization'],
-                'contact_person' => $validatedData['contact_person'],
-                'location' => $validatedData['location'],
-            ]);
+            $validatedData['user_id'] = $user->id;
+
+            $agent = Agent::create($validatedData);
             $agent->save();
             $agent->refresh();
 
@@ -67,7 +66,10 @@ class AgentController extends Controller
     {
         try {
             $data = Agent::findOrFail($id);
-            return $this->sendSuccessResponse('Record retrieved successfully', AgentResource::make($data));
+            return $this->sendSuccessResponse(
+                'Agent record retrieved successfully',
+                AgentResource::make($data)
+            );
         }
         catch (\Exception $e) {
             return $this->sendErrorResponse($e, 500, $e);
@@ -81,11 +83,13 @@ class AgentController extends Controller
 
         $validatedData = $request->validate([
             'agent_name' => 'nullable|string|max:255',
-            'organization' => 'nullable|string|max:255',
             'contact_person' => 'nullable|string|max:255',
-            'phone' => 'nullable|string|max:15|unique:users,phone,' . $user->id,
-            'email' => 'nullable|email|unique:users,email,' . $user->id,
+            'email' => 'nullable|email|unique:agents,email,' . $agent->id,
             'location' => 'nullable|string|max:255',
+            'nominated_staff' => 'nullable|exists:staffs,id',
+            'organization' => 'nullable|string|max:255',
+            'phone' => 'nullable|string|unique:agents,phone,' . $agent->id . '|max:15',
+            'password' => 'nullable|string|min:8', // Hash if provided
             'status' => 'nullable|boolean',
         ]);
 
@@ -100,14 +104,9 @@ class AgentController extends Controller
             ]);
 
             // Update the agent record
-            $agent->update([
-                'organization' => $validatedData['organization'] ?? $agent->organization,
-                'contact_person' => $validatedData['contact_person'] ?? $agent->contact_person,
-                'location' => $validatedData['location'] ?? $agent->location,
-                'status' => $validatedData['status'],
-            ]);
+            $agent->update($validatedData);
 
-            return $this->sendSuccessResponse('Record updated successfully', AgentResource::make($agent));
+            return $this->sendSuccessResponse('Agent record updated successfully', AgentResource::make($agent));
         } catch (\Exception $e) {
             return $this->sendErrorResponse($e, 500);
         }
