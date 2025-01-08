@@ -18,8 +18,8 @@ return new class extends Migration
             $table->foreignId('changed_by')->constrained('users')->onDelete('cascade');
             $table->string('prev_status')->nullable();
             $table->string('changed_to');
-            $table->timestamp('assigned_at');
-            $table->timestamp('changed_at');
+            $table->timestamp('assigned_at')->nullable(); // Allow NULL for assigned_at
+            $table->timestamp('changed_at')->nullable(); // Allow NULL for changed_at
             $table->timestamps();
         });
     }
