@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::create('assign_staff', function (Blueprint $table) {
             $table->id();  // Auto-incrementing ID for the record
             $table->foreignId('student_id')->constrained()->onDelete('cascade'); // Reference to users table
-            $table->unsignedBigInteger('staffId')->nullable();
-            $table->string('type', 255)->nullable();
+            $table->foreignId('staffId')->references('id')->on('staffs')->onDelete('cascade'); // Reference to staffs table
             $table->boolean('status')->default(true);
             $table->timestamps(); // Created and updated at timestamps
 

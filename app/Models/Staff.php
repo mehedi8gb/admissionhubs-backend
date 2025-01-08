@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Staff extends Model
@@ -14,6 +13,9 @@ class Staff extends Model
 
     protected $fillable = [
         'user_id',
+        'first_name',
+        'last_name',
+//        'status'
     ];
 
     public function user(): BelongsTo
