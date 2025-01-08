@@ -25,8 +25,8 @@ class Student extends Model
         'email', // Student's email address
         'phone', // Student's phone number
         'dob', // Student's date of birth
-        'agent', // Agent information (if any)
-        'staff', // Staff assigned to the student (if any)
+        'agent_id', // Agent information (if any)
+        'staff_id', // Staff assigned to the student (if any)
         'student_data', // JSON column containing the entire student object
         'maritual_status', // Marital status of the student
         'gender', // Gender of the student
@@ -63,8 +63,8 @@ class Student extends Model
         'academic_year_id',
         'term_id',
 //        'institute_id',
-        'agent',
-        'staff',
+        'agent_id',
+        'staff_id',
     ];
 
     protected $with = [
@@ -79,7 +79,9 @@ class Student extends Model
         'academicHistories',
         'refuseHistories',
         'travelHistories',
-        'englishLanguageExams'
+        'englishLanguageExams',
+        'agent',
+        'staff',
     ];
 
     protected static function boot(): void
@@ -156,5 +158,15 @@ class Student extends Model
     public function englishLanguageExams(): HasMany
     {
         return $this->hasMany(EnglishLanguageExam::class);
+    }
+
+    public function agent(): BelongsTo
+    {
+        return $this->belongsTo(Agent::class);
+    }
+
+    public function staff(): BelongsTo
+    {
+        return $this->belongsTo(Staff::class);
     }
 }

@@ -3,7 +3,9 @@
 namespace Database\Factories;
 
 use App\Models\AcademicYear;
+use App\Models\Agent;
 use App\Models\Institute;
+use App\Models\Staff;
 use App\Models\Student;
 use App\Models\Term;
 use App\Models\User;
@@ -37,8 +39,8 @@ class StudentFactory extends Factory
             'email' => fake()->unique()->safeEmail,
             'phone' => fake()->phoneNumber,
             'dob' => fake()->date('Y-m-d', fake()->dateTimeBetween('-30 years', '-18 years')),
-            'agent' => fake()->name,
-            'staff' => fake()->name,
+            'agent_id' => Agent::inRandomOrder()->first()->id,
+            'staff_id' => Staff::inRandomOrder()->first()->id,
             'student_data' => [
                 'title' => fake()->title,
                 'firstName' => fake()->firstName,
