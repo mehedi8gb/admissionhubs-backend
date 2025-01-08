@@ -71,7 +71,11 @@ class StudentResource extends JsonResource
             'refuseHistory' => RefuseHistoryResource::collection($this->refuseHistories),
             'academicHistory' => AcademicHistoryResource::collection($this->academicHistories),
             'workDetails' => WorkDetailResource::collection($this->workDetails),
-            'documents' => FileResource::collection($this->documents),
+            'documents' => FileResource::collection(
+                $this->documents->reject(function ($document) {
+                    return $document->file_type === 'profile';
+                })
+            ),
             'applications' => ApplicationResource::collection($this->applications),
             'assignStaff' => AssignStaffResource::collection($this->assignStaffs),
             'englishLanguageExam' => EnglishLanguageExamResource::collection($this->englishLanguageExams),
