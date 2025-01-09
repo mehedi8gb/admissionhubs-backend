@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreAgentRequest;
+use App\Http\Requests\UpdateAgentRequest;
 use App\Http\Resources\AgentResource;
 use App\Models\Agent;
 use App\Models\User;
@@ -26,19 +28,9 @@ class AgentController extends Controller
         return $this->sendSuccessResponse('Records retrieved successfully', $results);
     }
 
-    public function store(Request $request): JsonResponse
+    public function store(StoreAgentRequest $request): JsonResponse
     {
-        $validatedData = $request->validate([
-            'agent_name' => 'required|string|max:255',
-            'contact_person' => 'nullable|string|max:255',
-            'email' => 'required|email|unique:agents,email',
-            'location' => 'nullable|string|max:255',
-            'nominated_staff' => 'nullable|exists:staffs,id',
-            'organization' => 'nullable|string|max:255',
-            'phone' => 'required|string|unique:agents,phone|max:15',
-            'password' => 'required|string|min:8',
-            'status' => 'nullable|boolean',
-        ]);
+        $validatedData = $request->validated();
 
         try {
             $user = User::create([
@@ -76,23 +68,12 @@ class AgentController extends Controller
         }
     }
 
-    public function update(Request $request, string $id): JsonResponse
+    public function update(UpdateAgentRequest $request, $id): JsonResponse
     {
         $agent = Agent::findOrFail($id);
         $user = $agent->user; // Get the associated user
 
-        $validatedData = $request->validate([
-            'agent_name' => 'nullable|string|max:255',
-            'contact_person' => 'nullable|string|max:255',
-            'email' => 'nullable|email|unique:agents,email,' . $agent->id,
-            'location' => 'nullable|string|max:255',
-            'nominated_staff' => 'nullable|exists:staffs,id',
-            'organization' => 'nullable|string|max:255',
-            'phone' => 'nullable|string|unique:agents,phone,' . $agent->id . '|max:15',
-            'password' => 'nullable|string|min:8', // Hash if provided
-            'status' => 'nullable|boolean',
-        ]);
-
+        $validatedData = $request->validated();
         $validatedData['status'] = $validatedData['status'] ?? $agent->status;
 
         try {
