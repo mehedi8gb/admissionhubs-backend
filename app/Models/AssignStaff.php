@@ -13,11 +13,17 @@ class AssignStaff extends Model
     protected $fillable = [
         'student_id',
         'staffId',
-        'type',
+        'status'
     ];
 
-    public function student(): BelongsTo
+    protected $with = ['staff'];
+//    public function student(): BelongsTo
+//    {
+//        return $this->belongsTo(Student::class);
+//    }
+
+    public function staff(): BelongsTo
     {
-        return $this->belongsTo(Student::class);
+        return $this->belongsTo(Staff::class, 'staffId');
     }
 }

@@ -11,9 +11,14 @@ class CreateAgentsTable extends Migration
         Schema::create('agents', function (Blueprint $table) {
             $table->id(); // ID
             $table->foreignId('user_id')->constrained()->onDelete('cascade'); // User ID
-            $table->string('organization'); // Organization
-            $table->string('contact_person'); // Contact Person
-            $table->string('location'); // Location
+            $table->foreignId('nominatedStaffId')->nullable()->constrained('staffs')->cascadeOnDelete(); // Nominated staff
+            $table->string('agentName');
+            $table->string('contactPerson')->nullable();
+            $table->string('email')->unique();
+            $table->string('location')->nullable();
+            $table->string('organization')->nullable();
+            $table->string('phone')->unique();
+            $table->string('password'); // Use hashed password
             $table->boolean('status')->default(1); // Status (1 = Active, 0 = Inactive)
             $table->timestamps(); // Created_At and Updated_At
         });

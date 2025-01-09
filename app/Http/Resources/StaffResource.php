@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class WorkDetailResource extends JsonResource
+class StaffResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,14 +16,13 @@ class WorkDetailResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'jobTitle' => $this->jobTitle,
-            'organization' => $this->organization,
-            'address' => $this->address,
-            'phone' => $this->phone,
-            'fromDate' => $this->fromDate,
-            'toDate' => $this->toDate,
-            'currentlyWorking' => $this->currentlyWorking,
+            'firstName' => $this->firstName,
+            'lastName' => $this->lastName,
+            'email' => $this->user->email,
+            'phone' => $this->user->phone,
+            'role' => $this->user->roles->first()->name,
             'status' => convertStatus($this->status),
+//            'user' => UserResource::make($this->user),
         ];
     }
 }

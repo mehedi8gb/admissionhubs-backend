@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\AssignStaff;
+use App\Models\Staff;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,8 +19,7 @@ class AssignStaffFactory extends Factory
     public function definition(): array
     {
         return [
-            'staffId' => 1, // Replace with a valid staff ID or use a factory
-            'type' => 'Counselor',
+            'staffId' => Staff::factory()->create()->id,
         ];
     }
 }

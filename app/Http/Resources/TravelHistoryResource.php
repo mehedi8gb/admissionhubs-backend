@@ -22,6 +22,7 @@ class TravelHistoryResource extends JsonResource
             'visaStart' => $this->visaStart,
             'visaExpiry' => $this->visaExpiry,
             'visaType' => $this->visaType,
+            'status' => convertStatus($this->status),
         ];
     }
 }

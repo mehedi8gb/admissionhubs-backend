@@ -18,7 +18,7 @@ class CreateEnglishLanguageExamsTable extends Migration
             $table->string('exam'); // Exam name
             $table->date('examDate'); // Exam date
             $table->integer('score'); // Exam score
-            $table->boolean('status')->default(1); // Active (1) or inactive (0)
+            $table->boolean('status')->default(true); // Active (1) or inactive (0)
             $table->timestamps(); // Created at and updated at timestamps
         });
     }

@@ -31,6 +31,7 @@ class StudentTest extends TestCase
         $this->token = JWTAuth::fromUser($this->user);
     }
 
+
     private function studentData($overrides = []): array
     {
         $data = [
@@ -62,6 +63,13 @@ class StudentTest extends TestCase
             "genderidentity" => "Male",
             "sexualOrientation" => "Heterosexual",
             "religion" => "Islam",
+        ];
+
+        return array_merge($data, $overrides);
+    }
+    private function studentPatchData($overrides = []): array
+    {
+        $patchData = [
             "emergencyContact" => [
                 [
                     "id" => 1,
@@ -143,10 +151,8 @@ class StudentTest extends TestCase
             ],
         ];
 
-
-        return array_merge($data, $overrides);
+        return array_merge($patchData, $overrides);
     }
-
     public function test_can_store_student_with_valid_data()
     {
         // Send request to store student with valid data

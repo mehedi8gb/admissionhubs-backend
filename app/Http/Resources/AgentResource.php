@@ -12,12 +12,14 @@ class AgentResource extends JsonResource
 
         return [
             'id' => $this->id,
-            'agent_name' => $agent->name,
-            'organization' => $this->organization,
-            'contact_person' => $this->contact_person,
-            'phone' => $agent->phone,
-            'email' => $agent->email,
+            'agentName' => $this->agentName,
+            'contactPerson' => $this->contactPerson,
+            'email' => $this->email,
             'location' => $this->location,
+            'organization' => $this->organization,
+            'phone' => $this->phone,
+//            'user' => UserResource::make($this->user),
+            'nominatedStaff' => $this->nominatedStaff ? StaffResource::make($this->nominatedStaff) : [],
             'status' => convertStatus($this->status),
         ];
     }
