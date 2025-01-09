@@ -29,7 +29,9 @@ class UpdateStudentRequest extends FormRequest
                 Rule::unique('students')->ignore($studentId, 'id') // Ignore the current student's email
             ],
             'phone' => 'nullable|string|max:20',
-            'dob' => 'nullable|date_format:d-m-Y',
+            'dob' => 'nullable|date_format:Y-m-d',
+            'claimDisabilities' => 'nullable|string',
+            'disabilitiesOption' => 'nullable|string|max:255',
             'maritualStatus' => 'nullable|string|max:255',
             'gender' => 'nullable|string|max:50',
             'nationality' => 'nullable|string|max:255',
@@ -43,14 +45,28 @@ class UpdateStudentRequest extends FormRequest
             'religion' => 'nullable|string|max:255',
             'visaNeed' => 'nullable|boolean',
 
+            'addressLine1' => 'nullable|string|max:255', // Address Line 1 is required
+            'addressLine2' => 'nullable|string|max:255', // Address Line 2 is nullable
+            'townCity' => 'nullable|string|max:255', // Town/City is required
+            'state' => 'nullable|string|max:255', // State is required
+            'postCode' => 'nullable|string|max:20', // Post Code is required
+            'country' => 'nullable|string|max:255', // Country is required
+
+            'passportName' => 'nullable|string|max:255',
+            'passportIssueLocation' => 'nullable|string|max:255',
+            'passportNumber' => 'nullable|string|max:255',
+            'passportIssueDate' => 'nullable|date_format:Y-m-d',
+            'passportExpiryDate' => 'nullable|date_format:Y-m-d',
+
             'refusedPermission' => 'nullable|boolean', // Refused permission flag
             'englishLanguageRequired' => 'nullable|boolean', // English language requirement
             'academicHistoryRequired' => 'nullable|boolean', // Academic history requirement
             'workExperience' => 'nullable|boolean', // Work experience flag
-            'ukinpast' => 'nullable|boolean', // UK in the past flag
+            'ukInPast' => 'nullable|boolean', // UK in the past flag
+            'currentlyInUk' => 'nullable|boolean',
 
-            'academicYearId' => 'nullable|integer',
-            'termId' => 'nullable|integer',
+            'academicYearId' => 'nullable',
+            'termId' => 'nullable',
         ];
     }
 }

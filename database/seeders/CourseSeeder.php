@@ -13,9 +13,72 @@ class CourseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create Courses
-        Course::factory()
-            ->count(30)
-            ->create();
+        $name = [
+            'Computer Science',
+            'Computer Engineering',
+            'Electrical Engineering',
+            'Mechanical Engineering',
+            'Civil Engineering',
+            'Petroleum Engineering',
+            'Chemical Engineering',
+            'Agricultural Engineering',
+            'Agricultural Science',
+            'Agricultural Economics',
+            'Agricultural Extension',
+            'Agricultural Education',
+            'Agricultural Engineering',
+            'Agricultural Science',
+            'Agricultural Economics',
+            'Agricultural Extension',
+            'Agricultural Education',
+            'Agricultural Engineering',
+            'Agricultural Science',
+            'Agricultural Economics',
+            'Agricultural Extension',
+            'Agricultural Education',
+            'Agricultural Engineering',
+            'Agricultural Science',
+            'Agricultural Economics',
+            'Agricultural Extension',
+            'Agricultural Education',
+            'Agricultural Engineering',
+            'Agricultural Science',
+            'Agricultural Economics',
+            'Agricultural Extension',
+            'Agricultural Education',
+            'Agricultural Engineering',
+            'Agricultural Science',
+            'Agricultural Economics',
+            'Agricultural Extension',
+            'Agricultural Education',
+            'Agricultural Engineering',
+            'Agricultural Science',
+            'Agricultural Economics',
+            'Agricultural Extension',
+            'Agricultural Education',
+            'Agricultural Engineering',
+            'Agricultural Science',
+            'Agricultural Economics',
+            'Agricultural Extension',
+            'Agricultural Education',
+            'Agricultural Engineering',
+            'Agricultural Science',
+            'Agricultural Economics',
+            'Agricultural Extension',
+            'Agricultural Education',
+            'Agricultural Engineering',
+            'Agricultural Science',
+            'Agricultural Economics',
+            'Agricultural Extension',
+            'Agricultural Education',
+        ];
+
+        foreach ($name as $course) {
+            Course::factory()->create([
+                'course_data' => [
+                    'name' => $course
+                ],
+            ]);
+        }
     }
 }

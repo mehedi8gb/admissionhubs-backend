@@ -24,14 +24,14 @@ class AcademicHistoryFactory extends Factory
             'student_id' => Student::inRandomOrder()->first()->id,
             'institution' => $this->faker->company,
             'course' => $this->faker->word,
-            'academicYearId' => AcademicYear::inRandomOrder()->first()->id,
-            'termId' => Term::inRandomOrder()->first()->id,
+            'academic_year_id' => AcademicYear::inRandomOrder()->first()->id,
+            'term_id' => Term::inRandomOrder()->first()->id,
             'studyLevel' => fake()->randomElement(['Undergraduate', 'Graduate', 'Diploma']),
             'resultScore' => $this->faker->randomFloat(2, 1, 5),
             'outOf' => 5,
             'startDate' => fake()->date('Y-m-d', '-10 years'),
             'endDate' => fake()->date('Y-m-d', '-5 years'),
-            'status' => $this->faker->randomElement(['Completed', 'Ongoing']),
+            'status' => rand(0, 1),
         ];
     }
 }

@@ -3,7 +3,9 @@
 namespace Database\Factories;
 
 use App\Models\AcademicYear;
+use App\Models\Agent;
 use App\Models\Institute;
+use App\Models\Staff;
 use App\Models\Student;
 use App\Models\Term;
 use App\Models\User;
@@ -37,8 +39,8 @@ class StudentFactory extends Factory
             'email' => fake()->unique()->safeEmail,
             'phone' => fake()->phoneNumber,
             'dob' => fake()->date('Y-m-d', fake()->dateTimeBetween('-30 years', '-18 years')),
-            'agent' => fake()->name,
-            'staff' => fake()->name,
+            'agent_id' => Agent::inRandomOrder()->first()->id,
+            'staff_id' => Staff::inRandomOrder()->first()->id,
             'student_data' => [
                 'title' => fake()->title,
                 'firstName' => fake()->firstName,
@@ -47,12 +49,31 @@ class StudentFactory extends Factory
                 'phone' => fake()->phoneNumber,
                 'dob' => fake()->date('Y-m-d', fake()->dateTimeBetween('-30 years', '-18 years')),
                 'maritualStatus' => fake()->randomElement(['Single', 'Married', 'Divorced', 'Widowed']),
+                'claimDisabilities' => fake()->word(),
+                'disabilitiesOption' => fake()->sentence,
                 'gender' => fake()->randomElement(['Male', 'Female']),
                 'nationality' => fake()->country,
                 'countryResidence' => fake()->country,
                 'countryBirth' => fake()->country,
                 'nativeLanguage' => fake()->languageCode,
-
+                'passportName' => fake()->name,
+                'passportIssueLocation' => fake()->city,
+                'passportNumber' => fake()->unique()->randomNumber(8),
+                'passportIssueDate' => fake()->date('Y-m-d', fake()->dateTimeBetween('-10 years', '-5 years')),
+                'passportExpiryDate' => fake()->date('Y-m-d', fake()->dateTimeBetween('+5 years', '+10 years')),
+                'addressLine1' => fake()->streetAddress,
+                'addressLine2' => fake()->streetAddress,
+                'townCity' => fake()->city,
+                'state' => fake()->word(),
+                'postCode' => fake()->postcode,
+                'country' => fake()->country,
+                'visaNeed' => fake()->boolean,
+                'refusedPermission' => fake()->boolean,
+                'englishLanguageRequired' => fake()->boolean,
+                'academicHistoryRequired' => fake()->boolean,
+                'workExperience' => fake()->boolean,
+                'ukInPast' => fake()->boolean,
+                'currentlyInUk' => fake()->boolean,
                 'disabilities' => fake()->randomElement(['None', 'Visual', 'Hearing', 'Mobility']),
                 'ethnicity' => fake()->word(),
                 'genderIdentity' => fake()->randomElement(['Male', 'Female', 'Transgender']),

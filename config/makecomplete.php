@@ -13,11 +13,11 @@ return [
     |
     */
 
-    'model' => false,       // Enable or disable Model creation
+    'model' => true,       // Enable or disable Model creation
     'migration' => true,   // Enable or disable Migration creation
     'factory' => true,     // Enable or disable Factory creation
     'seeder' => true,      // Enable or disable Seeder creation
     'resource' => true,    // Enable or disable Resource creation
-    'controller' => false,  // Enable or disable Controller creation
+    'controller' => true,  // Enable or disable Controller creation
 
 ];

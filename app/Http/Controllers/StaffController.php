@@ -2,21 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreAgentRequest;
-use App\Http\Requests\UpdateAgentRequest;
-use App\Http\Resources\AgentResource;
-use App\Models\Agent;
+use App\Http\Requests\StoreStaffRequest;
+use App\Http\Requests\UpdateStaffRequest;
+use App\Http\Resources\StaffResource;
+use App\Models\Staff;
 use App\Models\User;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-class AgentController extends Controller
+class StaffController extends Controller
 {
     public function index(Request $request): JsonResponse
     {
-        $query = Agent::query();
+        $query = Staff::query();
         $results = $this->handleApiRequest($request, $query);
 
         // Convert $results to a collection if it's an array
@@ -28,7 +27,7 @@ class AgentController extends Controller
         return $this->sendSuccessResponse('Records retrieved successfully', $results);
     }
 
-    public function store(StoreAgentRequest $request): JsonResponse
+    public function store(StoreStaffRequest $request): JsonResponse
     {
         $validatedData = $request->validated();
 
@@ -39,18 +38,16 @@ class AgentController extends Controller
                 'phone' => $request->phone,
                 'password' => bcrypt($request->password),
             ]);
-            $user->assignRole('agent');
+            $user->assignRole('staff');
             $user->save();
 
             $validatedData['user_id'] = $user->id;
 
-            $validatedData['nominatedStaffId'] = $validatedData['nominatedStaff'] ?? null;
+            $staff = Staff::create($validatedData);
+            $staff->save();
+            $staff->refresh();
 
-            $agent = Agent::create($validatedData);
-            $agent->save();
-            $agent->refresh();
-
-            return $this->sendSuccessResponse('Record created successfully', AgentResource::make($agent));
+            return $this->sendSuccessResponse('Record created successfully', StaffResource::make($staff));
         } catch (\Exception $e) {
             return $this->sendErrorResponse($e, 500);
         }
@@ -59,10 +56,10 @@ class AgentController extends Controller
     public function show($id): JsonResponse
     {
         try {
-            $data = Agent::findOrFail($id);
+            $data = Staff::findOrFail($id);
             return $this->sendSuccessResponse(
-                'Agent record retrieved successfully',
-                AgentResource::make($data)
+                'Staff record retrieved successfully',
+                StaffResource::make($data)
             );
         }
         catch (\Exception $e) {
@@ -70,14 +67,14 @@ class AgentController extends Controller
         }
     }
 
-    public function update(UpdateAgentRequest $request, $id): JsonResponse
+    public function update(UpdateStaffRequest $request, string $id): JsonResponse
     {
-        $agent = Agent::findOrFail($id);
-        $user = $agent->user; // Get the associated user
+        $staff = Staff::findOrFail($id);
+        $user = $staff->user; // Get the associated user
 
         $validatedData = $request->validated();
-        $validatedData['status'] = $validatedData['status'] ?? $agent->status;
-        $validatedData['nominatedStaffId'] = $validatedData['nominatedStaff'] ?? $agent->nominatedStaffId;
+
+        $validatedData['status'] = $validatedData['status'] ?? $staff->status;
 
         try {
             // Update the user record
@@ -88,10 +85,10 @@ class AgentController extends Controller
                 'password' => bcrypt($request->password) ?? $user->password,
             ]);
 
-            // Update the agent record
-            $agent->update($validatedData);
+            // Update the staff record
+            $staff->update($validatedData);
 
-            return $this->sendSuccessResponse('Agent record updated successfully', AgentResource::make($agent));
+            return $this->sendSuccessResponse('Staff record updated successfully', StaffResource::make($staff));
         } catch (\Exception $e) {
             return $this->sendErrorResponse($e, 500);
         }
@@ -101,7 +98,7 @@ class AgentController extends Controller
     public function destroy($id): JsonResponse
     {
         try {
-            $data = Agent::findOrFail($id);
+            $data = Staff::findOrFail($id);
             $data->delete();
             return $this->sendSuccessResponse('Record deleted successfully');
         } catch (\Exception $e) {

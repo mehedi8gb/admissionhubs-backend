@@ -25,7 +25,7 @@ class EmergencyContactFactory extends Factory
             'email' => $this->faker->safeEmail,
             'address' => $this->faker->address,
             'relationship' => $this->faker->randomElement(['Parent', 'Sibling', 'Guardian', 'Friend']),
-            'status' => $this->faker->randomElement(['Active', 'Inactive']),
+            'status' => rand(0, 1),
         ];
     }
 }

@@ -3,10 +3,12 @@
 use App\Http\Controllers\AcademicYearController;
 use App\Http\Controllers\AgentController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\CourseRelationController;
 use App\Http\Controllers\EnglishLanguageExamController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\InstitutionController;
 use App\Http\Controllers\ResourceController;
+use App\Http\Controllers\StaffController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TermController;
 use App\Http\Controllers\UserController;
@@ -44,6 +46,8 @@ Route::group(['prefix' => 'auth'], function () {
 // Admin Routes
 Route::middleware(['role:student'])->group(function () {
     Route::apiResource('agents', AgentController::class);
+    Route::apiResource('staffs', StaffController::class);
+    Route::apiResource('course-relations', CourseRelationController::class);
     Route::apiResource('english-language-exams', EnglishLanguageExamController::class);
     // Add more routes specific to the student role
 });

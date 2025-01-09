@@ -25,8 +25,8 @@ class Student extends Model
         'email', // Student's email address
         'phone', // Student's phone number
         'dob', // Student's date of birth
-        'agent', // Agent information (if any)
-        'staff', // Staff assigned to the student (if any)
+        'agent_id', // Agent information (if any)
+        'staff_id', // Staff assigned to the student (if any)
         'student_data', // JSON column containing the entire student object
         'maritual_status', // Marital status of the student
         'gender', // Gender of the student
@@ -34,19 +34,6 @@ class Student extends Model
         'country_residence', // Country of residence
         'country_birth', // Country of birth
         'native_language', // Native language of the student
-
-//        'visa_need', // Whether the student needs a visa
-//        'refused_permission', // Whether the student has refused permission
-//        'english_language_required', // Whether English language proficiency is required
-//        'academic_history_required', // Whether academic history is required
-//        'work_experience', // Whether work experience is required
-//        'ukinpast', // Whether the student has been in the UK in the past
-//        'maritual_status', // Marital status of the student
-//        'gender_identity', // Gender identity of the student
-//        'sexual_orientation', // Sexual orientation of the student
-//        'religion', // Religion of the student
-//        'ethnicity', // Ethnicity of the student
-//        'disabilities', // Disabilities of the student
     ];
 
 
@@ -76,14 +63,15 @@ class Student extends Model
         'academic_year_id',
         'term_id',
 //        'institute_id',
-        'agent',
-        'staff',
+        'agent_id',
+        'staff_id',
     ];
 
     protected $with = [
         'createdBy',
         'academicYear',
         'term',
+        'emergencyContacts',
         'documents',
         'applications',
         'assignStaffs',
@@ -91,8 +79,9 @@ class Student extends Model
         'academicHistories',
         'refuseHistories',
         'travelHistories',
-        'passports',
-        'addresses',
+        'englishLanguageExams',
+        'agent',
+        'staff',
     ];
 
     protected static function boot(): void
@@ -166,13 +155,18 @@ class Student extends Model
         return $this->hasMany(TravelHistory::class);
     }
 
-    public function passports(): HasMany
+    public function englishLanguageExams(): HasMany
     {
-        return $this->hasMany(Passport::class);
+        return $this->hasMany(EnglishLanguageExam::class);
     }
 
-    public function addresses(): HasMany
+    public function agent(): BelongsTo
     {
-        return $this->hasMany(Address::class);
+        return $this->belongsTo(Agent::class);
+    }
+
+    public function staff(): BelongsTo
+    {
+        return $this->belongsTo(Staff::class);
     }
 }

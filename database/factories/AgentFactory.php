@@ -3,8 +3,10 @@
 namespace Database\Factories;
 
 use App\Models\Agent;
+use App\Models\Staff;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Hash;
 
 class AgentFactory extends Factory
 {
@@ -17,9 +19,14 @@ class AgentFactory extends Factory
 
         return [
             'user_id' => $user->id,
-            'organization' => $this->faker->company(),
-            'contact_person' => $this->faker->name(),
-            'location' => $this->faker->address(),
+            'agentName' => $this->faker->name,
+            'contactPerson' => $this->faker->name,
+            'email' => $this->faker->unique()->safeEmail,
+            'location' => $this->faker->address,
+            'nominatedStaffId' => Staff::factory()->create()->id,
+            'organization' => $this->faker->company,
+            'phone' => $this->faker->unique()->phoneNumber,
+            'password' => Hash::make('password'), // Default password
             'status' => $this->faker->boolean(),
         ];
     }

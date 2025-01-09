@@ -22,17 +22,17 @@ class UpdateStudentRelationsRequest extends FormRequest
             'emergencyContact.*.email' => 'nullable|email|max:255',
             'emergencyContact.*.address' => 'nullable|string|max:255',
             'emergencyContact.*.relationship' => 'nullable|string|max:255',
-            'emergencyContact.*.status' => 'nullable|string|max:50',
+            'emergencyContact.*.status' => 'nullable|boolean',
 
             'applications' => 'nullable|array',
             'applications.*.id' => 'nullable|integer',
             'applications.*.delete' => 'nullable|boolean',
-            'applications.*.institution' => 'nullable|string|max:255',
-            'applications.*.course' => 'nullable|string|max:255',
-            'applications.*.term' => 'nullable|string|max:255',
+            'applications.*.instituteId' => 'nullable|integer|max:255',
+            'applications.*.courseId' => 'nullable|integer|max:255',
+            'applications.*.termId' => 'nullable|integer|max:255',
             'applications.*.type' => 'nullable|string|max:255',
             'applications.*.amount' => 'nullable|numeric',
-            'applications.*.status' => 'nullable|string|max:50',
+            'applications.*.status' => 'nullable|string',
 
             'assignStaff' => 'nullable|array',
             'assignStaff.*.id' => 'nullable|integer',
@@ -47,21 +47,21 @@ class UpdateStudentRelationsRequest extends FormRequest
             'workDetails.*.phone' => 'nullable|string|max:20',
             'workDetails.*.fromDate' => 'nullable|date',
             'workDetails.*.toDate' => 'nullable|date',
-            'workDetails.*.active' => 'nullable|boolean',
             'workDetails.*.currentlyWorking' => 'nullable|boolean',
+            'workDetails.*.status' => 'nullable|boolean',
 
             'academicHistory' => 'nullable|array',
             'academicHistory.*.id' => 'nullable|integer',
             'academicHistory.*.institution' => 'nullable|string|max:255',
             'academicHistory.*.course' => 'nullable|string|max:255',
-            'academicHistory.*.academicYearId' => 'nullable|string|max:255',
-            'academicHistory.*.termId' => 'nullable|string|max:255',
+            'academicHistory.*.academicYearId' => 'nullable|max:255',
+            'academicHistory.*.termId' => 'nullable|max:255',
             'academicHistory.*.studyLevel' => 'nullable|string|max:255',
             'academicHistory.*.resultScore' => 'nullable|numeric',
             'academicHistory.*.outOf' => 'nullable|numeric',
             'academicHistory.*.startDate' => 'nullable|date',
             'academicHistory.*.endDate' => 'nullable|date',
-            'academicHistory.*.status' => 'nullable|string|max:50',
+            'academicHistory.*.status' => 'nullable|boolean',
 
             'refuseHistory' => 'nullable|array',
             'refuseHistory.*.id' => 'nullable|integer',
@@ -70,7 +70,7 @@ class UpdateStudentRelationsRequest extends FormRequest
             'refuseHistory.*.details' => 'nullable|string|max:1000',
             'refuseHistory.*.country' => 'nullable|string|max:255',
             'refuseHistory.*.visaType' => 'nullable|string|max:255',
-            'refuseHistory.*.status' => 'nullable|string|max:50',
+            'refuseHistory.*.status' => 'nullable|boolean',
 
             'travelHistory' => 'nullable|array',
             'travelHistory.*.id' => 'nullable|integer',
@@ -80,23 +80,50 @@ class UpdateStudentRelationsRequest extends FormRequest
             'travelHistory.*.visaStart' => 'nullable|date',
             'travelHistory.*.visaExpiry' => 'nullable|date',
             'travelHistory.*.visaType' => 'nullable|string|max:255',
+            'travelHistory.*.status' => 'nullable|boolean',
 
-            'passports' => 'nullable|array',
-            'passports.*.id' => 'nullable|integer',
-            'passports.*.passportName' => 'nullable|string|max:255',
-            'passports.*.passportIssueLocation' => 'nullable|string|max:255',
-            'passports.*.passportNumber' => 'nullable|string|max:255',
-            'passports.*.passportIssueDate' => 'nullable|date_format:d-m-Y',
-            'passports.*.passportExpiryDate' => 'nullable|date_format:d-m-Y',
-
-            'addresses' => 'nullable|array',
-            'addresses.*.id' => 'nullable|integer',
-            'addresses.*.addressLine1' => 'nullable|string|max:255',
-            'addresses.*.addressLine2' => 'nullable|string|max:255',
-            'addresses.*.townCity' => 'nullable|string|max:255',
-            'addresses.*.state' => 'nullable|string|max:255',
-            'addresses.*.postCode' => 'nullable|string|max:20',
-            'addresses.*.country' => 'nullable|string|max:255',
+            'englishLanguageExam' => 'nullable|array',
+            'englishLanguageExam.*.id' => 'nullable|integer',
+            'englishLanguageExam.*.exam' => 'nullable|string|max:255',
+            'englishLanguageExam.*.examDate' => 'nullable|date',
+            'englishLanguageExam.*.score' => 'nullable|numeric',
+            'englishLanguageExam.*.status' => 'nullable|boolean',
         ];
+    }
+
+    /**
+     * Override validated method to apply transformations.
+     */
+    public function validated($key = null, $default = null): array
+    {
+        $validated = parent::validated($key, $default);
+        return $this->transformSelectedKeys($validated);
+    }
+
+
+    /**
+     * Transform specific camelCase keys to snake_case.
+     */
+    private function transformSelectedKeys(array $data): array
+    {
+        // Define the keys to transform.
+        $keysToTransform = [
+            'instituteId' => 'institute_id',
+            'termId' => 'term_id',
+            'courseId' => 'course_id',
+            'academicYearId' => 'academic_year_id',
+        ];
+
+        foreach ($data as $key => $value) {
+            if (is_array($value)) {
+                $data[$key] = $this->transformSelectedKeys($value); // Recursive for nested arrays.
+            } elseif (isset($keysToTransform[$key])) {
+                // Transform key if it matches the ones in the mapping.
+                $data[$keysToTransform[$key]] = $value;
+                unset($data[$key]); // Remove old key.
+            }
+        }
+
+        return $data;
     }
 }
