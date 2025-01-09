@@ -18,7 +18,7 @@ class AgentResource extends JsonResource
             'location' => $this->location,
             'organization' => $this->organization,
             'phone' => $this->phone,
-            'user' => UserResource::make($this->user),
+//            'user' => UserResource::make($this->user),
             'nominated_staff' => StaffResource::make($this->nominatedStaff), // Related staff resource
             'created_at' => $this->created_at->toDateTimeString(),
             'updated_at' => $this->updated_at->toDateTimeString(),
