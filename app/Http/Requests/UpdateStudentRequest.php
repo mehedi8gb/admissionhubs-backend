@@ -44,6 +44,8 @@ class UpdateStudentRequest extends FormRequest
             'sexualOrientation' => 'nullable|string|max:255',
             'religion' => 'nullable|string|max:255',
             'visaNeed' => 'nullable|boolean',
+            'agentId' => 'nullable|integer',
+            'staffId' => 'nullable|integer',
 
             'addressLine1' => 'nullable|string|max:255', // Address Line 1 is required
             'addressLine2' => 'nullable|string|max:255', // Address Line 2 is nullable

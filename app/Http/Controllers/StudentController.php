@@ -102,7 +102,7 @@ class StudentController extends Controller
                 'dob' => $validatedData['dob'],
                 'academic_year_id' => $validatedData['academicYearId'] ?? null,
                 'term_id' => $validatedData['termId'] ?? null,
-//                'institute' => $validatedData['institute'],
+                //                'institute' => $validatedData['institute'],
                 'status' => $validatedData['status'] ?? true,
                 'agent' => $validatedData['agent'] ?? null,
                 'staff' => $validatedData['staff'] ?? null,
@@ -112,7 +112,7 @@ class StudentController extends Controller
             DB::commit();
 
             return $this->sendSuccessResponse('Student created successfully', StudentResource::make($student));
-        } catch (\Exception|Throwable $e) {
+        } catch (\Exception | Throwable $e) {
             DB::rollBack();
             return $this->sendErrorResponse($e, 500);
         }
@@ -123,7 +123,6 @@ class StudentController extends Controller
         $student = Student::findOrFail($id);
         $validatedData = $request->validated();
         $validatedArray = $req->validated();
-
         try {
             DB::beginTransaction();
             $studentData = $student->student_data;
@@ -136,10 +135,10 @@ class StudentController extends Controller
                 'dob' => $validatedData['dob'] ?? $student->dob,
                 'academic_year_id' => $validatedData['academicYearId'] ?? optional($student->academicYear)->id,
                 'term_id' => $validatedData['termId'] ?? optional($student->term)->id,
-//                'institute' => $validatedData['institute'] ?? $student->institute,
+                //                'institute' => $validatedData['institute'] ?? $student->institute,
                 'status' => $validatedData['status'] ?? $student->status,
-                'agent' => $validatedData['agent'] ?? $student->agent,
-                'staff' => $validatedData['staff'] ?? $student->staff,
+                'agent_id' => $validatedData['agentId'] ?? $student->agent->id,
+                'staff_id' => $validatedData['staffId'] ?? $student->staff->id,
                 'student_data' => $studentData,
             ]);
 
@@ -151,7 +150,8 @@ class StudentController extends Controller
                             // If the key is 'applications' and the status has changed
                             $data = $classes['model']::find($nestedData['id']);
 
-                            if ($key === 'applications' && isset($nestedData['status'])
+                            if (
+                                $key === 'applications' && isset($nestedData['status'])
                                 && $nestedData['status'] !== $data->status
                             ) {
                                 $classes['model']::logApplicationStatusChange($nestedData['status'], $data);
@@ -160,7 +160,6 @@ class StudentController extends Controller
                             $data->update($nestedData);
                             $data->refresh();
                             $msg = 'updated';
-
                         } else {
                             $nestedData['student_id'] = $student->id;
                             $nestedModel = $classes['model']::create($nestedData);
