@@ -34,7 +34,7 @@ class StudentResource extends JsonResource
             'lastName' => $studentData['lastName'] ?? null,
             'email' => $studentData['email'] ?? null,
             'phone' => $studentData['phone'] ?? null,
-            'agent' => AgentResource::make($this->agent) ?? [],
+            'agent' => $this->agent ? AgentResource::make($this->agent) : [],
 //            'staff' => StaffResource::make($this->staff),
             'dob' => Carbon::parse($studentData['dob'])->format('Y-m-d') ?? null,
             'claimDisabilities' => $studentData['claimDisabilities'] ?? false,
