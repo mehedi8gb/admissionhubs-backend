@@ -3,7 +3,7 @@
 set -e  # Exit immediately if a command exits with a non-zero status
 
 # Variables
-APP_DIR="/var/www/apex365"
+APP_DIR="/var/www/admissionhubs-backend"
 LOG_FILE="$APP_DIR/deploy.log"
 
 # Start logging
