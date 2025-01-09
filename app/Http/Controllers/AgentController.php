@@ -37,7 +37,7 @@ class AgentController extends Controller
                 'name' => $validatedData['agent_name'],
                 'email' => $validatedData['email'],
                 'phone' => $validatedData['phone'],
-                'password' => Hash::make($validatedData['password']),
+                'password' => bcrypt($validatedData['password']),
             ]);
             $user->assignRole('agent');
             $user->save();
@@ -82,6 +82,7 @@ class AgentController extends Controller
                 'name' => $validatedData['agent_name'] ?? $user->name,
                 'email' => $validatedData['email'] ?? $user->email,
                 'phone' => $validatedData['phone'] ?? $user->phone,
+                'password' => bcrypt($validatedData['password']) ?? $user->password,
             ]);
 
             // Update the agent record

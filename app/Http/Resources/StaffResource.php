@@ -21,6 +21,7 @@ class StaffResource extends JsonResource
             'email' => $this->user->email,
             'phone' => $this->user->phone,
             'role' => $this->user->roles->first()->name,
+            'status' => convertStatus($this->status),
 //            'user' => UserResource::make($this->user),
         ];
     }
