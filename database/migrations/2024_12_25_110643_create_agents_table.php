@@ -11,9 +11,9 @@ class CreateAgentsTable extends Migration
         Schema::create('agents', function (Blueprint $table) {
             $table->id(); // ID
             $table->foreignId('user_id')->constrained()->onDelete('cascade'); // User ID
-            $table->unsignedBigInteger('nominated_staff')->nullable(); // Nominated staff
-            $table->string('agent_name');
-            $table->string('contact_person')->nullable();
+            $table->unsignedBigInteger('nominatedStaff')->nullable(); // Nominated staff
+            $table->string('agentName');
+            $table->string('contactPerson')->nullable();
             $table->string('email')->unique();
             $table->string('location')->nullable();
             $table->string('organization')->nullable();

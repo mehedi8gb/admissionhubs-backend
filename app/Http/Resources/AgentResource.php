@@ -12,8 +12,8 @@ class AgentResource extends JsonResource
 
         return [
             'id' => $this->id,
-            'agentName' => $this->agent_name,
-            'contactPerson' => $this->contact_person,
+            'agentName' => $this->agentName,
+            'contactPerson' => $this->contactPerson,
             'email' => $this->email,
             'location' => $this->location,
             'organization' => $this->organization,

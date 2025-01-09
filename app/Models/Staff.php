@@ -13,9 +13,9 @@ class Staff extends Model
 
     protected $fillable = [
         'user_id',
-        'first_name',
-        'last_name',
-//        'status'
+        'firstName',
+        'lastName',
+        'status'
     ];
 
     public function user(): BelongsTo

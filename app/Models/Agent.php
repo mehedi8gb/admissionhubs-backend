@@ -12,11 +12,11 @@ class Agent extends Model
 
     protected $fillable = [
         'user_id',
-        'agent_name',
-        'contact_person',
+        'agentName',
+        'contactPerson',
         'email',
         'location',
-        'nominated_staff',
+        'nominatedStaff',
         'organization',
         'phone',
         'password',
@@ -30,6 +30,6 @@ class Agent extends Model
 
     public function nominatedStaff(): HasOne
     {
-        return $this->hasOne(Staff::class, 'id', 'nominated_staff');
+        return $this->hasOne(Staff::class, 'id', 'nominatedStaff');
     }
 }

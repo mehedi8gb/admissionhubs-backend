@@ -22,8 +22,8 @@ class StaffFactory extends Factory
 
         return [
             'user_id' => $user->id,
-            'first_name' => $this->faker->firstName,
-            'last_name' => $this->faker->lastName,
+            'firstName' => $this->faker->firstName,
+            'lastName' => $this->faker->lastName,
         ];
     }
 }

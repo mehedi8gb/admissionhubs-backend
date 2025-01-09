@@ -33,38 +33,4 @@ class UpdateStaffRequest extends FormRequest
             'status' => 'nullable|boolean',
         ];
     }
-
-    /**
-     * Override validated method to apply transformations.
-     */
-    public function validated($key = null, $default = null): array
-    {
-        $validated = parent::validated($key, $default);
-        return $this->transformSelectedKeys($validated);
-    }
-
-
-    /**
-     * Transform specific camelCase keys to snake_case.
-     */
-    private function transformSelectedKeys(array $data): array
-    {
-        // Define the keys to transform.
-        $keysToTransform = [
-            'firstName' => 'first_name',
-            'lastName' => 'last_name',
-        ];
-
-        foreach ($data as $key => $value) {
-            if (is_array($value)) {
-                $data[$key] = $this->transformSelectedKeys($value); // Recursive for nested arrays.
-            } elseif (isset($keysToTransform[$key])) {
-                // Transform key if it matches the ones in the mapping.
-                $data[$keysToTransform[$key]] = $value;
-                unset($data[$key]); // Remove old key.
-            }
-        }
-
-        return $data;
-    }
 }

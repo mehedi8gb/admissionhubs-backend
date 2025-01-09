@@ -34,10 +34,10 @@ class AgentController extends Controller
 
         try {
             $user = User::create([
-                'name' => $validatedData['agent_name'],
-                'email' => $validatedData['email'],
-                'phone' => $validatedData['phone'],
-                'password' => bcrypt($validatedData['password']),
+                'name' => $request->firstName . $request->lastName,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'password' => bcrypt($request->password),
             ]);
             $user->assignRole('agent');
             $user->save();
@@ -79,10 +79,10 @@ class AgentController extends Controller
         try {
             // Update the user record
             $user->update([
-                'name' => $validatedData['agent_name'] ?? $user->name,
-                'email' => $validatedData['email'] ?? $user->email,
-                'phone' => $validatedData['phone'] ?? $user->phone,
-                'password' => bcrypt($validatedData['password']) ?? $user->password,
+                'name' => $request->firstName . $request->lastName ?? $user->name,
+                'email' => $request->email ?? $user->email,
+                'phone' => $request->phone ?? $user->phone,
+                'password' => bcrypt($request->password) ?? $user->password,
             ]);
 
             // Update the agent record
