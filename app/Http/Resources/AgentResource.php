@@ -12,16 +12,16 @@ class AgentResource extends JsonResource
 
         return [
             'id' => $this->id,
-            'agent_name' => $this->agent_name,
-            'contact_person' => $this->contact_person,
+            'agentName' => $this->agent_name,
+            'contactPerson' => $this->contact_person,
             'email' => $this->email,
             'location' => $this->location,
             'organization' => $this->organization,
             'phone' => $this->phone,
 //            'user' => UserResource::make($this->user),
-            'nominated_staff' => StaffResource::make($this->nominatedStaff), // Related staff resource
-            'created_at' => $this->created_at->toDateTimeString(),
-            'updated_at' => $this->updated_at->toDateTimeString(),
+            'nominatedStaff' => StaffResource::make($this->nominatedStaff), // Related staff resource
+            'createdAt' => $this->created_at->toDateTimeString(),
+            'updatedAt' => $this->updated_at->toDateTimeString(),
             'status' => convertStatus($this->status),
         ];
     }
