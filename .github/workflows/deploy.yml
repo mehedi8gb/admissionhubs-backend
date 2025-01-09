@@ -3,27 +3,27 @@ name: Deploy to Ubuntu Server
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Deploy to Server
-      env:
-        SSH_KEY: ${{ secrets.SSH_KEY }}
-        HOST: ${{ secrets.HOST }}
-        USER: ${{ secrets.USER }}
-      run: |
-        mkdir -p ~/.ssh
-        echo "$SSH_KEY" > ~/.ssh/id_ed25519
-        chmod 600 ~/.ssh/id_ed25519
-        ssh-keyscan -H $HOST >> ~/.ssh/known_hosts
+      - name: Deploy to Server
+        env:
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+          HOST: ${{ secrets.HOST }}
+          USER: ${{ secrets.USER }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H $HOST >> ~/.ssh/known_hosts
 
-        ssh -i ~/.ssh/id_ed25519 $USER@$HOST << 'EOF'
-          /var/www/apex365/deploy.sh
-        EOF
+          ssh -i ~/.ssh/id_ed25519 $USER@$HOST << 'EOF'
+            /var/www/apex365/deploy.sh
+          EOF
