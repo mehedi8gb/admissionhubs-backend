@@ -56,6 +56,7 @@ Route::middleware([JwtMiddleware::class])->group(function () {
     Route::apiResource('terms', TermController::class);
     Route::apiResource('academic-years', AcademicYearController::class);
     Route::apiResource('users', UserController::class);
+    Route::apiResource('students', StudentController::class);
 });
 
 // Documents Routes
@@ -71,7 +72,6 @@ Route::middleware(['role:student'])->prefix('documents')->group(function () {
 
 // Student Routes
 Route::middleware(['role:student'])->group(function () {
-    Route::apiResource('students', StudentController::class);
     Route::get('profile', [AuthController::class, 'me']);
     // Add more routes specific to the student role
 });
