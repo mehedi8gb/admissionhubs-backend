@@ -20,8 +20,6 @@ class AgentResource extends JsonResource
             'phone' => $this->phone,
 //            'user' => UserResource::make($this->user),
             'nominatedStaff' => StaffResource::make($this->nominatedStaff), // Related staff resource
-            'createdAt' => $this->created_at->toDateTimeString(),
-            'updatedAt' => $this->updated_at->toDateTimeString(),
             'status' => convertStatus($this->status),
         ];
     }
