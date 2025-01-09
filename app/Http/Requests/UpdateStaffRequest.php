@@ -28,7 +28,7 @@ class UpdateStaffRequest extends FormRequest
             'firstName' => 'nullable|string|max:255',
             'lastName' => 'nullable|string|max:255',
             'email' => 'nullable|email|unique:users,email' . ($user->id ? ',' . $user->id : ''),
-            'phone' => 'nullable|string|unique:users,phone|max:15' . ($user->id ? ',' . $user->id : ''),
+            'phone' => 'nullable|string|unique:users,phone' . ($user->id ? ',' . $user->id : ''),
             'password' => 'nullable|string|min:8',
             'status' => 'nullable|boolean',
         ];

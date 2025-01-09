@@ -25,7 +25,7 @@ class StoreStaffRequest extends FormRequest
             'firstName' => 'required|string|max:255',
             'lastName' => 'nullable|string|max:255',
             'email' => 'required|email|unique:agents,email',
-            'phone' => 'required|string|unique:agents,phone|max:15',
+            'phone' => 'required|string|unique:agents,phone',
             'password' => 'required|string|min:8',
             'status' => 'nullable|boolean',
         ];

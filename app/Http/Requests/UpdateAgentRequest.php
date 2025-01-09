@@ -17,17 +17,17 @@ class UpdateAgentRequest extends FormRequest
 
     public function rules(): array
     {
-        $agentId = $this->route('agent'); // Get the agent ID from the route
-        $agent = Agent::find($agentId); // Fetch the Agent instance (null if not found)
+        $agent = Agent::find($this->route('agent')); // Fetch the Agent instance (null if not found)
+        $user = $agent?->user; // Fetch the User instance (null if not found)
 
         return [
             'agentName' => 'nullable|string|max:255',
             'contactPerson' => 'nullable|string|max:255',
-            'email' => 'nullable|email|unique:agents,email,' . ($agent?->id ?? 'null'),
+            'email' => 'nullable|email|unique:users,email,' . ($user?->id ?? 'null'),
             'location' => 'nullable|string|max:255',
             'nominatedStaff' => 'nullable|exists:staffs,id',
             'organization' => 'nullable|string|max:255',
-            'phone' => 'nullable|string|unique:agents,phone,' . ($agent?->id ?? 'null') . '|max:15',
+            'phone' => 'nullable|string|unique:users,phone,' . ($user?->id ?? 'null'),
             'password' => 'nullable|string|min:8', // Hash if provided
             'status' => 'nullable|boolean',
         ];

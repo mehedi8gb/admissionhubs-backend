@@ -19,11 +19,11 @@ class StoreAgentRequest extends FormRequest
         return [
             'agentName' => 'required|string|max:255',
             'contactPerson' => 'nullable|string|max:255',
-            'email' => 'required|email|unique:agents,email',
+            'email' => 'required|email|unique:users,email',
             'location' => 'nullable|string|max:255',
             'nominatedStaff' => 'nullable|exists:staffs,id',
             'organization' => 'nullable|string|max:255',
-            'phone' => 'required|string|unique:agents,phone|max:15',
+            'phone' => 'required|string|unique:users,phone',
             'password' => 'required|string|min:8',
             'status' => 'nullable|boolean',
         ];
