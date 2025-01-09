@@ -23,7 +23,7 @@ class AgentFactory extends Factory
             'contactPerson' => $this->faker->name,
             'email' => $this->faker->unique()->safeEmail,
             'location' => $this->faker->address,
-            'nominatedStaff' => Staff::factory()->create()->id,
+            'nominatedStaffId' => Staff::factory()->create()->id,
             'organization' => $this->faker->company,
             'phone' => $this->faker->unique()->phoneNumber,
             'password' => Hash::make('password'), // Default password

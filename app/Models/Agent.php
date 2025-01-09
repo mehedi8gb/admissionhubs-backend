@@ -16,12 +16,14 @@ class Agent extends Model
         'contactPerson',
         'email',
         'location',
-        'nominatedStaff',
+        'nominatedStaffId',
         'organization',
         'phone',
         'password',
         'status',
     ];
+
+    protected $with = ['user', 'nominatedStaff'];
 
     public function user():BelongsTo
     {
@@ -30,6 +32,6 @@ class Agent extends Model
 
     public function nominatedStaff(): HasOne
     {
-        return $this->hasOne(Staff::class, 'id', 'nominatedStaff');
+        return $this->hasOne(Staff::class, 'id', 'nominatedStaffId');
     }
 }

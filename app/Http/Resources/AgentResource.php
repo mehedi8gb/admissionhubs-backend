@@ -19,7 +19,7 @@ class AgentResource extends JsonResource
             'organization' => $this->organization,
             'phone' => $this->phone,
 //            'user' => UserResource::make($this->user),
-            'nominatedStaff' => StaffResource::make($this->nominatedStaff), // Related staff resource
+            'nominatedStaff' => $this->nominatedStaff ? StaffResource::make($this->nominatedStaff) : [],
             'status' => convertStatus($this->status),
         ];
     }

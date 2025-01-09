@@ -44,6 +44,8 @@ class AgentController extends Controller
 
             $validatedData['user_id'] = $user->id;
 
+            $validatedData['nominatedStaffId'] = $validatedData['nominatedStaff'] ?? null;
+
             $agent = Agent::create($validatedData);
             $agent->save();
             $agent->refresh();
@@ -75,6 +77,7 @@ class AgentController extends Controller
 
         $validatedData = $request->validated();
         $validatedData['status'] = $validatedData['status'] ?? $agent->status;
+        $validatedData['nominatedStaffId'] = $validatedData['nominatedStaff'] ?? $agent->nominatedStaffId;
 
         try {
             // Update the user record
