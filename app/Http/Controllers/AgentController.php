@@ -33,7 +33,7 @@ class AgentController extends Controller
             'contact_person' => 'nullable|string|max:255',
             'email' => 'required|email|unique:agents,email',
             'location' => 'nullable|string|max:255',
-            'nominated_staff' => 'required|exists:staffs,id',
+            'nominated_staff' => 'nullable|exists:staffs,id',
             'organization' => 'nullable|string|max:255',
             'phone' => 'required|string|unique:agents,phone|max:15',
             'password' => 'required|string|min:8',
