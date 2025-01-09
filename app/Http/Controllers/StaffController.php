@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\AgentResource;
+use App\Http\Requests\StoreStaffRequest;
+use App\Http\Requests\UpdateStaffRequest;
+use App\Http\Resources\StaffResource;
 use App\Models\Staff;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
@@ -25,16 +27,9 @@ class StaffController extends Controller
         return $this->sendSuccessResponse('Records retrieved successfully', $results);
     }
 
-    public function store(Request $request): JsonResponse
+    public function store(StoreStaffRequest $request): JsonResponse
     {
-        $validatedData = $request->validate([
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'nullable|string|max:255',
-            'email' => 'required|email|unique:agents,email',
-            'phone' => 'required|string|unique:agents,phone|max:15',
-            'password' => 'required|string|min:8',
-            'status' => 'nullable|boolean',
-        ]);
+        $validatedData = $request->validated();
 
         try {
             $user = User::create([
@@ -52,7 +47,7 @@ class StaffController extends Controller
             $staff->save();
             $staff->refresh();
 
-            return $this->sendSuccessResponse('Record created successfully', AgentResource::make($staff));
+            return $this->sendSuccessResponse('Record created successfully', StaffResource::make($staff));
         } catch (\Exception $e) {
             return $this->sendErrorResponse($e, 500);
         }
@@ -64,7 +59,7 @@ class StaffController extends Controller
             $data = Staff::findOrFail($id);
             return $this->sendSuccessResponse(
                 'Staff record retrieved successfully',
-                AgentResource::make($data)
+                StaffResource::make($data)
             );
         }
         catch (\Exception $e) {
@@ -72,19 +67,12 @@ class StaffController extends Controller
         }
     }
 
-    public function update(Request $request, string $id): JsonResponse
+    public function update(UpdateStaffRequest $request, string $id): JsonResponse
     {
         $staff = Staff::findOrFail($id);
         $user = $staff->user; // Get the associated user
 
-        $validatedData = $request->validate([
-            'first_name' => 'nullable|string|max:255',
-            'last_name' => 'nullable|string|max:255',
-            'email' => 'nullable|email|unique:agents,email' . $user->id,
-            'phone' => 'nullable|string|unique:agents,phone|max:15' . $user->id,
-            'password' => 'nullable|string|min:8',
-            'status' => 'nullable|boolean',
-        ]);
+        $validatedData = $request->validated();
 
         $validatedData['status'] = $validatedData['status'] ?? $staff->status;
 
@@ -99,7 +87,7 @@ class StaffController extends Controller
             // Update the staff record
             $staff->update($validatedData);
 
-            return $this->sendSuccessResponse('Staff record updated successfully', AgentResource::make($staff));
+            return $this->sendSuccessResponse('Staff record updated successfully', StaffResource::make($staff));
         } catch (\Exception $e) {
             return $this->sendErrorResponse($e, 500);
         }
