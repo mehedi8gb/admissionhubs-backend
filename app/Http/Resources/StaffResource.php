@@ -18,8 +18,8 @@ class StaffResource extends JsonResource
             'id' => $this->id,
             'firstName' => $this->first_name,
             'lastName' => $this->last_name,
-            'name' => $this->user->name,
             'email' => $this->user->email,
+            'phone' => $this->user->phone,
             'role' => $this->user->roles->first()->name,
 //            'user' => UserResource::make($this->user),
         ];
