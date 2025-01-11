@@ -11,27 +11,27 @@ use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
-//class StudentTest extends TestCase
-//{
-//    use RefreshDatabase;
-//    private User $user;
-//    private $token;
-//
-//    protected function setUp(): void
-//    {
-//        parent::setUp();
-//
-//        // Create the student role and user only once
-//        Role::create(['name' => 'student', 'guard_name' => 'web']);
-//        AcademicYear::factory()->create();
-//        Term::factory()->create();
-//
-//        $this->user = User::factory()->create();
-//        $this->user->assignRole('student');
-//        $this->token = JWTAuth::fromUser($this->user);
-//    }
-//
-//
+class StudentTest extends TestCase
+{
+    use RefreshDatabase;
+    private User $user;
+    private $token;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        // Create the student role and user only once
+        Role::create(['name' => 'student', 'guard_name' => 'web']);
+        AcademicYear::factory()->create();
+        Term::factory()->create();
+
+        $this->user = User::factory()->create();
+        $this->user->assignRole('student');
+        $this->token = JWTAuth::fromUser($this->user);
+    }
+
+
 //    private function studentData($overrides = []): array
 //    {
 //        $data = [
@@ -380,4 +380,4 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 //            'message' => 'The email has already been taken.',
 //        ]);
 //    }
-//}
+}
