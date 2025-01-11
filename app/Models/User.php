@@ -52,12 +52,6 @@ class User extends Authenticatable implements JWTSubject
         'password',
         'status'
     ];
-
-    /**
-     * $with array
-     */
-    protected $with = ['agent', 'roles'];
-
     /**
      * The attributes that should be hidden for serialization.
      *
