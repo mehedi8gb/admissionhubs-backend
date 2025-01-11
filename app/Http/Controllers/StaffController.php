@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Symfony\Component\HttpFoundation\Response;
 
 class StaffController extends Controller
 {
@@ -24,7 +25,7 @@ class StaffController extends Controller
             return $this->sendErrorResponse('No records found', 404);
         }
 
-        return $this->sendSuccessResponse('Records retrieved successfully', $results);
+        return $this->sendSuccessResponse('Staff records retrieved successfully', $results);
     }
 
     public function store(StoreStaffRequest $request): JsonResponse
@@ -37,17 +38,21 @@ class StaffController extends Controller
                 'email' => $request->email,
                 'phone' => $request->phone,
                 'password' => bcrypt($request->password),
+                'status' => $request->status ?? true,
             ]);
             $user->assignRole('staff');
             $user->save();
 
-            $validatedData['user_id'] = $user->id;
+            $staff = Staff::create(array_merge($validatedData, ['user_id' => $user->id]));
 
-            $staff = Staff::create($validatedData);
             $staff->save();
             $staff->refresh();
 
-            return $this->sendSuccessResponse('Record created successfully', StaffResource::make($staff));
+            return $this->sendSuccessResponse(
+                'Staff record created successfully',
+                StaffResource::make($staff),
+                Response::HTTP_CREATED
+            );
         } catch (\Exception $e) {
             return $this->sendErrorResponse($e, 500);
         }
@@ -61,8 +66,7 @@ class StaffController extends Controller
                 'Staff record retrieved successfully',
                 StaffResource::make($data)
             );
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             return $this->sendErrorResponse($e, 500, $e);
         }
     }
@@ -74,15 +78,14 @@ class StaffController extends Controller
 
         $validatedData = $request->validated();
 
-        $validatedData['status'] = $validatedData['status'] ?? $staff->status;
-
         try {
             // Update the user record
             $user->update([
                 'name' => $request->firstName . $request->lastName ?? $user->name,
                 'email' => $request->email ?? $user->email,
                 'phone' => $request->phone ?? $user->phone,
-                'password' => bcrypt($request->password) ?? $user->password,
+                'password' => $request->password ? bcrypt($request->password) : $user->password,
+                'status' => $request->status ?? $user->status,
             ]);
 
             // Update the staff record
