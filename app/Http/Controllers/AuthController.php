@@ -31,7 +31,7 @@ class AuthController extends Controller
             'name' => $validated['name'],
             'email' => $validated['email'],
             'phone' => $validated['phone'],
-            'password' => Hash::make($validated['password']),
+            'password' => bcrypt($validated['password']),
         ]);
 
         // Assign the role to the user
@@ -63,6 +63,10 @@ class AuthController extends Controller
 
         if (!Auth::attempt($credentials)) {
             return $this->sendErrorResponse('invalid credentials', 401);
+        }
+
+        if (auth()->user()->status == 0) {
+            return $this->sendErrorResponse('Your account is inactive', 403);
         }
 
         // Generate refresh token (optional: store securely if needed)

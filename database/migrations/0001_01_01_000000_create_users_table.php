@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('password_reset_code')->nullable();
             $table->rememberToken();
             $table->string('profile_photo_path', 2048)->nullable();
+            $table->boolean('status')->default(1);
             $table->timestamps();
         });
 
