@@ -156,6 +156,10 @@ class StudentController extends Controller
                                 $classes['model']::logApplicationStatusChange($nestedData['status'], $data);
                             }
 
+                            if ($key === 'assignStaff' && $data->staffId === $nestedData['staffId']) {
+                                $this->sendErrorResponse('You cannot assign the same staff to the same student', 422);
+                            }
+
                             $data->update($nestedData);
                             $data->refresh();
                             $msg = 'updated';
