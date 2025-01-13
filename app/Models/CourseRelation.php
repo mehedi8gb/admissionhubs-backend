@@ -13,7 +13,6 @@ class CourseRelation extends Model
         'institute_id',
         'course_id',
         'term_id',
-        'academic_year_id',
         'local',
         'local_amount',
         'international',
@@ -27,7 +26,7 @@ class CourseRelation extends Model
         'status' => 'boolean',
     ];
 
-    protected $with = ['institute', 'course', 'term', 'academicYear'];
+    protected $with = ['institute', 'course', 'term'];
 
     // Relationship to Institute
     public function institute(): BelongsTo
@@ -45,12 +44,6 @@ class CourseRelation extends Model
     public function term(): BelongsTo
     {
         return $this->belongsTo(Term::class);
-    }
-
-    // Relationship to AcademicYear
-    public function academicYear(): BelongsTo
-    {
-        return $this->belongsTo(AcademicYear::class);
     }
 }
 

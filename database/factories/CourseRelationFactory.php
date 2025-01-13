@@ -13,13 +13,12 @@ class CourseRelationFactory extends Factory
 {
     protected $model = CourseRelation::class;
 
-    public function definition()
+    public function definition(): array
     {
         return [
             'institute_id' => Institute::inRandomOrder()->first()->id,
             'course_id' => Course::inRandomOrder()->first()->id,
             'term_id' => Term::inRandomOrder()->first()->id,
-            'academic_year_id' => AcademicYear::inRandomOrder()->first()->id,
             'local' => $this->faker->boolean(),
             'local_amount' => $this->faker->randomFloat(2, 100, 1000),
             'international' => $this->faker->boolean(),
