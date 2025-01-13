@@ -23,15 +23,15 @@ class StudentSeeder extends Seeder
      */
     public function run(): void
     {
-        Student::factory(10)->create()->each(function ($student) {
-            EmergencyContact::factory(rand(1, 3))->create(['student_id' => $student->id]);
-            Application::factory(rand(1, 3))->create(['student_id' => $student->id]);
-            AcademicHistory::factory(rand(1, 3))->create(['student_id' => $student->id]);
-            TravelHistory::factory(rand(1, 3))->create(['student_id' => $student->id]);
-            RefuseHistory::factory(rand(1, 2))->create(['student_id' => $student->id]);
-            WorkDetail::factory(rand(2, 3))->create(['student_id' => $student->id]);
-            AssignStaff::factory(rand(1, 3))->create(['student_id' => $student->id]);
-            EnglishLanguageExam::factory(rand(2, 4))->create(['student_id' => $student->id]);
+        Student::factory(50)->create()->each(function ($student) {
+            EmergencyContact::factory(rand(3, 5))->create(['student_id' => $student->id]);
+            Application::factory(rand(3, 6))->create(['student_id' => $student->id]);
+            AcademicHistory::factory(rand(3, 6))->create(['student_id' => $student->id]);
+            TravelHistory::factory(rand(3, 6))->create(['student_id' => $student->id]);
+            RefuseHistory::factory(rand(3, 6))->create(['student_id' => $student->id]);
+            WorkDetail::factory(rand(3, 6))->create(['student_id' => $student->id]);
+            AssignStaff::factory(rand(3, 6))->create(['student_id' => $student->id]);
+            EnglishLanguageExam::factory(rand(3, 6))->create(['student_id' => $student->id]);
 //            Address::factory(rand(2, 4))->create(['student_id' => $student->id]);
 //            Passport::factory(rand(1, 3))->create(['student_id' => $student->id]);
         });
