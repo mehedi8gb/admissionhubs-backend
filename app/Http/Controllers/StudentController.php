@@ -123,7 +123,6 @@ class StudentController extends Controller
         $student = Student::findOrFail($id);
         $validatedData = $request->validated();
         $validatedArray = $req->validated();
-
         try {
             DB::beginTransaction();
             $studentData = $student->student_data;
@@ -138,8 +137,8 @@ class StudentController extends Controller
                 'term_id' => $validatedData['termId'] ?? optional($student->term)->id,
 //                'institute' => $validatedData['institute'] ?? $student->institute,
                 'status' => $validatedData['status'] ?? $student->status,
-                'agent' => $validatedData['agent'] ?? $student->agent,
-                'staff' => $validatedData['staff'] ?? $student->staff,
+                'agent_id' => $validatedData['agentId'] ?? $student->agent_id,
+                'staff_id' => $validatedData['staffId'] ?? $student->staff_id,
                 'student_data' => $studentData,
             ]);
 

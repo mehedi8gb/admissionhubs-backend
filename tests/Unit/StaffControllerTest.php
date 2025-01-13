@@ -245,16 +245,9 @@ class StaffControllerTest extends TestCase
     public function it_fails_to_login_when_staff_status_is_false()
     {
         // Step 1: Create a staff member
-        $createPayload = [
-            'firstName' => 'Barbara',
-            'lastName' => 'McLaughlin',
-            'email' => 'dddd.hopee@example.net',
-            'phone' => '44452',
-            'password' => '12345688',
-        ];
 
         $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)
-            ->postJson('/api/staffs', $createPayload);
+            ->postJson('/api/staffs', $this->payload);
 
         $response->assertStatus(Response::HTTP_CREATED);
 
@@ -276,8 +269,8 @@ class StaffControllerTest extends TestCase
             ]);
 
         $loginPayload = [
-            'email' => $createPayload['email'],
-            'password' => $createPayload['password'],
+            'email' => $this->payload['email'],
+            'password' => $this->payload['password'],
         ];
 
         $loginResponse = $this->postJson('/api/auth/login', $loginPayload);
