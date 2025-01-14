@@ -16,7 +16,6 @@ return new class extends Migration
             $table->foreignId('institute_id')->constrained('institutes')->onDelete('cascade'); // Foreign key to institutes table
             $table->foreignId('course_id')->constrained('courses')->onDelete('cascade'); // Foreign key to courses table
             $table->foreignId('term_id')->constrained('terms')->onDelete('cascade'); // Foreign key to terms table
-            $table->foreignId('academic_year_id')->constrained('academic_years')->onDelete('cascade'); // Foreign key to academic_years table
             $table->boolean('local')->default(false); // Local course indicator
             $table->decimal('local_amount', 10, 2)->nullable(); // Local amount
             $table->boolean('international')->default(false); // International course indicator

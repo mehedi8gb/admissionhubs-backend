@@ -12,15 +12,10 @@ class Agent extends Model
 
     protected $fillable = [
         'user_id',
-        'agentName',
         'contactPerson',
-        'email',
         'location',
         'nominatedStaffId',
         'organization',
-        'phone',
-        'password',
-        'status',
     ];
 
     protected $with = ['user', 'nominatedStaff'];

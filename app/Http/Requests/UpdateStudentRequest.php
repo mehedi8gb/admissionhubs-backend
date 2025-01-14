@@ -69,6 +69,8 @@ class UpdateStudentRequest extends FormRequest
 
             'academicYearId' => 'nullable',
             'termId' => 'nullable',
+            'agentId' => 'nullable',
+            'staffId' => 'nullable',
         ];
     }
 }

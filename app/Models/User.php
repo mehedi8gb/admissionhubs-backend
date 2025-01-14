@@ -50,8 +50,8 @@ class User extends Authenticatable implements JWTSubject
         'email',
         'phone',
         'password',
+        'status'
     ];
-
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -83,6 +83,7 @@ class User extends Authenticatable implements JWTSubject
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'status' => 'boolean',
         ];
     }
 
@@ -97,6 +98,7 @@ class User extends Authenticatable implements JWTSubject
             'email' => $this->email,
             'name' => $this->name,
             'role' => $this->getRoleNames()->first(), // Fetches the first role name as a string
+            'status' => $this->status,
         ];
     }
 

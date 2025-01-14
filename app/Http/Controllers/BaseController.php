@@ -121,11 +121,6 @@ class BaseController
             $total = $results->total();
         }
 
-        // Apply dynamic resource transformation
-        $resourceClass = getResourceClass($query->getModel());
-        $result = $results instanceof LengthAwarePaginator
-            ? $resourceClass::collection($results->items())
-            : $resourceClass::collection($results);
 
         // Meta information for pagination
         $meta = [
@@ -135,6 +130,17 @@ class BaseController
             'totalPage' => $limit === 'all' ? 1 : $results->lastPage(),
         ];
 
-        return compact('meta', 'result');
+        // Apply dynamic resource transformation
+        $resourceClass = getResourceClass($query->getModel());
+
+        $result = $request->query('select') !== null
+            ? ($results instanceof LengthAwarePaginator ? $results->items() : $results->toArray())
+            : $resourceClass::collection($results);
+
+        return [
+            'meta' => $meta,
+            'result' => $result,
+        ];
+
     }
 }

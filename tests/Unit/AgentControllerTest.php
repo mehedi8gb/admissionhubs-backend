@@ -6,6 +6,8 @@ use App\Models\Agent;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Artisan;
+use PHPUnit\Framework\Attributes\Test;
+use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
@@ -14,7 +16,7 @@ class AgentControllerTest extends TestCase
     use RefreshDatabase;
 
     private User $user;
-    private $token;
+    private string $token;
     private array $payload;
 
     protected function setUp(): void
@@ -40,13 +42,12 @@ class AgentControllerTest extends TestCase
         ];
     }
 
-    /** @test */
-    public function it_can_create_an_agent_record()
+    #[Test] public function it_can_create_an_agent_record()
     {
         $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)
             ->postJson('/api/agents', $this->payload);
 
-        $response->assertStatus(200)
+        $response->assertStatus(Response::HTTP_CREATED)
             ->assertJsonStructure([
                 'success',
                 'message',
@@ -64,15 +65,18 @@ class AgentControllerTest extends TestCase
             ]);
 
         // Assert database has the agent record
-        $this->assertDatabaseHas('agents', [
-            'agentName' => $this->payload['agentName'],
-            'organization' => $this->payload['organization'],
+        $this->assertDatabaseHas('users', [
+            'name' => $this->payload['agentName'],
             'email' => $this->payload['email'],
+        ]);
+
+        $this->assertDatabaseHas('agents', [
+            'organization' => $this->payload['organization'],
+            'contactPerson' => $this->payload['contactPerson'],
         ]);
     }
 
-    /** @test */
-    public function it_can_list_agent_records()
+    #[Test] public function it_can_list_agent_records()
     {
         Agent::factory()->count(10)->create();
 
@@ -107,8 +111,7 @@ class AgentControllerTest extends TestCase
             ]);
     }
 
-    /** @test */
-    public function it_can_show_an_agent_record()
+    #[Test] public function it_can_show_an_agent_record()
     {
         $agent = Agent::factory()->create();
 
@@ -134,8 +137,7 @@ class AgentControllerTest extends TestCase
             ->assertJsonFragment(['id' => $agent->id]);
     }
 
-    /** @test */
-    public function it_can_update_an_agent_record()
+    #[Test] public function it_can_update_an_agent_record()
     {
         $agent = Agent::factory()->create();
 
@@ -150,15 +152,19 @@ class AgentControllerTest extends TestCase
         $response->assertStatus(200)
             ->assertJsonFragment(['agentName' => 'Updated Agent Name']);
 
+        $this->assertDatabaseHas('users', [
+            'name' => $updatePayload['agentName'],
+            'email' => $agent->user->email,
+            'phone' => $agent->user->phone,
+        ]);
+
         $this->assertDatabaseHas('agents', [
-            'id' => $agent->id,
-            'agentName' => $updatePayload['agentName'],
             'organization' => $updatePayload['organization'],
+            'contactPerson' => $agent->contactPerson,
         ]);
     }
 
-    /** @test */
-    public function it_can_delete_an_agent_record()
+    #[Test] public function it_can_delete_an_agent_record()
     {
         $agent = Agent::factory()->create();
 
@@ -171,22 +177,129 @@ class AgentControllerTest extends TestCase
         $this->assertDatabaseMissing('agents', ['id' => $agent->id]);
     }
 
-    /** @test */
-    public function it_can_change_status_of_an_agent_record()
+    #[Test] public function it_can_change_status_of_an_agent_record()
     {
-        $agent = Agent::factory()->create(['status' => true]);
+        $agent = Agent::factory()->create();
 
-        $updatePayload = ['status' => false];
+        $updatePayload = [
+            'status' => 0,
+        ];
 
-        $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)
+        $updateResponse = $this->withHeader('Authorization', 'Bearer ' . $this->token)
             ->putJson("/api/agents/{$agent->id}", $updatePayload);
 
-        $response->assertStatus(200)
-            ->assertJsonFragment(['status' => 0]);
+        $updateResponse->assertStatus(200)
+            ->assertJson([
+                'data' => [
+                    'status' => 0,
+                ],
+            ]);
 
         $this->assertDatabaseHas('agents', [
             'id' => $agent->id,
+        ]);
+
+        $this->assertDatabaseHas('users', [
+            'id' => $agent->user->id,
             'status' => 0,
         ]);
+    }
+
+    #[Test]
+    public function it_can_create_an_agent_and_login()
+    {
+        // Step 1: Create an agent using POST /agents
+        $createPayload = [
+            'agentName' => 'John Doe',
+            'organization' => 'XYZ Organization',
+            'contactPerson' => 'Jane Smith',
+            'phone' => '+2 (4544)',
+            'email' => 'ag@demo.com',
+            'location' => '123 Main St, Cityville, NY 10001',
+            'password' => '12345678',
+            'status' => 1,
+        ];
+
+        $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)
+            ->postJson('/api/agents', $createPayload);
+
+
+        $response->assertStatus(Response::HTTP_CREATED)
+            ->assertJsonStructure([
+                'success',
+                'message',
+                'data' => [
+                    'id', 'agentName', 'email',
+                ],
+            ]);
+
+        // Step 2: Extract email and login
+        $loginPayload = [
+            'email' => $createPayload['email'],
+            'password' => $createPayload['password'],
+        ];
+
+        $loginResponse = $this->postJson('/api/auth/login', $loginPayload);
+
+        $loginResponse->assertStatus(200)
+            ->assertJsonStructure([
+                'success',
+                'message',
+                'data' => [
+                    'access_token',
+                ],
+            ]);
+    }
+
+    #[Test]
+    public function it_fails_to_login_when_agent_status_is_false()
+    {
+        // Step 1: Create an agent
+        $createPayload = [
+            'agentName' => 'John Doe',
+            'organization' => 'XYZ Organization',
+            'contactPerson' => 'Jane Smith',
+            'phone' => '+2 (4544)',
+            'email' => 'ag@demo.com',
+            'location' => '123 Main St, Cityville, NY 10001',
+            'password' => '12345678',
+            'status' => 1,
+        ];
+
+        $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)
+            ->postJson('/api/agents', $createPayload);
+
+        $response->assertStatus(Response::HTTP_CREATED);
+
+        // Step 2: Update the agent status to false
+        $agentId = $response->json('data.id');
+
+        $updatePayload = [
+            'status' => 0,
+        ];
+
+        $updateResponse = $this->withHeader('Authorization', 'Bearer ' . $this->token)
+            ->putJson("/api/agents/{$agentId}", $updatePayload);
+
+        $updateResponse->assertStatus(200)
+            ->assertJson([
+                'data' => [
+                    'status' => 0,
+                ],
+            ]);
+
+        $loginPayload = [
+            'email' => $createPayload['email'],
+            'password' => $createPayload['password'],
+        ];
+
+        $loginResponse = $this->postJson('/api/auth/login', $loginPayload);
+
+
+        $loginResponse->assertStatus(403)
+            ->assertJson([
+                'success' => false,
+                'message' => 'Your account is inactive',
+            ]);
     }
 }

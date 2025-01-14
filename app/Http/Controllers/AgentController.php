@@ -34,23 +34,23 @@ class AgentController extends Controller
 
         try {
             $user = User::create([
-                'name' => $request->firstName . $request->lastName,
+                'name' => $request->agentName,
                 'email' => $request->email,
                 'phone' => $request->phone,
                 'password' => bcrypt($request->password),
+                'status' => $request->status ?? true,
             ]);
             $user->assignRole('agent');
             $user->save();
 
             $validatedData['user_id'] = $user->id;
-
             $validatedData['nominatedStaffId'] = $validatedData['nominatedStaff'] ?? null;
 
             $agent = Agent::create($validatedData);
             $agent->save();
             $agent->refresh();
 
-            return $this->sendSuccessResponse('Record created successfully', AgentResource::make($agent));
+            return $this->sendSuccessResponse('Record created successfully', AgentResource::make($agent), 201);
         } catch (\Exception $e) {
             return $this->sendErrorResponse($e, 500);
         }
@@ -76,16 +76,17 @@ class AgentController extends Controller
         $user = $agent->user; // Get the associated user
 
         $validatedData = $request->validated();
-        $validatedData['status'] = $validatedData['status'] ?? $agent->status;
+        $validatedData['status'] = $validatedData['status'] ?? $user->status;
         $validatedData['nominatedStaffId'] = $validatedData['nominatedStaff'] ?? $agent->nominatedStaffId;
 
         try {
             // Update the user record
             $user->update([
-                'name' => $request->firstName . $request->lastName ?? $user->name,
+                'name' => $request->agentName ?? $user->name,
                 'email' => $request->email ?? $user->email,
                 'phone' => $request->phone ?? $user->phone,
-                'password' => bcrypt($request->password) ?? $user->password,
+                'password' => $request->password ? bcrypt($request->password) : $user->password,
+                'status' => $validatedData['status'] ?? $user->status,
             ]);
 
             // Update the agent record

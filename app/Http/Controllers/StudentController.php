@@ -137,8 +137,8 @@ class StudentController extends Controller
                 'term_id' => $validatedData['termId'] ?? optional($student->term)->id,
                 //                'institute' => $validatedData['institute'] ?? $student->institute,
                 'status' => $validatedData['status'] ?? $student->status,
-                'agent_id' => $validatedData['agentId'] ?? $student->agent->id,
-                'staff_id' => $validatedData['staffId'] ?? $student->staff->id,
+                'agent_id' => $validatedData['agentId'] ?? $student->agent_id,
+                'staff_id' => $validatedData['staffId'] ?? $student->staff_id,
                 'student_data' => $studentData,
             ]);
 
@@ -155,6 +155,10 @@ class StudentController extends Controller
                                 && $nestedData['status'] !== $data->status
                             ) {
                                 $classes['model']::logApplicationStatusChange($nestedData['status'], $data);
+                            }
+
+                            if ($key === 'assignStaff' && $data->staffId === $nestedData['staffId']) {
+                                $this->sendErrorResponse('You cannot assign the same staff to the same student', 422);
                             }
 
                             $data->update($nestedData);
