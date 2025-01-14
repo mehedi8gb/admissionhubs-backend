@@ -103,7 +103,7 @@ class StudentController extends Controller
                 'dob' => $validatedData['dob'],
                 'academic_year_id' => $validatedData['academicYearId'] ?? null,
                 'term_id' => $validatedData['termId'] ?? null,
-//                'institute' => $validatedData['institute'],
+                //                'institute' => $validatedData['institute'],
                 'status' => $validatedData['status'] ?? true,
                 'agent' => $validatedData['agent'] ?? null,
                 'staff' => $validatedData['staff'] ?? null,
@@ -113,7 +113,7 @@ class StudentController extends Controller
             DB::commit();
 
             return $this->sendSuccessResponse('Student created successfully', StudentResource::make($student));
-        } catch (\Exception|Throwable $e) {
+        } catch (\Exception | Throwable $e) {
             DB::rollBack();
             return $this->sendErrorResponse($e, 500);
         }
@@ -136,7 +136,7 @@ class StudentController extends Controller
                 'dob' => $validatedData['dob'] ?? $student->dob,
                 'academic_year_id' => $validatedData['academicYearId'] ?? optional($student->academicYear)->id,
                 'term_id' => $validatedData['termId'] ?? optional($student->term)->id,
-//                'institute' => $validatedData['institute'] ?? $student->institute,
+                //                'institute' => $validatedData['institute'] ?? $student->institute,
                 'status' => $validatedData['status'] ?? $student->status,
                 'agent_id' => $validatedData['agentId'] ?? $student->agent_id,
                 'staff_id' => $validatedData['staffId'] ?? $student->staff_id,
