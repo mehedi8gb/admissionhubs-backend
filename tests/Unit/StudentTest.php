@@ -130,9 +130,9 @@ class StudentTest extends TestCase
         $student = Student::factory()->create();
         $updatedData = [
             'applications' => [
-                "institution" => "DDD PLC",
-                "course" => "esse",
-                "term" => "Spring",
+                "instituteId" => 1,
+                "courseId" => 1,
+                "termId" => 1,
                 "type" => "Full-time",
                 "amount" => "37243.86",
                 "status" => "Submitted"
@@ -142,8 +142,8 @@ class StudentTest extends TestCase
         $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)
             ->putJson("/api/students/{$student->id}", $updatedData);
 
-        dd($response->getContent());
-        $response->assertStatus(Response::HTTP_CREATED);
+
+        $response->assertStatus(Response::HTTP_OK);
         $response->assertJson([
             'success' => true,
             'message' => 'application was created successfully',

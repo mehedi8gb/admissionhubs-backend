@@ -23,7 +23,7 @@ class StudentSeeder extends Seeder
      */
     public function run(): void
     {
-        Student::factory(50)->create()->each(function ($student) {
+        Student::factory(10)->create()->each(function ($student) {
             EmergencyContact::factory(rand(3, 5))->create(['student_id' => $student->id]);
             Application::factory(rand(3, 6))->create(['student_id' => $student->id]);
             AcademicHistory::factory(rand(3, 6))->create(['student_id' => $student->id]);
