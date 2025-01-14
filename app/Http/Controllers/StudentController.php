@@ -112,10 +112,10 @@ class StudentController extends Controller
             $student->save();
             DB::commit();
 
-            return $this->sendSuccessResponse('Student created successfully', StudentResource::make($student));
+            return sendSuccessResponse('Student created successfully', StudentResource::make($student), 201);
         } catch (\Exception|Throwable $e) {
             DB::rollBack();
-            return $this->sendErrorResponse($e, 500);
+            return sendErrorResponse($e, 500);
         }
     }
 
@@ -151,7 +151,7 @@ class StudentController extends Controller
             }
 
             $student->refresh();
-            return sendSuccessResponse('Student updated successfully', StudentResource::make($student));
+            return sendSuccessResponse('Student updated successfully', StudentResource::make($student), 200);
         } catch (Exception|Throwable $e) {
             DB::rollBack();
             return sendErrorResponse($e, 500);
