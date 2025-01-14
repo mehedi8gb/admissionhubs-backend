@@ -27,13 +27,13 @@ class Student extends Model
         'dob', // Student's date of birth
         'agent_id', // Agent information (if any)
         'staff_id', // Staff assigned to the student (if any)
-        'student_data', // JSON column containing the entire student object
         'maritual_status', // Marital status of the student
         'gender', // Gender of the student
         'nationality', // Nationality of the student
         'country_residence', // Country of residence
         'country_birth', // Country of birth
         'native_language', // Native language of the student
+        'student_data', // JSON column containing the entire student object
     ];
 
 
