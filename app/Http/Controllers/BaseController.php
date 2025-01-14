@@ -85,7 +85,43 @@ class BaseController
         // Apply filters
         foreach ($request->query() as $key => $value) {
             if (!in_array($key, ['page', 'limit', 'searchTerm', 'sortBy', 'sortDirection', 'select'])) {
+                if ($request->query('where')) {
+                    continue;
+                }
                 $query->where($key, $value);
+            }
+        }
+
+        // Check for the 'where' parameter
+        if ($request->query('where')) {
+            $filter = $request->query('where');
+            $parts = explode(',', $filter);
+
+            if (count($parts) >= 2) {
+                $relationFlag = $parts[0]; // First part: "with:user" or column name
+                $column = $parts[1];
+                $value = $parts[2] ?? null;
+
+                if (str_starts_with($relationFlag, 'with:')) {
+                    // Handle relational filtering
+                    $relation = str_replace('with:', '', $relationFlag);
+                    if ($value !== null) {
+                        $query->whereHas($relation, function ($relationQuery) use ($column, $value) {
+                            $relationQuery->where($column, $value);
+                        });
+                    } else {
+                        return ['error' => 'Invalid relational where format. Use where=with:relation,column,value'];
+                    }
+                } else {
+                    // Handle non-relational filtering
+                    if ($value === null) {
+                        $query->where($relationFlag, $column); // Corrected: Use $relationFlag as column, $column as value
+                    } else {
+                        return ['error' => 'Invalid where format. Use where=column,value or where=with:relation,column,value'];
+                    }
+                }
+            } else {
+                return ['error' => 'Invalid where format. Use where=column,value or where=with:relation,column,value'];
             }
         }
 
