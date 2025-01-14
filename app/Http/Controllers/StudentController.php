@@ -26,6 +26,7 @@ use App\Models\RefuseHistory;
 use App\Models\Student;
 use App\Models\TravelHistory;
 use App\Models\WorkDetail;
+use App\Services\NestedRelationService;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -106,7 +107,7 @@ class StudentController extends Controller
                 'status' => $validatedData['status'] ?? true,
                 'agent' => $validatedData['agent'] ?? null,
                 'staff' => $validatedData['staff'] ?? null,
-                'student_data' => $validatedData,
+                'student_data' => $validatedData, // json column
             ]);
             $student->save();
             DB::commit();
@@ -142,53 +143,18 @@ class StudentController extends Controller
                 'student_data' => $studentData,
             ]);
 
-            if (!empty($validatedArray)) {
-                foreach ($this->nestedArrays as $key => $classes) {
-                    if (array_key_exists($key, $validatedArray)) {
-                        $nestedData = $validatedArray[$key][0];
-                        if (isset($nestedData['id'])) {
-                            // If the key is 'applications' and the status has changed
-                            $data = $classes['model']::find($nestedData['id']);
+            $result = NestedRelationService::process($validatedArray, $student);
+            DB::commit();
 
-                            if ($key === 'applications' && isset($nestedData['status'])
-                                && $nestedData['status'] !== $data->status
-                            ) {
-                                $classes['model']::logApplicationStatusChange($nestedData['status'], $data);
-                            }
-
-                            if ($key === 'assignStaff' && $data->staffId === $nestedData['staffId']) {
-                                $this->sendErrorResponse('You cannot assign the same staff to the same student', 422);
-                            }
-
-                            $data->update($nestedData);
-                            $data->refresh();
-                            $msg = 'updated';
-
-                        } else {
-                            $nestedData['student_id'] = $student->id;
-                            $nestedModel = $classes['model']::create($nestedData);
-                            $nestedData['id'] = $nestedModel->id;
-                            $msg = 'created';
-                        }
-                        DB::commit();
-
-                        $normalizedKeyName = strtolower(preg_replace('/([a-z])([A-Z])/', '$1 $2', $key));
-
-                        return $this->sendSuccessResponse(
-                            $normalizedKeyName . ' was ' . $msg . ' successfully',
-                            $classes['resource']::make($classes['model']::find($nestedData['id'])) // Dynamically call the resource class
-                        );
-                    }
-                }
+            if ($result['success']) {
+                return sendSuccessResponse($result['message'], $result['data'], 201);
             }
 
-
-            DB::commit();
             $student->refresh();
-            return $this->sendSuccessResponse('Student updated successfully', StudentResource::make($student));
-        } catch (Exception $e) {
+            return sendSuccessResponse('Student updated successfully', StudentResource::make($student));
+        } catch (Exception|Throwable $e) {
             DB::rollBack();
-            return $this->sendErrorResponse($e, 500);
+            return sendErrorResponse($e, 500);
         }
     }
 
