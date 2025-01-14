@@ -45,10 +45,10 @@ class DefaultHandler extends AbstractHandler
             'model' => WorkDetail::class,
             'resource' => WorkDetailResource::class,
         ],
-        'assignStaff' => [
-            'model' => AssignStaff::class,
-            'resource' => AssignStaffResource::class,
-        ],
+//        'assignStaff' => [
+//            'model' => AssignStaff::class,
+//            'resource' => AssignStaffResource::class,
+//        ],
         'englishLanguageExam' => [
             'model' => EnglishLanguageExam::class,
             'resource' => EnglishLanguageExamResource::class,
