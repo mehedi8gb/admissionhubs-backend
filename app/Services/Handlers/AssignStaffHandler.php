@@ -15,9 +15,8 @@ class AssignStaffHandler extends AbstractHandler
     {
         if (array_key_exists('assignStaff', $validatedArray)) {
             $nestedData = $validatedArray['assignStaff'][0];
-            $model = AssignStaff::find($nestedData['id']);
-
             if (isset($nestedData['id'])) {
+                $model = AssignStaff::find($nestedData['id']);
                 if ($model->staffId === $nestedData['staffId']) {
                     throw new Exception('You cannot assign the same staff to the same student', 422);
                 }
