@@ -21,7 +21,6 @@ function getResourceClass($model): string
     // Fallback to a default resource class if not found
     return DefaultResource::class;
 }
-
 /**
  * Convert boolean status to 1/0.
  *
@@ -32,8 +31,6 @@ function convertStatus(mixed $status): int
 {
     return $status ? 1 : 0;
 }
-
-
 /**
  * Perform a deep merge of two arrays, allowing forced replacement with a "forceReplace" value.
  * Includes handling for array deletions based on the forceReplace flag.
@@ -69,8 +66,6 @@ function deepMerge(array $original, array $new, string $forceReplaceIndicator = 
 
     return $original;
 }
-
-
 /**
  * Process nested arrays by removing missing indexes and merging incoming data.
  *
@@ -93,8 +88,6 @@ function processNestedArray(array $existingArray, array $payloadArray): array
     // if array fragment same to same then remove 1 index
     return array_map("unserialize", array_unique(array_map("serialize", $filteredArray)));
 }
-
-
 /**
  * Format error response.
  *
@@ -120,6 +113,25 @@ function sendErrorResponse( NotFoundHttpException|ModelNotFoundException|Excepti
     return response()->json([
         'success' => false,
         'message' => $e instanceof Exception ? $e->getMessage() : $e,
+    ], $statusCode);
+}
+/**
+ * Format success response.
+ *
+ * @param string $message
+ * @param mixed|null $data
+ * @param int $statusCode
+ * @return JsonResponse
+ */
+function sendSuccessResponse(string $message, mixed $data = null, int $statusCode = 200): JsonResponse
+{
+    if ($data === null) {
+        $data = new \stdClass();
+    }
+    return response()->json([
+        'success' => true,
+        'message' => $message,
+        'data' => $data,
     ], $statusCode);
 }
 
