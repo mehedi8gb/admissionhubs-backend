@@ -21,9 +21,9 @@ class AssignStaffHandler extends AbstractHandler
                     throw new Exception('You cannot assign the same staff to the same student', 422);
                 }
 
-                if (isset($nestedData['status'])) {
-                    $model->staff->user->update(['status' => $nestedData['status']]);
-                }
+//                if (isset($nestedData['status'])) {
+//                    $model->staff->user->update(['status' => $nestedData['status']]);
+//                }
 
                 $model->update($nestedData);
                 $model->refresh();
