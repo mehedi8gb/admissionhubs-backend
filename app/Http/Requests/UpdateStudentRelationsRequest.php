@@ -37,7 +37,7 @@ class UpdateStudentRelationsRequest extends FormRequest
             'assignStaff' => 'nullable|array',
             'assignStaff.*.id' => 'nullable|integer',
             'assignStaff.*.staffId' => 'nullable|integer',
-            'assignStaff.*.type' => 'nullable|string|max:255',
+            'assignStaff.*.status' => 'nullable',
 
             'workDetails' => 'nullable|array',
             'workDetails.*.id' => 'nullable|integer',
