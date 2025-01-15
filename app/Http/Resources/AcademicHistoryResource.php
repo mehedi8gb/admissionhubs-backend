@@ -18,8 +18,6 @@ class AcademicHistoryResource extends JsonResource
             'id' => $this->id,
             'institution' => $this->institution,
             'course' => $this->course,
-            'academicYear' => $this->academicYear,
-            'term' => TermResource::make($this->term),
             'studyLevel' => $this->studyLevel,
             'resultScore' => $this->resultScore,
             'outOf' => $this->outOf,
