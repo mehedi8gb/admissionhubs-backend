@@ -16,10 +16,11 @@ class ApplicationResource extends JsonResource
             'institution' => InstituteResource::make($this->institute),
             'course' => CourseResource::make($this->course),
             'term' => TermResource::make($this->term),
-            'type' => $this->type,
+            'choice' => $this->choice,
             'amount' => $this->amount,
             'status' => $this->status,
             'statusLogs' => ApplicationStatusLogResource::collection($this->statusLogs),
+            'created_at' => $this->created_at->format('Y-m-d H:i:s'),
         ];
     }
 }

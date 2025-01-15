@@ -15,12 +15,16 @@ class Application extends Model
         'institute_id',
         'course_id',
         'term_id',
-        'type',
+        'choice',
         'amount',
         'status',
     ];
 
     protected $with = ['institute', 'course', 'term', 'statusLogs'];
+
+    protected $casts = [
+        'created_at' => 'datetime',
+    ];
 
 //    public function student(): BelongsTo
 //    {

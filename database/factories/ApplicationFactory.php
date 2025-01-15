@@ -26,9 +26,9 @@ class ApplicationFactory extends Factory
             'institute_id' => Institute::inRandomOrder()->first()->id,
             'course_id' => Course::inRandomOrder()->first()->id,
             'term_id' => Term::inRandomOrder()->first()->id,
-            'type' => fake()->randomElement(['Full-time', 'Part-time']),
+            'choice' => fake()->randomElement(['International', 'Local']),
             'amount' => fake()->randomFloat(2, 1000, 50000),
-            'status' => fake()->numberBetween(0, 1),
+            'status' => fake()->randomElement(['New', 'Old', 'Accepted', 'Rejected']),
         ];
     }
 }

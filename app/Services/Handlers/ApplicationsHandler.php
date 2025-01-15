@@ -30,6 +30,9 @@ class ApplicationsHandler extends AbstractHandler
                 $msg = 'updated';
             } else {
                 $applications['student_id'] = $student->id;
+                if (!isset($applications['status'])){
+                    $applications['status'] = 'New';
+                }
                 $application = Application::create($applications);
                 $msg = 'created';
             }
