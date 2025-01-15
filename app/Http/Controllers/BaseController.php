@@ -84,10 +84,7 @@ class BaseController
 
         // Apply filters
         foreach ($request->query() as $key => $value) {
-            if (!in_array($key, ['page', 'limit', 'searchTerm', 'sortBy', 'sortDirection', 'select'])) {
-                if ($request->query('where')) {
-                    continue;
-                }
+            if (!in_array($key, ['page', 'limit', 'searchTerm', 'sortBy', 'sortDirection', 'select', 'where'])) {
                 $query->where($key, $value);
             }
         }
