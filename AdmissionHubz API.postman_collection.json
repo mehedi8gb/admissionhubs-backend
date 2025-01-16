@@ -1672,7 +1672,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"title\": \"Mr.\",\r\n  \"firstName\": \"John\",\r\n  \"lastName\": \"Doe\",\r\n  \"email\": \"johne.doe@example.com\",\r\n  \"phone\": \"1234567890\",\r\n  \"dob\": \"01-01-1990\",\r\n  \"maritualStatus\": \"Single\",\r\n  \"gender\": \"Male\",\r\n  \"nationality\": \"Bangladeshi\",\r\n  \"countryResidence\": \"Bangladesh\",\r\n  \"countryBirth\": \"Bangladesh\",\r\n  \"nativeLanguage\": \"Bengali\",\r\n  \"passportName\": \"John Doe\",\r\n  \"passportIssueLocation\": \"Dhaka\",\r\n  \"passportNumber\": \"A12345678\",\r\n  \"passportIssueDate\": \"01-01-2015\",\r\n  \"passportExpiryDate\": \"01-01-2025\",\r\n  \"addressLine1\": \"123 Main Street\",\r\n  \"addressLine2\": \"Apt 4B\",\r\n  \"townCity\": \"Dhaka\",\r\n  \"state\": \"Dhaka\",\r\n  \"postCode\": \"1205\",\r\n  \"country\": \"Bangladesh\",\r\n  \"disabilities\": \"None\",\r\n  \"ethnicity\": \"Asian\",\r\n  \"genderidentity\": \"Male\",\r\n  \"sexualOrientation\": \"Heterosexual\",\r\n  \"religion\": \"Islam\",\r\n  \"emergencyContact\": [\r\n    {\r\n      \"name\": \"Jane Doe\",\r\n      \"phone\": \"9876543210\",\r\n      \"email\": \"janee.doe@example.com\",\r\n      \"address\": \"456 Elm Street, Dhaka\",\r\n      \"relationship\": \"Spouse\",\r\n      \"status\": \"Active\"\r\n    }\r\n  ],\r\n  \"travelHistory\": [\r\n    {\r\n      \"purpose\": \"Study\",\r\n      \"arrival\": \"01-01-2020\",\r\n      \"departure\": \"01-01-2021\",\r\n      \"visaStart\": \"01-01-2020\",\r\n      \"visaExpiry\": \"01-01-2021\",\r\n      \"visaType\": \"Student Visa\"\r\n    }\r\n  ],\r\n  \"visaNeed\": true,\r\n  \"refuseHistory\": [\r\n    {\r\n      \"refusaltype\": \"Visa Refusal\",\r\n      \"refusalDate\": \"01-01-2018\",\r\n      \"details\": \"Insufficient funds\",\r\n      \"country\": \"USA\",\r\n      \"visaType\": \"Tourist Visa\",\r\n      \"status\": \"Resolved\"\r\n    }\r\n  ],\r\n  \"academicHistory\": [\r\n    {\r\n      \"institution\": \"Dhaka University\",\r\n      \"course\": \"Computer Science\",\r\n      \"studylevel\": \"Undergraduate\",\r\n      \"resultScore\": 3.8,\r\n      \"outof\": 4.0,\r\n      \"startDate\": \"01-01-2010\",\r\n      \"endDate\": \"01-01-2014\",\r\n      \"status\": \"Completed\"\r\n    }\r\n  ],\r\n  \"workDetails\": [\r\n    {\r\n      \"jobtitle\": \"Software Engineer\",\r\n      \"organization\": \"ABC Ltd.\",\r\n      \"address\": \"789 Maple Street, Dhaka\",\r\n      \"phone\": \"1122334455\",\r\n      \"fromDate\": \"01-01-2015\",\r\n      \"toDate\": \"01-01-2020\",\r\n      \"active\": true,\r\n      \"currentlyWorking\": false\r\n    }\r\n  ],\r\n  \"documents\": {\r\n    \"passport\": \"document-passport.pdf\",\r\n    \"bankstatement\": \"document-bankstatement.pdf\",\r\n    \"qualification\": \"document-qualification.pdf\",\r\n    \"workExperience\": \"document-workexperience.pdf\",\r\n    \"cv\": \"document-cv.pdf\"\r\n  },\r\n  \"application\": [\r\n    {\r\n      \"institution\": \"Dhaka University\",\r\n      \"course\": \"Computer Science\",\r\n      \"term\": \"Fall 2024\",\r\n      \"type\": \"Full-time\",\r\n      \"amount\": 50000,\r\n      \"status\": \"Submitted\"\r\n    }\r\n  ],\r\n  \"assignStaff\": [\r\n    {\r\n      \"staffid\": 1,\r\n      \"type\": \"Counselor\"\r\n    }\r\n  ]\r\n}\r\n",
+							"raw": "{\r\n  \"title\": \"Mr.\",\r\n  \"firstName\": \"John\",\r\n  \"lastName\": \"Doe\",\r\n  \"email\": \"dd@example.com\",\r\n  \"phone\": \"1234567890\",\r\n  \"dob\": \"01-01-1990\",\r\n  \"maritualStatus\": \"Single\",\r\n  \"gender\": \"Male\",\r\n  \"nationality\": \"Bangladeshi\",\r\n  \"countryResidence\": \"Bangladesh\",\r\n  \"countryBirth\": \"Bangladesh\",\r\n  \"nativeLanguage\": \"Bengali\",\r\n  \"addressLine1\": \"dd\",\r\n  \"addressLine2\": \"dd\",\r\n  \"townCity\": \"Dhaka\",\r\n  \"state\": \"Dhaka\",\r\n  \"postCode\": \"1205\",\r\n  \"country\": \"Bangladesh\",\r\n  \"disabilities\": \"None\",\r\n  \"ethnicity\": \"Asian\",\r\n  \"genderidentity\": \"Male\",\r\n  \"sexualOrientation\": \"Heterosexual\",\r\n  \"religion\": \"Islam\",\r\n\r\n  // Added fields\r\n//   \"claimDisabilities\": null, // Added: Claim disabilities flag (nullable)\r\n//   \"disabilitiesOption\": null, // Added: Option for disabilities (nullable)\r\n\r\n//   \"passportName\": null, // Added: Passport Name (nullable)\r\n//   \"passportIssueLocation\": null, // Added: Passport issue location (nullable)\r\n//   \"passportNumber\": null, // Added: Passport number (nullable)\r\n//   \"passportIssueDate\": null, // Added: Passport issue date (nullable)\r\n//   \"passportExpiryDate\": null, // Added: Passport expiry date (nullable)\r\n\r\n//   \"status\": null, // Added: Status flag (nullable)\r\n//   \"visaNeed\": null, // Added: Visa need flag (nullable)\r\n//   \"refusedPermission\": null, // Added: Refused permission flag (nullable)\r\n//   \"englishLanguageRequired\": null, // Added: English language requirement (nullable)\r\n//   \"academicHistoryRequired\": null, // Added: Academic history requirement (nullable)\r\n//   \"workExperience\": null, // Added: Work experience flag (nullable)\r\n//   \"ukInPast\": null, // Added: UK in the past flag (nullable)\r\n//   \"currentlyInUk\": null, // Added: Currently in UK flag (nullable)\r\n//   \"academicYearId\": null, // Added: Academic Year ID (nullable)\r\n//   \"termId\": null // Added: Term ID (nullable)\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1717,7 +1717,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\": \"Dr....\",\r\n    \"firstName\": \"d\",\r\n    \"country\": \"ddd\",\r\n    \"emergencyContact\": [\r\n        {\r\n            \"name\": \"John Smith\",\r\n            \"phone\": \"1122334455\",\r\n            \"email\": \"john.smith@example.com\",\r\n            \"address\": \"456 New Street\",\r\n            \"relationship\": \"BAND\",\r\n            \"status\": \"Active\"\r\n        }\r\n    ],\r\n    \"travelHistory\": [\r\n        {\r\n            \"purpose\": \"Business\",\r\n            \"arrival\": \"01-03-2022\",\r\n            \"departure\": \"10-03-2022\",\r\n            \"visaStart\": \"01-03-2022\",\r\n            \"visaExpiry\": \"10-03-2022\",\r\n            \"visaType\": \"WOW\"\r\n        }\r\n    ],\r\n    \"academicHistory\": [\r\n        {\r\n            \"institution\": \"New University\",\r\n            \"course\": \"Data Science\",\r\n            \"studylevel\": \"Master\",\r\n            \"resultScore\": 4.0,\r\n            \"outof\": 4.0,\r\n            \"startDate\": \"01-09-2015\",\r\n            \"endDate\": \"01-09-2017\",\r\n            \"status\": \"Completed\"\r\n        }\r\n    ]\r\n}\r\n",
+							"raw": "{\r\n// NOTE!\r\n// - If you don't pass an `id`, the data will be stored as a new entry.\r\n// - If you pass an `id`, the existing data with the matching `id` will be updated (patched).\r\n\r\n    // \"emergencyContact\": [\r\n    //     {\r\n    //         // \"id\": 17,\r\n    //         \"name\": \"Created\",\r\n    //         \"relationship\": \"SS\",\r\n    //         \"phone\": \"843-23423423-9795\",\r\n    //         \"email\": \"dd@example.net\"\r\n    //     }\r\n    // ]\r\n    // ,\r\n    // \"travelHistory\": [\r\n    //     {\r\n    //         \"id\": 35,\r\n    //         \"purpose\": \"DDD\",\r\n    //         \"arrival\": \"2020-01-01\",\r\n    //         \"departure\": \"2021-01-01\",\r\n    //         \"visaStart\": \"2020-01-01\",\r\n    //         \"visaExpiry\": \"2021-01-01\",\r\n    //         \"visaType\": \"Student DDD\"\r\n    //     }\r\n    // ],\r\n    // \"refuseHistory\": [\r\n    //     {\r\n    //         \"id\": 38,\r\n    //         \"refusalType\": \"DDD\",\r\n    //         \"refusalDate\": \"2008-04-21 00:00:00\",\r\n    //         \"details\": \"DD non enim id.\",\r\n    //         \"country\": \"DD\",\r\n    //         \"visaType\": \"FFF\",\r\n    //         \"status\": \"Pending\"\r\n    //     }\r\n    // ],\r\n    // \"academicHistory\": [\r\n    //     {\r\n    //         \"id\": 2,\r\n    //         \"institution\": \"Skiles-DDDD\",\r\n    //         \"course\": \"WWW\",\r\n    //         \"academicYearId\": 16,\r\n    //         \"termId\": 6,\r\n    //         \"studyLevel\": \"Diploma\",\r\n    //         \"resultScore\": \"3.21\",\r\n    //         \"outOf\": \"5.00\",\r\n    //         \"startDate\": \"1970-02-22 00:00:00\",\r\n    //         \"endDate\": \"1987-06-03 00:00:00\",\r\n    //         \"status\": 1\r\n    //     }\r\n    // ]\r\n    // ,\r\n    // \"workDetails\": [\r\n    //     {\r\n    //         // \"id\": 1,\r\n    //         \"jobTitle\": \"FFF Developer\",\r\n    //         \"organization\": \"Crona Inc\",\r\n    //         \"address\": \"5080 Devyn Trail\\nGreenview, FL 13369\",\r\n    //         \"phone\": \"+1-681-251-7306\",\r\n    //         \"fromDate\": \"1989-09-20 00:00:00\",\r\n    //         \"toDate\": \"1972-12-25 00:00:00\",\r\n    //         \"active\": 1,\r\n    //         \"currentlyWorking\": 0\r\n    //     }\r\n    // ],\r\n    \"applications\": [\r\n        {\r\n            \"id\": 211,\r\n            \"instituteId\": 3,\r\n            \"courseId\": 2,\r\n            \"termId\": 5,\r\n            \"type\": \"Hald-time\",\r\n            \"amount\": \"37243.86\",\r\n            \"status\": \"Data\"\r\n        }\r\n    ],\r\n    // ,\r\n    // \"assignStaff\": [\r\n    //     {\r\n    //         \"id\": 1,\r\n    //         \"staffId\": 11\r\n    //     }\r\n    // ]\r\n    \r\n  \"title\": \"Mr.\",\r\n  \"firstName\": \"John\",\r\n  \"agentId\" : 5,\r\n  \"lastName\": \"Doe\",\r\n  \"email\": \"asdf@example.com\",\r\n  \"phone\": \"1234567890\",\r\n  \"dob\": \"1990-01-01\",\r\n  \"maritualStatus\": \"Single\",\r\n  \"gender\": \"Male\",\r\n  \"nationality\": \"Bangladeshi\",\r\n  \"countryResidence\": \"Bangladesh\",\r\n  \"countryBirth\": \"Bangladesh\",\r\n  \"nativeLanguage\": \"Bengali\",\r\n  \"addressLine1\": \"dd\",\r\n  \"addressLine2\": \"dd\",\r\n  \"townCity\": \"Dhaka\",\r\n  \"state\": \"Dhaka\",\r\n  \"postCode\": \"1205\",\r\n  \"country\": \"Bangladesh\",\r\n  \"disabilities\": \"None\",\r\n  \"ethnicity\": \"Asian\",\r\n  \"genderidentity\": \"Male\",\r\n  \"sexualOrientation\": \"Heterosexual\",\r\n  \"religion\": \"Islam\"\r\n\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1725,17 +1725,17 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/students/1",
+							"raw": "{{baseUrl}}/students/52",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"students",
-								"1"
+								"52"
 							],
 							"query": [
 								{
-									"key": "status",
+									"key": "statusq=",
 									"value": "0",
 									"disabled": true
 								}
@@ -1776,13 +1776,13 @@
 							"formdata": []
 						},
 						"url": {
-							"raw": "{{baseUrl}}/students/1",
+							"raw": "{{baseUrl}}/students/10",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"students",
-								"1"
+								"10"
 							]
 						},
 						"description": "This returns a `token` that you can use to retrieve information later on.\n\nWe have included a test to confirm if a token is returned. We have also added test scripts to copy the token to the `token` collection variable. This makes it easy for us to reuse this token in other requests in the collection."
@@ -1813,16 +1813,283 @@
 							}
 						],
 						"body": {
-							"mode": "formdata",
-							"formdata": []
+							"mode": "raw",
+							"raw": "{\r\n// NOTE!\r\n// If a specific array with its id is provided, it will be deleted from the respective table.\r\n// If no array with id is found for a nested model, the student entry with the corresponding student_id will be deleted.\r\n\r\n    // \"emergencyContact\": [\r\n    //     {\r\n    //         \"id\": 21\r\n    //     }\r\n    // ]\r\n    // ,\r\n    // \"travelHistory\": [\r\n    //     {\r\n    //         \"id\": 30\r\n    //     }\r\n    // ]\r\n    // ,\r\n    // \"refuseHistory\": [\r\n    //     {\r\n    //         \"id\": 30\r\n    //     }\r\n    // ]\r\n    // ,\r\n    // \"academicHistory\": [\r\n    //     {\r\n    //         \"id\": 32\r\n    //     }\r\n    // ]\r\n    // ,\r\n    // \"workDetails\": [\r\n    //     {\r\n    //         \"id\": 41\r\n    //     }\r\n    // ],\r\n    // \"applications\": [\r\n    //     {\r\n    //         \"id\": 39\r\n    //     }\r\n    // ]\r\n    // ,\r\n    \"assignStaff\": [\r\n        {\r\n            \"id\": 1\r\n        }\r\n    ]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/students/1",
+							"raw": "{{baseUrl}}/students/6",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"students",
+								"6"
+							]
+						},
+						"description": "This returns a `token` that you can use to retrieve information later on.\n\nWe have included a test to confirm if a token is returned. We have also added test scripts to copy the token to the `token` collection variable. This makes it easy for us to reuse this token in other requests in the collection."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Agent",
+			"item": [
+				{
+					"name": "Collection",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"A name is returned\", () => {",
+									"    pm.expect(pm.response.json()).to.have.property('name');",
+									"    pm.expect(pm.response.json().name).to.be.a('string');",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Cookie",
+								"value": "PHPSESSID=your-session-id",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/agents",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"agents"
+							]
+						},
+						"description": "This request uses the saved `token` collection variable to access a secret 'name' stored against that token.\n\nIn this request, we used the `token` collection variable as a query param to fetch the name generated for that token. We have added a test to check that a name is correctly returned."
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"agentName\": \"John Doe\",\r\n    \"organization\": \"XYZ Organization\",\r\n    \"contactPerson\": \"Jane Smith\",\r\n    \"phone\": \"+2 (41544)\",\r\n    \"email\": \"asg@demo.com\",\r\n    \"location\": \"123 Main St, Cityville, NY 10001\",\r\n    \"password\": \"12345678\",\r\n    \"nominatedStaff\":1,\r\n    \"status\": 1\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/agents",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"agents"
+							]
+						},
+						"description": "This returns a `token` that you can use to retrieve information later on.\n\nWe have included a test to confirm if a token is returned. We have also added test scripts to copy the token to the `token` collection variable. This makes it easy for us to reuse this token in other requests in the collection."
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"agentName\": \"DDD Doe\",\r\n    \"organization\": \"XYZ Organization\",\r\n    \"contactPerson\": \"Jane Smith\",\r\n    \"phone\": \"+2 d(dddd)\",\r\n    \"email\": \"asdqddee@example.com\",\r\n    \"location\": \"123 Main St, Cityville, NY 10001\",\r\n    // \"password\": \"123456789\",\r\n    // \"nominatedStaff\": null,\r\n    \"status\": 0\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/agents/12",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"agents",
+								"12"
+							],
+							"query": [
+								{
+									"key": "statusq=",
+									"value": "0",
+									"disabled": true
+								}
+							]
+						},
+						"description": "This returns a `token` that you can use to retrieve information later on.\n\nWe have included a test to confirm if a token is returned. We have also added test scripts to copy the token to the `token` collection variable. This makes it easy for us to reuse this token in other requests in the collection."
+					},
+					"response": []
+				},
+				{
+					"name": "Show",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/agents/6",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"agents",
+								"6"
+							],
+							"query": [
+								{
+									"key": "statusq=",
+									"value": "0",
+									"disabled": true
+								}
+							]
+						},
+						"description": "This returns a `token` that you can use to retrieve information later on.\n\nWe have included a test to confirm if a token is returned. We have also added test scripts to copy the token to the `token` collection variable. This makes it easy for us to reuse this token in other requests in the collection."
+					},
+					"response": []
+				},
+				{
+					"name": "Destroy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/agents/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"agents",
 								"1"
 							]
 						},
@@ -1833,63 +2100,782 @@
 			]
 		},
 		{
-			"name": "Get User Permissions",
-			"event": [
+			"name": "Course Relation",
+			"item": [
 				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"A name is returned\", () => {",
-							"    pm.expect(pm.response.json()).to.have.property('name');",
-							"    pm.expect(pm.response.json().name).to.be.a('string');",
-							"})"
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/json",
-						"type": "text"
-					},
-					{
-						"key": "Cookie",
-						"value": "PHPSESSID=your-session-id",
-						"type": "text",
-						"disabled": true
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
+					"name": "Collection",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"A name is returned\", () => {",
+									"    pm.expect(pm.response.json()).to.have.property('name');",
+									"    pm.expect(pm.response.json().name).to.be.a('string');",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
 						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/auth/user/permissions",
-					"host": [
-						"{{baseUrl}}"
 					],
-					"path": [
-						"auth",
-						"user",
-						"permissions"
-					]
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Cookie",
+								"value": "PHPSESSID=your-session-id",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/course-relations",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"course-relations"
+							]
+						},
+						"description": "This request uses the saved `token` collection variable to access a secret 'name' stored against that token.\n\nIn this request, we used the `token` collection variable as a query param to fetch the name generated for that token. We have added a test to check that a name is correctly returned."
+					},
+					"response": []
 				},
-				"description": "This request uses the saved `token` collection variable to access a secret 'name' stored against that token.\n\nIn this request, we used the `token` collection variable as a query param to fetch the name generated for that token. We have added a test to check that a name is correctly returned."
-			},
-			"response": []
+				{
+					"name": "Create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"institute_id\": 1,\r\n  \"course_id\": 2,\r\n  \"term_id\": 3,\r\n  \"academic_year_id\": 4,\r\n//   \"local\": true,\r\n  \"local_amount\": 500.00,\r\n//   \"international\": true,\r\n  \"international_amount\": 1000.00,\r\n  \"status\": true\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/course-relations",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"course-relations"
+							]
+						},
+						"description": "This returns a `token` that you can use to retrieve information later on.\n\nWe have included a test to confirm if a token is returned. We have also added test scripts to copy the token to the `token` collection variable. This makes it easy for us to reuse this token in other requests in the collection."
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n// NOTE!\r\n// - If you don't pass an `id`, the data will be stored as a new entry.\r\n// - If you pass an `id`, the existing data with the matching `id` will be updated (patched).\r\n\r\n    \"emergencyContact\": [\r\n        {\r\n            // \"id\": 46,\r\n            \"name\": \"DFSSA\",\r\n            \"relationship\": \"SS\",\r\n            \"phone\": \"843-23423423-9795\",\r\n            \"email\": \"dd@example.net\"\r\n        }\r\n    ]\r\n    // ,\r\n    // \"travelHistory\": [\r\n    //     {\r\n    //         \"id\": 35,\r\n    //         \"purpose\": \"DDD\",\r\n    //         \"arrival\": \"2020-01-01\",\r\n    //         \"departure\": \"2021-01-01\",\r\n    //         \"visaStart\": \"2020-01-01\",\r\n    //         \"visaExpiry\": \"2021-01-01\",\r\n    //         \"visaType\": \"Student DDD\"\r\n    //     }\r\n    // ],\r\n    // \"refuseHistory\": [\r\n    //     {\r\n    //         \"id\": 38,\r\n    //         \"refusalType\": \"DDD\",\r\n    //         \"refusalDate\": \"2008-04-21 00:00:00\",\r\n    //         \"details\": \"DD non enim id.\",\r\n    //         \"country\": \"DD\",\r\n    //         \"visaType\": \"FFF\",\r\n    //         \"status\": \"Pending\"\r\n    //     }\r\n    // ],\r\n    // \"academicHistory\": [\r\n    //     {\r\n    //         \"id\": 35,\r\n    //         \"institution\": \"Skiles-DDDD\",\r\n    //         \"course\": \"nihil\",\r\n    //         \"academicYearId\": \"17\",\r\n    //         \"termId\": \"8\",\r\n    //         \"studyLevel\": \"Diploma\",\r\n    //         \"resultScore\": \"3.21\",\r\n    //         \"outOf\": \"5.00\",\r\n    //         \"startDate\": \"1970-02-22 00:00:00\",\r\n    //         \"endDate\": \"1987-06-03 00:00:00\",\r\n    //         \"status\": \"Ongoing\"\r\n    //     }\r\n    // ],\r\n    // \"workDetails\": [\r\n    //     {\r\n    //         \"id\": 41,\r\n    //         \"jobTitle\": \"FFF Developer\",\r\n    //         \"organization\": \"Crona Inc\",\r\n    //         \"address\": \"5080 Devyn Trail\\nGreenview, FL 13369\",\r\n    //         \"phone\": \"+1-681-251-7306\",\r\n    //         \"fromDate\": \"1989-09-20 00:00:00\",\r\n    //         \"toDate\": \"1972-12-25 00:00:00\",\r\n    //         \"active\": 1,\r\n    //         \"currentlyWorking\": 0\r\n    //     }\r\n    // ],\r\n    // \"applications\": [\r\n    //     {\r\n    //         \"id\": 45,\r\n    //         \"institution\": \"DDD PLC\",\r\n    //         \"course\": \"esse\",\r\n    //         \"term\": \"Spring\",\r\n    //         \"type\": \"Full-time\",\r\n    //         \"amount\": \"37243.86\",\r\n    //         \"status\": \"Submitted\"\r\n    //     }\r\n    // ],\r\n    // \"assignStaff\": [\r\n    //     {\r\n    //         \"id\": 43,\r\n    //         \"staffId\": 2,\r\n    //         \"type\": \"DDD\"\r\n    //     }\r\n    // ]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/course-relations/6",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"course-relations",
+								"6"
+							],
+							"query": [
+								{
+									"key": "statusq=",
+									"value": "0",
+									"disabled": true
+								}
+							]
+						},
+						"description": "This returns a `token` that you can use to retrieve information later on.\n\nWe have included a test to confirm if a token is returned. We have also added test scripts to copy the token to the `token` collection variable. This makes it easy for us to reuse this token in other requests in the collection."
+					},
+					"response": []
+				},
+				{
+					"name": "Show",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/course-relations/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"course-relations",
+								"1"
+							],
+							"query": [
+								{
+									"key": "statusq=",
+									"value": "0",
+									"disabled": true
+								}
+							]
+						},
+						"description": "This returns a `token` that you can use to retrieve information later on.\n\nWe have included a test to confirm if a token is returned. We have also added test scripts to copy the token to the `token` collection variable. This makes it easy for us to reuse this token in other requests in the collection."
+					},
+					"response": []
+				},
+				{
+					"name": "Destroy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/course-relations/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"course-relations",
+								"1"
+							]
+						},
+						"description": "This returns a `token` that you can use to retrieve information later on.\n\nWe have included a test to confirm if a token is returned. We have also added test scripts to copy the token to the `token` collection variable. This makes it easy for us to reuse this token in other requests in the collection."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Staff",
+			"item": [
+				{
+					"name": "Collection",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"A name is returned\", () => {",
+									"    pm.expect(pm.response.json()).to.have.property('name');",
+									"    pm.expect(pm.response.json().name).to.be.a('string');",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Cookie",
+								"value": "PHPSESSID=your-session-id",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/staffs?where=status,1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"staffs"
+							],
+							"query": [
+								{
+									"key": "where",
+									"value": "status,1"
+								}
+							]
+						},
+						"description": "This request uses the saved `token` collection variable to access a secret 'name' stored against that token.\n\nIn this request, we used the `token` collection variable as a query param to fetch the name generated for that token. We have added a test to check that a name is correctly returned."
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Barbara\",\r\n    \"lastName\": \"McLaughlin\",\r\n    \"email\": \"dddd.hopee@example.net\",\r\n    \"phone\": \"44452\",\r\n    \"password\": \"12345688\"\r\n    // \"status\": 0\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/staffs",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"staffs"
+							]
+						},
+						"description": "This returns a `token` that you can use to retrieve information later on.\n\nWe have included a test to confirm if a token is returned. We have also added test scripts to copy the token to the `token` collection variable. This makes it easy for us to reuse this token in other requests in the collection."
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Barbara\",\r\n    \"lastName\": \"McLaughlin\",\r\n    \"email\": \"dddd.hope@example.net\",\r\n    \"phone\": \"555\",\r\n    \"password\": \"12345688\",\r\n    \"status\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/staffs/29",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"staffs",
+								"29"
+							],
+							"query": [
+								{
+									"key": "statusq=",
+									"value": "0",
+									"disabled": true
+								}
+							]
+						},
+						"description": "This returns a `token` that you can use to retrieve information later on.\n\nWe have included a test to confirm if a token is returned. We have also added test scripts to copy the token to the `token` collection variable. This makes it easy for us to reuse this token in other requests in the collection."
+					},
+					"response": []
+				},
+				{
+					"name": "Show",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/staffs/6",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"staffs",
+								"6"
+							],
+							"query": [
+								{
+									"key": "statusq=",
+									"value": "0",
+									"disabled": true
+								}
+							]
+						},
+						"description": "This returns a `token` that you can use to retrieve information later on.\n\nWe have included a test to confirm if a token is returned. We have also added test scripts to copy the token to the `token` collection variable. This makes it easy for us to reuse this token in other requests in the collection."
+					},
+					"response": []
+				},
+				{
+					"name": "Destroy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/staffs/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"staffs",
+								"1"
+							]
+						},
+						"description": "This returns a `token` that you can use to retrieve information later on.\n\nWe have included a test to confirm if a token is returned. We have also added test scripts to copy the token to the `token` collection variable. This makes it easy for us to reuse this token in other requests in the collection."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "English Language Exams",
+			"item": [
+				{
+					"name": "Collection",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"A name is returned\", () => {",
+									"    pm.expect(pm.response.json()).to.have.property('name');",
+									"    pm.expect(pm.response.json().name).to.be.a('string');",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Cookie",
+								"value": "PHPSESSID=your-session-id",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/english-language-exams",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"english-language-exams"
+							]
+						},
+						"description": "This request uses the saved `token` collection variable to access a secret 'name' stored against that token.\n\nIn this request, we used the `token` collection variable as a query param to fetch the name generated for that token. We have added a test to check that a name is correctly returned."
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"exam\": \"IELTS\",\r\n  \"examDate\": \"2025-01-15\",\r\n  \"score\": 7.5\r\n//   \"status\": 1\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/english-language-exams",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"english-language-exams"
+							]
+						},
+						"description": "This returns a `token` that you can use to retrieve information later on.\n\nWe have included a test to confirm if a token is returned. We have also added test scripts to copy the token to the `token` collection variable. This makes it easy for us to reuse this token in other requests in the collection."
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"exam\": \"IELTS\",\r\n  \"examDate\": \"2025-01-15\",\r\n  \"score\": 8.5,\r\n  \"status\": 1\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/english-language-exams/9",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"english-language-exams",
+								"9"
+							]
+						},
+						"description": "This returns a `token` that you can use to retrieve information later on.\n\nWe have included a test to confirm if a token is returned. We have also added test scripts to copy the token to the `token` collection variable. This makes it easy for us to reuse this token in other requests in the collection."
+					},
+					"response": []
+				},
+				{
+					"name": "Show",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/english-language-exams/6",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"english-language-exams",
+								"6"
+							]
+						},
+						"description": "This returns a `token` that you can use to retrieve information later on.\n\nWe have included a test to confirm if a token is returned. We have also added test scripts to copy the token to the `token` collection variable. This makes it easy for us to reuse this token in other requests in the collection."
+					},
+					"response": []
+				},
+				{
+					"name": "Destroy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/english-language-exams/6",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"english-language-exams",
+								"6"
+							]
+						},
+						"description": "This returns a `token` that you can use to retrieve information later on.\n\nWe have included a test to confirm if a token is returned. We have also added test scripts to copy the token to the `token` collection variable. This makes it easy for us to reuse this token in other requests in the collection."
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"auth": {
@@ -1897,7 +2883,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vYWRtaXNzaW9uaHVicy1iYWNrZW5kLnRlc3QvYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE3MzU0MTkxODgsImV4cCI6MTczNTU5MTk4OCwibmJmIjoxNzM1NDE5MTg4LCJqdGkiOiJzTVhnTGhtUHB3VmsycURIIiwic3ViIjoiMyIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjciLCJlbWFpbCI6InN0dWRlbnRAZGVtby5jb20iLCJuYW1lIjoiTmFzaXIgVG93bmUgRFZNIiwicm9sZSI6InN0dWRlbnQifQ.EMoieb8JASUExxG9fc56ji-ykw1TTiKviHHkzxAkWkE",
+				"value": "{{token}}",
 				"type": "string"
 			}
 		]
@@ -1930,6 +2916,11 @@
 		{
 			"key": "prod",
 			"value": "https://admissionhubs.jumpintojob.com/api",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2FkbWlzc2lvbmh1YnMuanVtcGludG9qb2IuY29tL2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNzM2MjU1ODY0LCJleHAiOjE3MzY0Mjg2NjQsIm5iZiI6MTczNjI1NTg2NCwianRpIjoiUDJkclJVRHdKOHpaeTBzWiIsInN1YiI6IjMiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3IiwiZW1haWwiOiJzdHVkZW50QGRlbW8uY29tIiwibmFtZSI6Ik1hcmt1cyBCaW5zIiwicm9sZSI6InN0dWRlbnQifQ.ZshB00x2dzMR3YVmyymf2p2eQJcJase72eMGAeR9uaM",
 			"type": "string"
 		}
 	]

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
@@ -84,10 +85,46 @@ class BaseController
 
         // Apply filters
         foreach ($request->query() as $key => $value) {
-            if (!in_array($key, ['page', 'limit', 'searchTerm', 'sortBy', 'sortDirection', 'select'])) {
+            if (!in_array($key, ['page', 'limit', 'searchTerm', 'sortBy', 'sortDirection', 'select', 'where'])) {
                 $query->where($key, $value);
             }
         }
+
+        // Check for the 'where' parameter
+        if ($request->query('where')) {
+            $filter = $request->query('where');
+            $parts = explode(',', $filter);
+
+            if (count($parts) < 2) {
+                return ['error' => 'Invalid where format. Use where=column,value or where=with:relation,column,value'];
+            }
+
+            $relationParts = [];
+
+            // Extract multiple 'with:' relations dynamically
+            while (!empty($parts) && str_starts_with($parts[0], 'with:')) {
+                $relationParts[] = str_replace('with:', '', array_shift($parts));
+            }
+
+            $column = $parts[0] ?? null;
+            $value = $parts[1] ?? null;
+
+            if (!$column || $value === null) {
+                return ['error' => 'Invalid where format. Use where=column,value or where=with:relation,column,value'];
+            }
+
+            if (!empty($relationParts)) {
+                // Handle nested relational filtering
+                $query->whereHas(implode('.', $relationParts), function ($relationQuery) use ($column, $value) {
+                    $relationQuery->where($column, $value);
+                });
+            } else {
+                // Handle standard column filtering (previous system support)
+                $query->where($column, $value);
+            }
+        }
+
+
 
         // Apply search
         $searchTerm = $request->query('searchTerm');

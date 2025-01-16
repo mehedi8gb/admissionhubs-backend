@@ -30,14 +30,14 @@ class UpdateStudentRelationsRequest extends FormRequest
             'applications.*.instituteId' => 'nullable|integer|max:255',
             'applications.*.courseId' => 'nullable|integer|max:255',
             'applications.*.termId' => 'nullable|integer|max:255',
-            'applications.*.type' => 'nullable|string|max:255',
+            'applications.*.choice' => 'nullable|string|in:International,Local',
             'applications.*.amount' => 'nullable|numeric',
             'applications.*.status' => 'nullable|string',
 
             'assignStaff' => 'nullable|array',
             'assignStaff.*.id' => 'nullable|integer',
             'assignStaff.*.staffId' => 'nullable|integer',
-            'assignStaff.*.type' => 'nullable|string|max:255',
+            'assignStaff.*.status' => 'nullable',
 
             'workDetails' => 'nullable|array',
             'workDetails.*.id' => 'nullable|integer',

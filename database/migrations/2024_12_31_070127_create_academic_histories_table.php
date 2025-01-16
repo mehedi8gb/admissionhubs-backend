@@ -16,11 +16,6 @@ return new class extends Migration
             $table->foreignId('student_id')->constrained()->onDelete('cascade'); // Reference to users table
             $table->string('institution', 255)->nullable();
             $table->string('course', 255)->nullable();
-            // Foreign key for academic_year_id
-            $table->foreignId('academic_year_id')->constrained('academic_years', 'id')->onDelete('cascade');
-
-            // Foreign key for term_id
-            $table->foreignId('term_id')->constrained('terms', 'id')->onDelete('cascade');
             $table->string('studyLevel', 255)->nullable();
             $table->decimal('resultScore', 10, 2)->nullable();
             $table->decimal('outOf', 10, 2)->nullable();

@@ -17,9 +17,9 @@ return new class extends Migration
             $table->foreignId('institute_id')->constrained()->onDelete('cascade');
             $table->foreignId('course_id')->constrained()->onDelete('cascade');
             $table->foreignId('term_id')->constrained()->onDelete('cascade');
-            $table->string('type')->nullable();
+            $table->string('choice')->nullable();
             $table->decimal('amount', 10, 2)->nullable();
-            $table->string('status')->default(1);
+            $table->string('status')->default('New');
             $table->timestamps();
         });
     }

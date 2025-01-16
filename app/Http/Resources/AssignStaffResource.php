@@ -16,6 +16,7 @@ class AssignStaffResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'status' => $this->status,
             'staff' => StaffResource::make($this->staff),
         ];
     }
