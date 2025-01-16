@@ -105,8 +105,8 @@ class StudentController extends Controller
                 'term_id' => $validatedData['termId'] ?? null,
 //                'institute' => $validatedData['institute'],
                 'status' => $validatedData['status'] ?? true,
-                'agent' => $validatedData['agent'] ?? null,
-                'staff' => $validatedData['staff'] ?? null,
+                'agent_id' => $validatedData['agent'] ?? null,
+                'staff_id' => $validatedData['staff'] ?? null,
                 'student_data' => $validatedData, // json column
             ]);
             $student->save();

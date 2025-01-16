@@ -94,33 +94,36 @@ class BaseController
             $filter = $request->query('where');
             $parts = explode(',', $filter);
 
-            if (count($parts) >= 2) {
-                $relationFlag = $parts[0]; // First part: "with:user" or column name
-                $column = $parts[1];
-                $value = $parts[2] ?? null;
-
-                if (str_starts_with($relationFlag, 'with:')) {
-                    // Handle relational filtering
-                    $relation = str_replace('with:', '', $relationFlag);
-                    if ($value !== null) {
-                        $query->whereHas($relation, function ($relationQuery) use ($column, $value) {
-                            $relationQuery->where($column, $value);
-                        });
-                    } else {
-                        return ['error' => 'Invalid relational where format. Use where=with:relation,column,value'];
-                    }
-                } else {
-                    // Handle non-relational filtering
-                    if ($value === null) {
-                        $query->where($relationFlag, $column); // Corrected: Use $relationFlag as column, $column as value
-                    } else {
-                        return ['error' => 'Invalid where format. Use where=column,value or where=with:relation,column,value'];
-                    }
-                }
-            } else {
+            if (count($parts) < 2) {
                 return ['error' => 'Invalid where format. Use where=column,value or where=with:relation,column,value'];
             }
+
+            $relationParts = [];
+
+            // Extract multiple 'with:' relations dynamically
+            while (!empty($parts) && str_starts_with($parts[0], 'with:')) {
+                $relationParts[] = str_replace('with:', '', array_shift($parts));
+            }
+
+            $column = $parts[0] ?? null;
+            $value = $parts[1] ?? null;
+
+            if (!$column || $value === null) {
+                return ['error' => 'Invalid where format. Use where=column,value or where=with:relation,column,value'];
+            }
+
+            if (!empty($relationParts)) {
+                // Handle nested relational filtering
+                $query->whereHas(implode('.', $relationParts), function ($relationQuery) use ($column, $value) {
+                    $relationQuery->where($column, $value);
+                });
+            } else {
+                // Handle standard column filtering (previous system support)
+                $query->where($column, $value);
+            }
         }
+
+
 
         // Apply search
         $searchTerm = $request->query('searchTerm');
